@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * This file is part of the contentful-core.php package.
+ *
+ * @copyright 2015-2018 Contentful GmbH
+ * @license   MIT
+ */
+
+namespace Contentful\Core\Exception;
+
+use Contentful\Core\Api\Exception;
+use GuzzleHttp\Exception\RequestException;
+
+/**
+ * A RateLimitExceededException is thrown when there have been too many requests.
+ *
+ * The usual RateLimit on the Content Delivery API is 216000 requests/hour and 78 requests/second.
+ * Responses cached by the Contentful CDN don't count against the rate limit.
+ */
+class RateLimitExceededException extends Exception
+{
+    /**
+     * @var int|null
+     */
+    private $rateLimitReset;
+
+    /**
+     * RateLimitExceededException constructor.
+     *
+     * @param RequestException $previous
+     * @param string           $message
+     */
+    public function __construct(RequestException $previous, $message = '')
+    {
+        parent::__construct($previous, $message);
+
+        if ($this->getResponse()) {
+            $this->rateLimitReset = (int) $this->getResponse()->getHeader('X-Contentful-RateLimit-Reset')[0];
+        }
+    }
+
+    /**
+     * Returns the number of seconds until the rate limit expires.
+     *
+     * @return int|null
+     */
+    public function getRateLimitReset()
+    {
+        return $this->rateLimitReset;
+    }
+}

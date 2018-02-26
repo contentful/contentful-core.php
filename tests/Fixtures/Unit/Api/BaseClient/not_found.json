@@ -1,0 +1,14 @@
+{
+    "sys": {
+        "type": "Error",
+        "id": "NotFound"
+    },
+    "message": "The resource could not be found.",
+    "details": {
+        "sys": {
+            "type": "Space",
+            "id": "invalid"
+        }
+    },
+    "requestId": "941ced25f6d2797cd74fa775c1beb117"
+}
