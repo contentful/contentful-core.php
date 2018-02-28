@@ -74,6 +74,17 @@ after_success:
       travis_retry bash <(curl -s https://codecov.io/bash) -f build/logs/clover.xml
     fi
 
+  - |
+    # Generate API docs
+    #
+    # We generate API docs only for the build lead (to avoid wasting time on all builds),
+    # and when on merges to master, which is the result of this condition and the setting
+    # branches: only: master above.
+    if [[ ($TRAVIS_PULL_REQUEST == false || $TRAVIS_TAG != false) && $BUILD_LEAD == 1 ]]
+    then
+      ./scripts/prepare-docs.sh
+    fi
+
 deploy:
   provider: pages
   skip_cleanup: true
@@ -81,3 +92,7 @@ deploy:
   local_dir: build/docs
   on:
     condition: ($TRAVIS_PULL_REQUEST == false || $TRAVIS_TAG != false) && $BUILD_LEAD == 1
+
+notifications:
+  slack:
+    secure: Xmz80yyd9mcEMAeEuoSQis152G1/ZRqKhFXonGpH+HchzSoe8LONsvuIztfII+sSnL6mCzhoAJhCE5Lt+kR2H7LNFZcnOcdFJXKHwFDgDSRWDuvfx4cOeT9Jj6gIMp+VcucIemottBQ1679vGL6u/3WPROQ5HxYuydcl/H+UzMfOWu0Qh0flzB5/JaoTwn8Y+G68z8zJHKgKsHWUmyf2KHRH20dZ6MzG/OsRdX0xqHTvATxoUtW0Ii8TNWuqLuTH+bjzsK5SS1LvKGylWesckq0rNlhNFmtzaJ3ggtV+RrwZNt2E1xFs7TmDriyaO89UNN+2TTuR9J4KZql2jN2zTtUUoPY6Tl1D+LY+lPR6lgy0ExBvyQZFeivQDBz6WiQwB9LGL6EIAKsvcZjh19Oh+WD3qfa9T+Pkf9H6eTjR8Zw14MHQ9kjVJt0V2p8U7kKWSDA+1N++NxN4EmOQwPcp9mdNcmqZOo+Nm3ByEkks9o97YiJW+kwJ0wmWHoVlClv3LRULIsZZx8ZuTGoOmzfSLAkhNd+ulX31XZIg2FXteuPHqwndkMGMQD8rOUz/cs4Wb6KF4h2H7DM7kAFw1BJJxNDO9h/uV0y+7eP8D4x9J5Pui4kBk6Efwhd3Ynh7In2qXvTCLroH9zSxZ+uuGhwaJ9hQ6ars6pBdapzjl4h2uCk=
