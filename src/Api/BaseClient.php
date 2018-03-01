@@ -134,8 +134,12 @@ abstract class BaseClient
             throw $message->getException();
         }
 
-        return $message->getResponse()
-            ? \GuzzleHttp\json_decode((string) $message->getResponse()->getBody(), true)
+        $body = $message->getResponse()
+            ? (string) $message->getResponse()->getBody()
+            : null;
+
+        return $body
+            ? \GuzzleHttp\json_decode((string) $body, true)
             : [];
     }
 
