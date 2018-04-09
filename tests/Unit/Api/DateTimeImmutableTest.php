@@ -25,5 +25,6 @@ class DateTimeImmutableTest extends TestCase
 
         $this->assertSame('1988-09-19T00:00:00Z', $date->formatForJson());
         $this->assertSame('1988-09-19T00:00:00Z', (string) $date);
+        $this->assertSame('"1988-09-19T00:00:00Z"', \json_encode($date));
     }
 }

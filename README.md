@@ -1,10 +1,10 @@
 # contentful-core.php
 
-[![Packagist](https://img.shields.io/packagist/v/contentful/contentful-core.svg?style=flat-square)](https://packagist.org/packages/contentful/contentful-core.php)
-[![Travis](https://img.shields.io/travis/contentful/contentful-core.php.svg?style=flat-square)](https://travis-ci.org/contentful/contentful-core.php)
-[![Packagist](https://img.shields.io/github/license/contentful/contentful-core.php.svg?style=flat-square)](https://packagist.org/packages/contentful/contentful-core.php)
-[![Code Climate](https://img.shields.io/codeclimate/github/contentful/contentful-core.php.svg?style=flat-square)](https://codeclimate.com/github/contentful/contentful-core.php)
-[![Codecov](https://img.shields.io/codecov/c/github/contentful/contentful-core.php.svg?style=flat-square)](https://codecov.io/gh/contentful/contentful-core.php)
+[![Packagist](https://img.shields.io/packagist/v/contentful/core.svg?style=for-the-badge)](https://packagist.org/packages/contentful/core)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/contentful/core.svg?style=for-the-badge)](https://packagist.org/packages/contentful/core)
+[![Travis](https://img.shields.io/travis/contentful/contentful-core.php.svg?style=for-the-badge)](https://travis-ci.org/contentful/contentful-core.php)
+[![Packagist](https://img.shields.io/github/license/contentful/contentful-core.php.svg?style=for-the-badge)](https://packagist.org/packages/contentful/contentful-core.php)
+[![Codecov](https://img.shields.io/codecov/c/github/contentful/contentful-core.php.svg?style=for-the-badge)](https://codecov.io/gh/contentful/contentful-core.php)
 
 ## What is Contentful?
 
