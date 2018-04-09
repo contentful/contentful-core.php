@@ -14,7 +14,7 @@ namespace Contentful\Core\Api;
  *
  * This class is used for easier conversion to a timestamp that works with Contentful.
  */
-class DateTimeImmutable extends \DateTimeImmutable
+class DateTimeImmutable extends \DateTimeImmutable implements \JsonSerializable
 {
     /**
      * Formats the string for an easier interoperability with Contentful.
@@ -40,6 +40,16 @@ class DateTimeImmutable extends \DateTimeImmutable
      * @return string
      */
     public function __toString()
+    {
+        return $this->formatForJson();
+    }
+
+    /**
+     * Returns a JSON representation of the current object.
+     *
+     * @return string
+     */
+    public function jsonSerialize()
     {
         return $this->formatForJson();
     }
