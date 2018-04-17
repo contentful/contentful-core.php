@@ -100,50 +100,16 @@ abstract class BaseQuery
      */
     public function getQueryData()
     {
-        $data = [
+        return \array_merge($this->whereConditions, [
             'limit' => $this->limit,
             'skip' => $this->skip,
             'content_type' => $this->contentType,
             'mimetype_group' => $this->mimeTypeGroup,
-        ];
-
-        if (\count($this->orderConditions) > 0) {
-            $parts = [];
-            foreach ($this->orderConditions as $condition) {
-                $parts[] = ($condition['reverse'] ? '-' : '').$condition['field'];
-            }
-
-            $data['order'] = \implode(',', $parts);
-        }
-        foreach ($this->whereConditions as $whereCondition) {
-            $key = $whereCondition['field'];
-            if (null !== $whereCondition['operator']) {
-                $key .= '['.$whereCondition['operator'].']';
-            }
-            $data[$key] = $whereCondition['value'];
-        }
-
-        if (\count($this->select) > 0) {
-            // We always request all metadata to ensure the ResourceBuilder has everything it needs.
-            $select = ['sys'];
-            foreach ($this->select as $part) {
-                if ('sys' === $part || 0 === \mb_strpos($part, 'sys.')) {
-                    continue;
-                }
-                $select[] = $part;
-            }
-
-            $data['select'] = \implode(',', $select);
-        }
-
-        if (null !== $this->linksToEntry) {
-            $data['links_to_entry'] = $this->linksToEntry;
-        }
-        if (null !== $this->linksToAsset) {
-            $data['links_to_asset'] = $this->linksToAsset;
-        }
-
-        return $data;
+            'order' => $this->orderConditions ? \implode(',', $this->orderConditions) : null,
+            'select' => $this->select,
+            'links_to_entry' => $this->linksToEntry,
+            'links_to_asset' => $this->linksToAsset,
+        ]);
     }
 
     /**
@@ -215,10 +181,11 @@ abstract class BaseQuery
      */
     public function orderBy($field, $reverse = false)
     {
-        $this->orderConditions[] = [
-            'field' => $field,
-            'reverse' => $reverse,
-        ];
+        if ($reverse) {
+            $field = '-'.$field;
+        }
+
+        $this->orderConditions[] = $field;
 
         return $this;
     }
@@ -335,11 +302,11 @@ abstract class BaseQuery
             $value = \implode(',', $value);
         }
 
-        $this->whereConditions[] = [
-            'field' => $field,
-            'value' => $value,
-            'operator' => $operator,
-        ];
+        $urlParameter = $operator
+            ? $field.'['.$operator.']'
+            : $field;
+
+        $this->whereConditions[$urlParameter] = $value;
 
         return $this;
     }
@@ -356,7 +323,15 @@ abstract class BaseQuery
      */
     public function select(array $select)
     {
-        $this->select = $select;
+        $parts = ['sys'];
+        foreach ($select as $part) {
+            if ('sys' === $part || 0 === \mb_strpos($part, 'sys.')) {
+                continue;
+            }
+            $parts[] = $part;
+        }
+
+        $this->select = \implode(',', $parts);
 
         return $this;
     }
