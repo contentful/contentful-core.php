@@ -51,10 +51,6 @@ class Link implements \JsonSerializable
     /**
      * Get the type of the Link.
      *
-     * Possible values are:
-     *  - Asset
-     *  - Entry
-     *
      * @return string
      */
     public function getLinkType()
