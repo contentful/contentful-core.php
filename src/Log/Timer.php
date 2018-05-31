@@ -9,6 +9,11 @@
 
 namespace Contentful\Core\Log;
 
+/**
+ * Timer class.
+ *
+ * @deprecated 1.1
+ */
 class Timer
 {
     /**
