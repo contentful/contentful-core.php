@@ -10,7 +10,6 @@
 namespace Contentful\Core\Api;
 
 use Contentful\Core\Log\NullLogger;
-use Contentful\Core\Log\Timer;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
@@ -37,11 +36,6 @@ abstract class BaseClient
     private $userAgentGenerator;
 
     /**
-     * @var Timer
-     */
-    private $timer;
-
-    /**
      * @var RequestBuilder
      */
     private $requestBuilder;
@@ -64,7 +58,6 @@ abstract class BaseClient
         $this->logger = $logger ?: new NullLogger();
         $this->httpClient = $httpClient ?: new HttpClient();
 
-        $this->timer = new Timer();
         $this->userAgentGenerator = new UserAgentGenerator(
             $this->getSdkName(),
             $this->getSdkVersion()
@@ -153,7 +146,7 @@ abstract class BaseClient
      */
     private function callApi(RequestInterface $request)
     {
-        $this->timer->start();
+        $startTime = \microtime(true);
 
         $exception = null;
         try {
@@ -166,11 +159,11 @@ abstract class BaseClient
             $exception = $this->createCustomException($exception);
         }
 
-        $this->timer->stop();
+        $duration = \microtime(true) - $startTime;
 
         return new Message(
             $this->getApi(),
-            $this->timer->getDuration(),
+            $duration,
             $request,
             $response,
             $exception

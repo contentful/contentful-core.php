@@ -16,7 +16,7 @@ This package requires PHP 5.6 or above.
 
 ## About
 
-This package provides foundation components for both [Delivery SDK](https://github.com/contentful/contentful.php) and [Management SDK](https://github.com/contentful/contentful-management.php). It is not meant for being used from third party packages.
+This package provides foundation components for both [Delivery SDK](https://github.com/contentful/contentful.php) and [Management SDK](https://github.com/contentful/contentful-management.php), and it is not meant for being used from third party packages. For this reason, [semantic versioning](https://semver.org) is not strictly enforced.
 
 ## License
 
