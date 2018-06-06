@@ -61,7 +61,7 @@ class Location implements \JsonSerializable
     {
         return [
             'lat' => $this->latitude,
-            'long' => $this->longitude,
+            'lon' => $this->longitude,
         ];
     }
 
