@@ -28,7 +28,7 @@ class LocationTest extends TestCase
     {
         $loc = new Location(15.0, 17.8);
 
-        $this->assertJsonStringEqualsJsonString('{"lat":15,"long":17.8}', \json_encode($loc));
+        $this->assertJsonStringEqualsJsonString('{"lat":15,"lon":17.8}', \json_encode($loc));
     }
 
     public function testQueryStringFormatted()
