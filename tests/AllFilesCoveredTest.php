@@ -19,7 +19,6 @@ class AllFilesCoveredTest extends TestCase
     public function testAllClassesHaveTestFile($file)
     {
         $file = \str_replace('.php', 'Test.php', $file);
-        // var_dump(__DIR__.'/'.$file);
         $this->assertFileExists(__DIR__.'/Unit/'.$file);
     }
 
