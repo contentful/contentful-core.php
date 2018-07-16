@@ -52,10 +52,11 @@ class BaseClientTest extends TestCase
     public function testClient()
     {
         $httpClient = $this->createHttpClient();
-        $client = new ConcreteClient('b4c0n73n7fu1', 'https://cdn.contentful.com', new ConcreteLogger(), $httpClient);
+        $client = new ConcreteClient('b4c0n73n7fu1', 'https://cdn.contentful.com/', new ConcreteLogger(), $httpClient);
         $client->setApplication('sdk-test-application', '1.0');
 
         $this->assertSame('DELIVERY', $client->getApi());
+        $this->assertSame('https://cdn.contentful.com', $client->getHost());
 
         $jsonResponse = $client->request('GET', '/spaces/cfexampleapi');
 
@@ -101,10 +102,11 @@ class BaseClientTest extends TestCase
     public function testCustomException()
     {
         $httpClient = $this->createHttpClient();
-        $client = new CustomExceptionConcreteClient('b4c0n73n7fu1', 'https://cdn.contentful.com', new ConcreteLogger(), $httpClient);
+        $client = new CustomExceptionConcreteClient('b4c0n73n7fu1', 'https://api.contentful.com', new ConcreteLogger(), $httpClient);
         $client->setIntegration('sdk-test-integration', '1.0.0-beta');
 
         $this->assertSame('MANAGEMENT', $client->getApi());
+        $this->assertSame('https://api.contentful.com', $client->getHost());
 
         $this->requestHandler = function (RequestInterface $request, array $options) {
             $response = new Response(

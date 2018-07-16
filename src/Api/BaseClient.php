@@ -31,6 +31,11 @@ abstract class BaseClient
     private $logger;
 
     /**
+     * @var string
+     */
+    private $host;
+
+    /**
      * @var UserAgentGenerator
      */
     private $userAgentGenerator;
@@ -49,14 +54,19 @@ abstract class BaseClient
      * Client constructor.
      *
      * @param string               $accessToken
-     * @param string               $baseUri
+     * @param string               $host
      * @param LoggerInterface|null $logger
      * @param HttpClient|null      $httpClient
      */
-    public function __construct($accessToken, $baseUri, LoggerInterface $logger = null, HttpClient $httpClient = null)
+    public function __construct($accessToken, $host, LoggerInterface $logger = null, HttpClient $httpClient = null)
     {
         $this->logger = $logger ?: new NullLogger();
         $this->httpClient = $httpClient ?: new HttpClient();
+
+        if ('/' === \mb_substr($host, -1)) {
+            $host = \mb_substr($host, 0, -1);
+        }
+        $this->host = $host;
 
         $this->userAgentGenerator = new UserAgentGenerator(
             $this->getSdkName(),
@@ -64,7 +74,7 @@ abstract class BaseClient
         );
         $this->requestBuilder = new RequestBuilder(
             $accessToken,
-            $baseUri,
+            $host,
             $this->getApiContentType(),
             $this->userAgentGenerator
         );
@@ -241,6 +251,14 @@ abstract class BaseClient
     public function getMessages()
     {
         return $this->messages;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->host;
     }
 
     /**
