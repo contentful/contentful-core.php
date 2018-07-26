@@ -81,7 +81,7 @@ abstract class BaseResourceBuilder implements ResourceBuilderInterface
      * Determines the fully-qualified class name of the mapper object
      * that will handle the mapping process.
      *
-     * This function will use user-defined data matchers, if avaiable.
+     * This function will use user-defined data matchers, if available.
      *
      * If the user-defined matcher does not return anything,
      * we default to the base mapper, so the user doesn't have
@@ -141,7 +141,7 @@ abstract class BaseResourceBuilder implements ResourceBuilderInterface
     abstract protected function getMapperNamespace();
 
     /**
-     * Abstract function for instantianting a mapper.
+     * Abstract function for instantiating a mapper.
      * This function is made abstract because different resource builders
      * might need to create mappers with different arguments.
      *
