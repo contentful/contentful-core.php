@@ -261,8 +261,8 @@ abstract class BaseQuery
      *
      * @param string                                   $field
      * @param string|array|\DateTimeInterface|Location $value
-     * @param string|null                              $operator The operator to use for this condition.
-     *                                                           Default is strict equality.
+     * @param string|null                              $operator the operator to use for this condition.
+     *                                                           Default is strict equality
      *
      * @throws \InvalidArgumentException If $operator is not one of the valid values
      *

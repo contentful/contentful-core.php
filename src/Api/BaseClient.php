@@ -119,6 +119,8 @@ abstract class BaseClient
      *                        * body    The request body
      *                        * baseUri A string that can be used to override the default client base URI
      *
+     * @throws \Exception
+     *
      * @return array|null
      */
     protected function request($method, $path, array $options = [])
@@ -128,10 +130,20 @@ abstract class BaseClient
         $message = $this->callApi($request);
         $this->messages[] = $message;
 
+        $logMessage = \sprintf(
+            '%s %s (%.3Fs)',
+            $request->getMethod(),
+            (string) $request->getUri(),
+            $message->getDuration()
+        );
+
+        // This is a "simple" log, for general purpose
         $this->logger->log(
             $message->getLogLevel(),
-            $message->asString()
+            $logMessage
         );
+        // This is a debug log, with all message details
+        $this->logger->debug($logMessage, $message->jsonSerialize());
 
         if ($message->getException()) {
             throw $message->getException();
