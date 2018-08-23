@@ -11,6 +11,11 @@ namespace Contentful\Core\Api;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use function GuzzleHttp\json_decode as guzzle_json_decode;
+use function GuzzleHttp\json_encode as guzzle_json_encode;
+use function GuzzleHttp\Psr7\parse_request as guzzle_parse_request;
+use function GuzzleHttp\Psr7\parse_response as guzzle_parse_response;
+use function GuzzleHttp\Psr7\str as guzzle_stringify_message;
 
 /**
  * Message class.
@@ -84,7 +89,7 @@ class Message implements \Serializable, \JsonSerializable
      */
     public static function createFromString($json)
     {
-        $data = \GuzzleHttp\json_decode($json, true);
+        $data = guzzle_json_decode($json, true);
 
         if (
             !isset($data['api']) ||
@@ -101,8 +106,8 @@ class Message implements \Serializable, \JsonSerializable
         return new self(
             $data['api'],
             $data['duration'],
-            \GuzzleHttp\Psr7\parse_request($data['request']),
-            $data['response'] ? \GuzzleHttp\Psr7\parse_response($data['response']) : null,
+            guzzle_parse_request($data['request']),
+            $data['response'] ? guzzle_parse_response($data['response']) : null,
             $data['exception'] ? \unserialize($data['exception']) : null
         );
     }
@@ -175,8 +180,8 @@ class Message implements \Serializable, \JsonSerializable
         return [
             'api' => $this->api,
             'duration' => $this->duration,
-            'request' => \GuzzleHttp\Psr7\str($this->request),
-            'response' => null !== $this->response ? \GuzzleHttp\Psr7\str($this->response) : null,
+            'request' => guzzle_stringify_message($this->request),
+            'response' => null !== $this->response ? guzzle_stringify_message($this->response) : null,
             'exception' => \serialize($this->exception),
         ];
     }
@@ -206,8 +211,8 @@ class Message implements \Serializable, \JsonSerializable
 
         $this->api = $data['api'];
         $this->duration = $data['duration'];
-        $this->request = \GuzzleHttp\Psr7\parse_request($data['request']);
-        $this->response = null !== $data['response'] ? \GuzzleHttp\Psr7\parse_response($data['response']) : null;
+        $this->request = guzzle_parse_request($data['request']);
+        $this->response = null !== $data['response'] ? guzzle_parse_response($data['response']) : null;
         $this->exception = \unserialize($data['exception']);
     }
 
@@ -218,7 +223,7 @@ class Message implements \Serializable, \JsonSerializable
      */
     public function asString()
     {
-        return \GuzzleHttp\json_encode($this);
+        return guzzle_json_encode($this);
     }
 
     /**

@@ -11,7 +11,6 @@ namespace Contentful\Tests\Core\Unit\Api;
 
 use Contentful\Core\Api\BaseClient;
 use Contentful\Core\Api\Exception;
-use Contentful\Core\Api\Message;
 use Contentful\Tests\Core\TestCase;
 use Contentful\Tests\Core\Unit\Api\Exception\BadRequestException;
 use GuzzleHttp\Client as HttpClient;
@@ -19,8 +18,11 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Monolog\Handler\TestHandler;
+use Monolog\Logger;
 use Psr\Http\Message\RequestInterface;
-use Psr\Log\LoggerInterface;
+use function GuzzleHttp\Psr7\parse_request as guzzle_parse_request;
+use function GuzzleHttp\Psr7\parse_response as guzzle_parse_response;
 
 class BaseClientTest extends TestCase
 {
@@ -28,11 +30,6 @@ class BaseClientTest extends TestCase
      * @var \Closure
      */
     private $requestHandler;
-
-    public function setUp()
-    {
-        ConcreteLogger::reset();
-    }
 
     public function createHttpClient()
     {
@@ -51,8 +48,10 @@ class BaseClientTest extends TestCase
 
     public function testClient()
     {
+        $handler = new TestHandler();
+        $logger = new Logger('test', [$handler]);
         $httpClient = $this->createHttpClient();
-        $client = new ConcreteClient('b4c0n73n7fu1', 'https://cdn.contentful.com/', new ConcreteLogger(), $httpClient);
+        $client = new ConcreteClient('b4c0n73n7fu1', 'https://cdn.contentful.com/', $logger, $httpClient);
         $client->setApplication('sdk-test-application', '1.0');
 
         $this->assertSame('DELIVERY', $client->getApi());
@@ -61,16 +60,33 @@ class BaseClientTest extends TestCase
         $jsonResponse = $client->request('GET', '/spaces/cfexampleapi');
 
         $this->assertSame('cfexampleapi', $jsonResponse['sys']['id']);
-        $logs = $client->getLogger()->getLogs('INFO');
-        $this->assertCount(1, $logs);
+        $logs = $handler->getRecords();
+        $this->assertCount(2, $logs);
 
-        $message = Message::createFromString($logs[0]);
-        $this->assertSame(200, $message->getResponse()->getStatusCode());
+        $this->assertSame('INFO', $logs[0]['level_name']);
+        $this->assertRegExp('/GET https\:\/\/cdn\.contentful\.com\/spaces\/cfexampleapi \(([0-9]{1,})\.([0-9]{3})s\)/', $logs[0]['message']);
+
+        $this->assertSame('DEBUG', $logs[1]['level_name']);
+        $context = $logs[1]['context'];
+        $this->assertSame('DELIVERY', $context['api']);
+        $this->assertInternalType('float', $context['duration']);
+        $this->assertNull(\unserialize($context['exception']));
+
+        try {
+            $request = guzzle_parse_request($context['request']);
+            if ($context['response']) {
+                $response = guzzle_parse_response($context['response']);
+                $this->assertSame(200, $response->getStatusCode());
+            }
+        } catch (\Exception $exception) {
+            $this->fail('Creating request and response from strings failed');
+
+            return;
+        }
 
         // String representations of HTTP messages have no real way of storing the HTTPS vs HTTP
         // information. Because of this, after serialization the protocol is defaulted to HTTP.
         // To get the original request, use a Message object retrieved from BaseClient::getMessages().
-        $request = $message->getRequest();
         $this->assertSame('http://cdn.contentful.com/spaces/cfexampleapi', (string) $request->getUri());
         $this->assertSame('Bearer b4c0n73n7fu1', $request->getHeaderLine('Authorization'));
         $this->assertRegExp(
@@ -88,7 +104,7 @@ class BaseClientTest extends TestCase
     public function testErrorPage()
     {
         $httpClient = $this->createHttpClient();
-        $client = new ConcreteClient('b4c0n73n7fu1', 'https://cdn.contentful.com', new ConcreteLogger(), $httpClient);
+        $client = new ConcreteClient('b4c0n73n7fu1', 'https://cdn.contentful.com', null, $httpClient);
 
         $this->requestHandler = function (RequestInterface $request, array $options) {
             $response = new Response(404, [], $this->getFixtureContent('not_found.json'));
@@ -102,7 +118,7 @@ class BaseClientTest extends TestCase
     public function testCustomException()
     {
         $httpClient = $this->createHttpClient();
-        $client = new CustomExceptionConcreteClient('b4c0n73n7fu1', 'https://api.contentful.com', new ConcreteLogger(), $httpClient);
+        $client = new CustomExceptionConcreteClient('b4c0n73n7fu1', 'https://api.contentful.com', null, $httpClient);
         $client->setIntegration('sdk-test-integration', '1.0.0-beta');
 
         $this->assertSame('MANAGEMENT', $client->getApi());
@@ -212,65 +228,5 @@ class CustomExceptionConcreteClient extends BaseClient
     protected function getExceptionNamespace()
     {
         return __NAMESPACE__.'\\Exception';
-    }
-}
-
-class ConcreteLogger implements LoggerInterface
-{
-    private static $logs = [
-        'ERROR' => [],
-        'INFO' => [],
-    ];
-
-    public static function reset()
-    {
-        self::$logs = [
-            'ERROR' => [],
-            'INFO' => [],
-        ];
-    }
-
-    public function getLogs($level)
-    {
-        return self::$logs[$level];
-    }
-
-    public function emergency($message, array $context = [])
-    {
-    }
-
-    public function alert($message, array $context = [])
-    {
-    }
-
-    public function critical($message, array $context = [])
-    {
-    }
-
-    public function error($message, array $context = [])
-    {
-        $this->log('ERROR', $message, $context);
-    }
-
-    public function warning($message, array $context = [])
-    {
-    }
-
-    public function notice($message, array $context = [])
-    {
-    }
-
-    public function info($message, array $context = [])
-    {
-        $this->log('INFO', $message, $context);
-    }
-
-    public function debug($message, array $context = [])
-    {
-    }
-
-    public function log($level, $message, array $context = [])
-    {
-        self::$logs[$level][] = $message;
     }
 }
