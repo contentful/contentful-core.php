@@ -3,7 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/1.2.0...HEAD)
+## [1.3.0](https://github.com/contentful/contentful-core.php/tree/1.3.0) (2018-08-28)
+
+### Added
+
+* `LinkResolverInterface` was added to abstract link resolving.
 
 ## [1.2.0](https://github.com/contentful/contentful-core.php/tree/1.2.0) (2018-08-23)
 
