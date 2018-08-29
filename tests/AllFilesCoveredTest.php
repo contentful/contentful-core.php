@@ -15,6 +15,8 @@ class AllFilesCoveredTest extends TestCase
 {
     /**
      * @dataProvider classFileProvider
+     *
+     * @param string $file
      */
     public function testAllClassesHaveTestFile($file)
     {

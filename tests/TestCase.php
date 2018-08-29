@@ -9,6 +9,8 @@
 
 namespace Contentful\Tests\Core;
 
+use function GuzzleHttp\json_encode as guzzle_json_encode;
+
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -19,7 +21,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function markTestAsPassed()
     {
-        $this->assertTrue(true, 'Test case did not throw an exception and passed.');
+        $this->assertTrue(\true, 'Test case did not throw an exception and passed.');
     }
 
     /**
@@ -31,7 +33,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     {
         $dir = $this->convertClassToFixturePath(\debug_backtrace()[1]['class']);
 
-        $this->assertJsonStringEqualsJsonFile($dir.'/'.$file, \GuzzleHttp\json_encode($object), $message);
+        $this->assertJsonStringEqualsJsonFile($dir.'/'.$file, guzzle_json_encode($object), $message);
     }
 
     /**

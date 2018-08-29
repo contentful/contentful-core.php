@@ -29,12 +29,12 @@ class Timer
     /**
      * @var bool
      */
-    private $isStarted = false;
+    private $isStarted = \false;
 
     /**
      * @var bool
      */
-    private $isStopped = false;
+    private $isStopped = \false;
 
     /**
      * Starts the timer.
@@ -44,8 +44,8 @@ class Timer
         if ($this->isStarted) {
             return;
         }
-        $this->startTime = \microtime(true);
-        $this->isStarted = true;
+        $this->startTime = \microtime(\true);
+        $this->isStarted = \true;
     }
 
     /**
@@ -57,8 +57,8 @@ class Timer
             return;
         }
 
-        $this->endTime = \microtime(true);
-        $this->isStopped = true;
+        $this->endTime = \microtime(\true);
+        $this->isStopped = \true;
     }
 
     /**
@@ -81,7 +81,7 @@ class Timer
     public function getDuration()
     {
         if (!$this->isStarted || !$this->isStopped) {
-            return null;
+            return \null;
         }
 
         return $this->endTime - $this->startTime;

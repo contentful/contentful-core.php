@@ -42,7 +42,7 @@ class ImageOptions
     /**
      * @var bool
      */
-    private $progressive = false;
+    private $progressive = \false;
 
     /**
      * @var string|null
@@ -79,19 +79,19 @@ class ImageOptions
             'r' => $this->radius,
         ];
 
-        if (null !== $this->quality || $this->progressive) {
+        if (\null !== $this->quality || $this->progressive) {
             $options['fm'] = 'jpg';
         }
         if ($this->progressive) {
             $options['fl'] = 'progressive';
         }
-        if (null !== $this->resizeFit) {
+        if (\null !== $this->resizeFit) {
             $options['fit'] = $this->resizeFit;
 
-            if ('thumb' === $this->resizeFit && null !== $this->resizeFocus) {
+            if ('thumb' === $this->resizeFit && \null !== $this->resizeFocus) {
                 $options['f'] = $this->resizeFocus;
             }
-            if ('pad' === $this->resizeFit && null !== $this->backgroundColor) {
+            if ('pad' === $this->resizeFit && \null !== $this->backgroundColor) {
                 $options['bg'] = 'rgb:'.\mb_substr($this->backgroundColor, 1);
             }
         }
@@ -114,9 +114,9 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setWidth($width = null)
+    public function setWidth($width = \null)
     {
-        if (null !== $width && $width < 0) {
+        if (\null !== $width && $width < 0) {
             throw new \InvalidArgumentException('Width must not be negative.');
         }
 
@@ -140,9 +140,9 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setHeight($height = null)
+    public function setHeight($height = \null)
     {
-        if (null !== $height && $height < 0) {
+        if (\null !== $height && $height < 0) {
             throw new \InvalidArgumentException('Height must not be negative.');
         }
 
@@ -161,11 +161,11 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setFormat($format = null)
+    public function setFormat($format = \null)
     {
         $validValues = ['png', 'jpg', 'webp'];
 
-        if (null !== $format && !\in_array($format, $validValues, true)) {
+        if (\null !== $format && !\in_array($format, $validValues, \true)) {
             throw new \InvalidArgumentException(\sprintf(
                 'Unknown format "%s" given. Expected "%s" or null.',
                 $format,
@@ -188,9 +188,9 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setQuality($quality = null)
+    public function setQuality($quality = \null)
     {
-        if (null !== $quality && ($quality < 1 || $quality > 100)) {
+        if (\null !== $quality && ($quality < 1 || $quality > 100)) {
             throw new \InvalidArgumentException(\sprintf(
                 'Quality must be between 1 and 100, "%d" given.',
                 $quality
@@ -210,7 +210,7 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setProgressive($progressive = null)
+    public function setProgressive($progressive = \null)
     {
         $this->progressive = (bool) $progressive;
 
@@ -237,11 +237,11 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setResizeFit($resizeFit = null)
+    public function setResizeFit($resizeFit = \null)
     {
         $validValues = ['pad', 'crop', 'fill', 'thumb', 'scale'];
 
-        if (null !== $resizeFit && !\in_array($resizeFit, $validValues, true)) {
+        if (\null !== $resizeFit && !\in_array($resizeFit, $validValues, \true)) {
             throw new \InvalidArgumentException(\sprintf(
                 'Unknown resize fit "%s" given. Expected "%s" or null.',
                 $resizeFit,
@@ -268,7 +268,7 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setResizeFocus($resizeFocus = null)
+    public function setResizeFocus($resizeFocus = \null)
     {
         $validValues = [
             'face',
@@ -283,7 +283,7 @@ class ImageOptions
             'bottom_left',
         ];
 
-        if (null !== $resizeFocus && !\in_array($resizeFocus, $validValues, true)) {
+        if (\null !== $resizeFocus && !\in_array($resizeFocus, $validValues, \true)) {
             throw new \InvalidArgumentException(\sprintf(
                 'Unknown resize focus "%s" given. Expected "%s" or null.',
                 $resizeFocus,
@@ -305,9 +305,9 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setRadius($radius = null)
+    public function setRadius($radius = \null)
     {
-        if (null !== $radius && $radius < 0) {
+        if (\null !== $radius && $radius < 0) {
             throw new \InvalidArgumentException('Radius must not be negative.');
         }
 
@@ -326,9 +326,9 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setBackgroundColor($backgroundColor = null)
+    public function setBackgroundColor($backgroundColor = \null)
     {
-        if (null !== $backgroundColor && !\preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $backgroundColor)) {
+        if (\null !== $backgroundColor && !\preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $backgroundColor)) {
             throw new \InvalidArgumentException('Background color must be in hexadecimal format.');
         }
 

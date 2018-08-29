@@ -65,12 +65,12 @@ class RequestBuilder
      */
     public function build($method, $path, array $options)
     {
-        $body = isset($options['body']) ? $options['body'] : null;
+        $body = isset($options['body']) ? $options['body'] : \null;
 
         $uri = $this->getUri(
             $path,
-            isset($options['baseUri']) ? $options['baseUri'] : null,
-            isset($options['query']) ? $options['query'] : null
+            isset($options['baseUri']) ? $options['baseUri'] : \null,
+            isset($options['query']) ? $options['query'] : \null
         );
 
         $headers = $this->getHeaders(
@@ -95,7 +95,7 @@ class RequestBuilder
         $uri = UriResolver::resolve($baseUri, new Uri($path));
 
         if ($query) {
-            $serializedQuery = \http_build_query($query, null, '&', \PHP_QUERY_RFC3986);
+            $serializedQuery = \http_build_query($query, \null, '&', \PHP_QUERY_RFC3986);
             $uri = $uri->withQuery($serializedQuery);
         }
 

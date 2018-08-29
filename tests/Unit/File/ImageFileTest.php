@@ -43,10 +43,12 @@ class ImageFileTest extends TestCase
     {
         $stub = $this->getMockBuilder(ImageOptions::class)
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
 
         $stub->method('getQueryString')
-            ->willReturn('fm=jpg&q=50');
+            ->willReturn('fm=jpg&q=50')
+        ;
 
         $this->assertSame(
             '//images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png?fm=jpg&q=50',

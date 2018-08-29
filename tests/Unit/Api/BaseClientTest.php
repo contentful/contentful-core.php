@@ -104,7 +104,7 @@ class BaseClientTest extends TestCase
     public function testErrorPage()
     {
         $httpClient = $this->createHttpClient();
-        $client = new ConcreteClient('b4c0n73n7fu1', 'https://cdn.contentful.com', null, $httpClient);
+        $client = new ConcreteClient('b4c0n73n7fu1', 'https://cdn.contentful.com', \null, $httpClient);
 
         $this->requestHandler = function (RequestInterface $request, array $options) {
             $response = new Response(404, [], $this->getFixtureContent('not_found.json'));
@@ -118,7 +118,7 @@ class BaseClientTest extends TestCase
     public function testCustomException()
     {
         $httpClient = $this->createHttpClient();
-        $client = new CustomExceptionConcreteClient('b4c0n73n7fu1', 'https://api.contentful.com', null, $httpClient);
+        $client = new CustomExceptionConcreteClient('b4c0n73n7fu1', 'https://api.contentful.com', \null, $httpClient);
         $client->setIntegration('sdk-test-integration', '1.0.0-beta');
 
         $this->assertSame('MANAGEMENT', $client->getApi());

@@ -51,12 +51,13 @@ abstract class BaseResourceBuilder implements ResourceBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build(array $data, ResourceInterface $resource = null)
+    public function build(array $data, ResourceInterface $resource = \null)
     {
         $fqcn = $this->determineMapperFqcn($data);
 
         return $this->getMapper($fqcn)
-            ->map($resource, $data);
+            ->map($resource, $data)
+        ;
     }
 
     /**
@@ -103,7 +104,7 @@ abstract class BaseResourceBuilder implements ResourceBuilderInterface
                 return $fqcn;
             }
 
-            if (!\class_exists($matchedFqcn, true)) {
+            if (!\class_exists($matchedFqcn, \true)) {
                 throw new \RuntimeException(\sprintf(
                     'Mapper class "%s" does not exist.',
                     $matchedFqcn
@@ -126,7 +127,7 @@ abstract class BaseResourceBuilder implements ResourceBuilderInterface
      *
      * @return static
      */
-    public function setDataMapperMatcher($type, callable $dataMapperMatcher = null)
+    public function setDataMapperMatcher($type, callable $dataMapperMatcher = \null)
     {
         $this->dataMapperMatchers[$type] = $dataMapperMatcher;
 

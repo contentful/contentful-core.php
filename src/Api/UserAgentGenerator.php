@@ -50,12 +50,12 @@ class UserAgentGenerator
      *
      * @return $this
      */
-    public function setApplication($name, $version = null)
+    public function setApplication($name, $version = \null)
     {
         $this->application = $name ? $name.($version ? '/'.$version : '') : '';
 
         // Reset the cached value
-        $this->cachedUserAgent = null;
+        $this->cachedUserAgent = \null;
 
         return $this;
     }
@@ -68,12 +68,12 @@ class UserAgentGenerator
      *
      * @return $this
      */
-    public function setIntegration($name, $version = null)
+    public function setIntegration($name, $version = \null)
     {
         $this->integration = $name ? $name.($version ? '/'.$version : '') : '';
 
         // Reset the cached value
-        $this->cachedUserAgent = null;
+        $this->cachedUserAgent = \null;
 
         return $this;
     }
@@ -111,7 +111,7 @@ class UserAgentGenerator
      */
     public function getUserAgent()
     {
-        if (null === $this->cachedUserAgent) {
+        if (\null === $this->cachedUserAgent) {
             $this->cachedUserAgent = $this->generate();
         }
 

@@ -26,7 +26,8 @@ class BaseQueryTest extends TestCase
     public function testFilterWithLimit()
     {
         $query = (new ConcreteQuery())
-            ->setLimit(150);
+            ->setLimit(150)
+        ;
 
         $this->assertSame('limit=150', $query->getQueryString());
     }
@@ -38,7 +39,8 @@ class BaseQueryTest extends TestCase
     public function testLimitThrowsOnValueTooLarge()
     {
         (new ConcreteQuery())
-            ->setLimit(1500);
+            ->setLimit(1500)
+        ;
     }
 
     /**
@@ -48,7 +50,8 @@ class BaseQueryTest extends TestCase
     public function testLimitThrowsOnValueZero()
     {
         (new ConcreteQuery())
-            ->setLimit(0);
+            ->setLimit(0)
+        ;
     }
 
     /**
@@ -58,15 +61,17 @@ class BaseQueryTest extends TestCase
     public function testLimitThrowsOnValueNegative()
     {
         (new ConcreteQuery())
-            ->setLimit(-1);
+            ->setLimit(-1)
+        ;
     }
 
     public function testLimitSetNull()
     {
         $query = (new ConcreteQuery())
-            ->setLimit(150);
+            ->setLimit(150)
+        ;
 
-        $query->setLimit(null);
+        $query->setLimit(\null);
 
         $this->assertSame('', $query->getQueryString());
     }
@@ -74,7 +79,8 @@ class BaseQueryTest extends TestCase
     public function testFilterWithSkip()
     {
         $query = (new ConcreteQuery())
-            ->setSkip(10);
+            ->setSkip(10)
+        ;
 
         $this->assertSame('skip=10', $query->getQueryString());
     }
@@ -86,13 +92,15 @@ class BaseQueryTest extends TestCase
     public function testSkipThrowsOnValueNegative()
     {
         (new ConcreteQuery())
-            ->setSkip(-1);
+            ->setSkip(-1)
+        ;
     }
 
     public function testFilterOrderBy()
     {
         $query = (new ConcreteQuery())
-            ->orderBy('sys.createdAt');
+            ->orderBy('sys.createdAt')
+        ;
 
         $this->assertSame('order=sys.createdAt', $query->getQueryString());
     }
@@ -100,7 +108,8 @@ class BaseQueryTest extends TestCase
     public function testFilterOrderByReversed()
     {
         $query = (new ConcreteQuery())
-            ->orderBy('sys.createdAt', true);
+            ->orderBy('sys.createdAt', \true)
+        ;
 
         $this->assertSame('order=-sys.createdAt', $query->getQueryString());
     }
@@ -109,7 +118,8 @@ class BaseQueryTest extends TestCase
     {
         $query = (new ConcreteQuery())
             ->orderBy('sys.createdAt')
-            ->orderBy('sys.updatedAt', true);
+            ->orderBy('sys.updatedAt', \true)
+        ;
 
         $this->assertSame('order=sys.createdAt%2C-sys.updatedAt', $query->getQueryString());
     }
@@ -117,7 +127,8 @@ class BaseQueryTest extends TestCase
     public function testFilterByContentType()
     {
         $query = (new ConcreteQuery())
-            ->setContentType('cat');
+            ->setContentType('cat')
+        ;
 
         $this->assertSame('content_type=cat', $query->getQueryString());
     }
@@ -125,7 +136,8 @@ class BaseQueryTest extends TestCase
     public function testWhere()
     {
         $query = (new ConcreteQuery())
-            ->where('sys.id', 'nyancat');
+            ->where('sys.id', 'nyancat')
+        ;
 
         $this->assertSame('sys.id=nyancat', $query->getQueryString());
     }
@@ -133,7 +145,8 @@ class BaseQueryTest extends TestCase
     public function testWhereOperator()
     {
         $query = (new ConcreteQuery())
-            ->where('sys.id', 'nyancat', 'ne');
+            ->where('sys.id', 'nyancat', 'ne')
+        ;
 
         $this->assertSame('sys.id%5Bne%5D=nyancat', $query->getQueryString());
     }
@@ -141,7 +154,8 @@ class BaseQueryTest extends TestCase
     public function testWhereDateTime()
     {
         $query = (new ConcreteQuery())
-            ->where('sys.updatedAt', new DateTimeImmutable('2013-01-01T00:00:00Z'), 'lte');
+            ->where('sys.updatedAt', new DateTimeImmutable('2013-01-01T00:00:00Z'), 'lte')
+        ;
 
         $this->assertSame('sys.updatedAt%5Blte%5D=2013-01-01T00%3A00%3A00%2B00%3A00', $query->getQueryString());
     }
@@ -149,7 +163,8 @@ class BaseQueryTest extends TestCase
     public function testWhereDateTimeResetsSeconds()
     {
         $query = (new ConcreteQuery())
-            ->where('sys.updatedAt', new DateTimeImmutable('2013-01-01T12:30:35Z'), 'lte');
+            ->where('sys.updatedAt', new DateTimeImmutable('2013-01-01T12:30:35Z'), 'lte')
+        ;
 
         $this->assertSame('sys.updatedAt%5Blte%5D=2013-01-01T12%3A30%3A00%2B00%3A00', $query->getQueryString());
     }
@@ -157,7 +172,8 @@ class BaseQueryTest extends TestCase
     public function testWhereLocation()
     {
         $query = (new ConcreteQuery())
-            ->where('fields.center', new Location(15.0, 17.8), 'near');
+            ->where('fields.center', new Location(15.0, 17.8), 'near')
+        ;
 
         $this->assertSame('fields.center%5Bnear%5D=15%2C17.8', $query->getQueryString());
     }
@@ -165,7 +181,8 @@ class BaseQueryTest extends TestCase
     public function testWhereArray()
     {
         $query = (new ConcreteQuery())
-            ->where('fields.favoriteColor', ['blue', 'red'], 'all');
+            ->where('fields.favoriteColor', ['blue', 'red'], 'all')
+        ;
 
         $this->assertSame('fields.favoriteColor%5Ball%5D=blue%2Cred', $query->getQueryString());
     }
@@ -177,7 +194,8 @@ class BaseQueryTest extends TestCase
     public function testWhereUnknownOperator()
     {
         (new ConcreteQuery())
-            ->where('sys.id', 'nyancat', 'wrong');
+            ->where('sys.id', 'nyancat', 'wrong')
+        ;
     }
 
     /**
@@ -187,13 +205,15 @@ class BaseQueryTest extends TestCase
     public function testSetMimeTypeGroupInvalid()
     {
         (new ConcreteQuery())
-            ->setMimeTypeGroup('invalid');
+            ->setMimeTypeGroup('invalid')
+        ;
     }
 
     public function testFilterByMimeTypeGroup()
     {
         $query = (new ConcreteQuery())
-            ->setMimeTypeGroup('image');
+            ->setMimeTypeGroup('image')
+        ;
 
         $this->assertSame('mimetype_group=image', $query->getQueryString());
     }
@@ -207,7 +227,8 @@ class BaseQueryTest extends TestCase
             ->setSkip(10)
             ->orderBy('sys.createdAt')
             ->where('sys.id', 'nyancat')
-            ->where('sys.updatedAt', new DateTimeImmutable('2013-01-01T00:00:00Z'), 'lte');
+            ->where('sys.updatedAt', new DateTimeImmutable('2013-01-01T00:00:00Z'), 'lte')
+        ;
 
         $this->assertSame(
             'sys.id=nyancat&sys.updatedAt%5Blte%5D=2013-01-01T00%3A00%3A00%2B00%3A00&limit=150&skip=10&content_type=cat&order=sys.createdAt',
@@ -219,19 +240,22 @@ class BaseQueryTest extends TestCase
     {
         $query = (new ConcreteQuery())
             ->select(['foobar1'])
-            ->setContentType('cat');
+            ->setContentType('cat')
+        ;
 
         $this->assertSame('content_type=cat&select=sys%2Cfoobar1', $query->getQueryString());
 
         $query = (new ConcreteQuery())
             ->select(['foobar2'])
-            ->setContentType('cat');
+            ->setContentType('cat')
+        ;
 
         $this->assertSame('content_type=cat&select=sys%2Cfoobar2', $query->getQueryString());
 
         $query = (new ConcreteQuery())
             ->select(['sys'])
-            ->setContentType('cat');
+            ->setContentType('cat')
+        ;
 
         $this->assertSame('content_type=cat&select=sys', $query->getQueryString());
     }
@@ -239,12 +263,14 @@ class BaseQueryTest extends TestCase
     public function testIncomingLinks()
     {
         $query = (new ConcreteQuery())
-            ->linksToEntry('entryId');
+            ->linksToEntry('entryId')
+        ;
 
         $this->assertSame('links_to_entry=entryId', $query->getQueryString());
 
         $query = (new ConcreteQuery())
-            ->linksToAsset('assetId');
+            ->linksToAsset('assetId')
+        ;
 
         $this->assertSame('links_to_asset=assetId', $query->getQueryString());
     }

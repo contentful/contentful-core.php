@@ -34,6 +34,12 @@ class RequestBuilderTest extends TestCase
 
     /**
      * @dataProvider requestProvider
+     *
+     * @param string           $method
+     * @param string           $path
+     * @param string[]         $options
+     * @param RequestInterface $request
+     * @param array            $headers
      */
     public function testBuilder($method, $path, $options, RequestInterface $request, $headers = [])
     {
