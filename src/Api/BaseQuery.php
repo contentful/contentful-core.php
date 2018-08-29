@@ -105,7 +105,7 @@ abstract class BaseQuery
             'skip' => $this->skip,
             'content_type' => $this->contentType,
             'mimetype_group' => $this->mimeTypeGroup,
-            'order' => $this->orderConditions ? \implode(',', $this->orderConditions) : null,
+            'order' => $this->orderConditions ? \implode(',', $this->orderConditions) : \null,
             'select' => $this->select,
             'links_to_entry' => $this->linksToEntry,
             'links_to_asset' => $this->linksToAsset,
@@ -133,7 +133,7 @@ abstract class BaseQuery
      */
     public function setSkip($skip)
     {
-        if (null !== $skip && $skip < 0) {
+        if (\null !== $skip && $skip < 0) {
             throw new \RangeException(\sprintf(
                 'Skip value must be 0 or bigger, "%d" given.',
                 $skip
@@ -156,7 +156,7 @@ abstract class BaseQuery
      */
     public function setLimit($limit)
     {
-        if (null !== $limit && ($limit < 1 || $limit > 1000)) {
+        if (\null !== $limit && ($limit < 1 || $limit > 1000)) {
             throw new \RangeException(\sprintf(
                 'Limit value must be between 0 and 1000, "%d" given.',
                 $limit
@@ -179,7 +179,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function orderBy($field, $reverse = false)
+    public function orderBy($field, $reverse = \false)
     {
         if ($reverse) {
             $field = '-'.$field;
@@ -229,7 +229,7 @@ abstract class BaseQuery
             'code',
             'markup',
         ];
-        if (null !== $group && !\in_array($group, $validGroups, true)) {
+        if (\null !== $group && !\in_array($group, $validGroups, \true)) {
             throw new \InvalidArgumentException(\sprintf(
                 'Unknown MIME-type group "%s" given. Expected "%s" or null.',
                 $group,
@@ -268,7 +268,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function where($field, $value, $operator = null)
+    public function where($field, $value, $operator = \null)
     {
         $validOperators = [
             'ne', // Not equal
@@ -284,7 +284,7 @@ abstract class BaseQuery
             'near', // Nearby (for locations)
             'within', // Within an rectangle (for locations)
         ];
-        if (null !== $operator && !\in_array($operator, $validOperators, true)) {
+        if (\null !== $operator && !\in_array($operator, $validOperators, \true)) {
             throw new \InvalidArgumentException(\sprintf(
                 'Unknown operator "%s" given. Expected "%s" or null.',
                 $operator,

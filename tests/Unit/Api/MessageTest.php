@@ -15,6 +15,7 @@ use Contentful\Tests\Core\TestCase;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use function GuzzleHttp\Psr7\str as guzzle_stringify_message;
 
 class MessageTest extends TestCase
 {
@@ -119,7 +120,7 @@ class MessageTest extends TestCase
             'X-Contentful-Request-Id' => 'ddbaaceaced126fc7d29a4d8335f06d9',
         ]);
 
-        $exception = null;
+        $exception = \null;
         $closure1 = function ($closure) {
             $closure();
         };
@@ -144,7 +145,7 @@ class MessageTest extends TestCase
         // PSR-7 message bodies are mutable.
         // Because of this, it's easier to simply check for the string representation
         // of request and response objects, rather than actually checking all their properties.
-        $this->assertSame(\GuzzleHttp\Psr7\str($serialized->getRequest()), \GuzzleHttp\Psr7\str($message->getRequest()));
-        $this->assertSame(\GuzzleHttp\Psr7\str($serialized->getResponse()), \GuzzleHttp\Psr7\str($message->getResponse()));
+        $this->assertSame(guzzle_stringify_message($serialized->getRequest()), guzzle_stringify_message($message->getRequest()));
+        $this->assertSame(guzzle_stringify_message($serialized->getResponse()), guzzle_stringify_message($message->getResponse()));
     }
 }

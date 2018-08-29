@@ -63,10 +63,10 @@ class Message implements \Serializable, \JsonSerializable
         $api,
         $duration,
         RequestInterface $request,
-        ResponseInterface $response = null,
-        Exception $exception = null
+        ResponseInterface $response = \null,
+        Exception $exception = \null
     ) {
-        if (!\in_array($api, ['DELIVERY', 'PREVIEW', 'MANAGEMENT'], true)) {
+        if (!\in_array($api, ['DELIVERY', 'PREVIEW', 'MANAGEMENT'], \true)) {
             throw new \InvalidArgumentException(\sprintf(
                 'Unknown API value "%s".',
                 $api
@@ -89,7 +89,7 @@ class Message implements \Serializable, \JsonSerializable
      */
     public static function createFromString($json)
     {
-        $data = guzzle_json_decode($json, true);
+        $data = guzzle_json_decode($json, \true);
 
         if (
             !isset($data['api']) ||
@@ -107,8 +107,8 @@ class Message implements \Serializable, \JsonSerializable
             $data['api'],
             $data['duration'],
             guzzle_parse_request($data['request']),
-            $data['response'] ? guzzle_parse_response($data['response']) : null,
-            $data['exception'] ? \unserialize($data['exception']) : null
+            $data['response'] ? guzzle_parse_response($data['response']) : \null,
+            $data['exception'] ? \unserialize($data['exception']) : \null
         );
     }
 
@@ -169,7 +169,7 @@ class Message implements \Serializable, \JsonSerializable
      */
     public function isError()
     {
-        return null !== $this->exception;
+        return \null !== $this->exception;
     }
 
     /**
@@ -181,7 +181,7 @@ class Message implements \Serializable, \JsonSerializable
             'api' => $this->api,
             'duration' => $this->duration,
             'request' => guzzle_stringify_message($this->request),
-            'response' => null !== $this->response ? guzzle_stringify_message($this->response) : null,
+            'response' => \null !== $this->response ? guzzle_stringify_message($this->response) : \null,
             'exception' => \serialize($this->exception),
         ];
     }
@@ -212,7 +212,7 @@ class Message implements \Serializable, \JsonSerializable
         $this->api = $data['api'];
         $this->duration = $data['duration'];
         $this->request = guzzle_parse_request($data['request']);
-        $this->response = null !== $data['response'] ? guzzle_parse_response($data['response']) : null;
+        $this->response = \null !== $data['response'] ? guzzle_parse_response($data['response']) : \null;
         $this->exception = \unserialize($data['exception']);
     }
 

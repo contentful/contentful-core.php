@@ -24,7 +24,7 @@ class ImageOptionsTest extends TestCase
     public function tesSetWidthNull()
     {
         $options = new ImageOptions();
-        $options->setWidth(null);
+        $options->setWidth(\null);
 
         $this->assertSame('', $options->getQueryString());
     }
@@ -50,7 +50,7 @@ class ImageOptionsTest extends TestCase
     public function testSetHeightNull()
     {
         $options = new ImageOptions();
-        $options->setHeight(null);
+        $options->setHeight(\null);
 
         $this->assertSame('', $options->getQueryString());
     }
@@ -76,7 +76,7 @@ class ImageOptionsTest extends TestCase
     public function testGetSetFormatNull()
     {
         $options = new ImageOptions();
-        $options->setFormat(null);
+        $options->setFormat(\null);
 
         $this->assertSame('', $options->getQueryString());
     }
@@ -102,7 +102,7 @@ class ImageOptionsTest extends TestCase
     public function testGetSetQualityNull()
     {
         $options = new ImageOptions();
-        $options->setQuality(null);
+        $options->setQuality(\null);
 
         $this->assertSame('', $options->getQueryString());
     }
@@ -129,7 +129,8 @@ class ImageOptionsTest extends TestCase
     {
         $options = (new ImageOptions())
             ->setFormat('png')
-            ->setQuality(50);
+            ->setQuality(50)
+        ;
 
         $this->assertSame('fm=jpg&q=50', $options->getQueryString());
     }
@@ -137,7 +138,7 @@ class ImageOptionsTest extends TestCase
     public function testQueryProgressive()
     {
         $options = new ImageOptions();
-        $options->setProgressive(true);
+        $options->setProgressive(\true);
 
         $this->assertSame('fm=jpg&fl=progressive', $options->getQueryString());
     }
@@ -146,7 +147,8 @@ class ImageOptionsTest extends TestCase
     {
         $options = (new ImageOptions())
             ->setFormat('png')
-            ->setProgressive(true);
+            ->setProgressive(\true)
+        ;
 
         $this->assertSame('fm=jpg&fl=progressive', $options->getQueryString());
     }
@@ -172,7 +174,8 @@ class ImageOptionsTest extends TestCase
     public function testSetResizeFocus()
     {
         $options = (new ImageOptions())
-            ->setResizeFocus('top');
+            ->setResizeFocus('top')
+        ;
 
         $this->assertSame('', $options->getQueryString());
     }
@@ -191,7 +194,8 @@ class ImageOptionsTest extends TestCase
     {
         $options = (new ImageOptions())
             ->setResizeFit('thumb')
-            ->setResizeFocus('top');
+            ->setResizeFocus('top')
+        ;
 
         $this->assertSame('fit=thumb&f=top', $options->getQueryString());
     }
@@ -226,7 +230,8 @@ class ImageOptionsTest extends TestCase
     {
         $options = (new ImageOptions())
             ->setResizeFit('pad')
-            ->setBackgroundColor('#a0f326');
+            ->setBackgroundColor('#a0f326')
+        ;
 
         $this->assertSame('fit=pad&bg=rgb%3Aa0f326', $options->getQueryString());
     }
@@ -235,7 +240,8 @@ class ImageOptionsTest extends TestCase
     {
         $options = (new ImageOptions())
             ->setResizeFit('pad')
-            ->setBackgroundColor('#0AF');
+            ->setBackgroundColor('#0AF')
+        ;
 
         $this->assertSame('fit=pad&bg=rgb%3A0AF', $options->getQueryString());
     }
@@ -244,7 +250,8 @@ class ImageOptionsTest extends TestCase
     {
         $options = (new ImageOptions())
             ->setResizeFit('pad')
-            ->setBackgroundColor('#A0F326');
+            ->setBackgroundColor('#A0F326')
+        ;
 
         $this->assertSame('fit=pad&bg=rgb%3AA0F326', $options->getQueryString());
     }
@@ -295,8 +302,9 @@ class ImageOptionsTest extends TestCase
             ->setWidth(30)
             ->setHeight(40)
             ->setFormat('jpg')
-            ->setProgressive(true)
-            ->setQuality(80);
+            ->setProgressive(\true)
+            ->setQuality(80)
+        ;
 
         $this->assertSame('w=30&h=40&fm=jpg&q=80&fl=progressive', $options->getQueryString());
     }

@@ -14,6 +14,7 @@ use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
+use function GuzzleHttp\json_decode as guzzle_json_decode;
 
 /**
  * Abstract client for common code for the different clients.
@@ -58,7 +59,7 @@ abstract class BaseClient
      * @param LoggerInterface|null $logger
      * @param HttpClient|null      $httpClient
      */
-    public function __construct($accessToken, $host, LoggerInterface $logger = null, HttpClient $httpClient = null)
+    public function __construct($accessToken, $host, LoggerInterface $logger = \null, HttpClient $httpClient = \null)
     {
         $this->logger = $logger ?: new NullLogger();
         $this->httpClient = $httpClient ?: new HttpClient();
@@ -88,7 +89,7 @@ abstract class BaseClient
      *
      * @return $this
      */
-    public function setApplication($name, $version = null)
+    public function setApplication($name, $version = \null)
     {
         $this->userAgentGenerator->setApplication($name, $version);
 
@@ -103,7 +104,7 @@ abstract class BaseClient
      *
      * @return $this
      */
-    public function setIntegration($name, $version = null)
+    public function setIntegration($name, $version = \null)
     {
         $this->userAgentGenerator->setIntegration($name, $version);
 
@@ -151,10 +152,10 @@ abstract class BaseClient
 
         $body = $message->getResponse()
             ? (string) $message->getResponse()->getBody()
-            : null;
+            : \null;
 
         return $body
-            ? \GuzzleHttp\json_decode((string) $body, true)
+            ? guzzle_json_decode((string) $body, \true)
             : [];
     }
 
@@ -168,20 +169,20 @@ abstract class BaseClient
      */
     private function callApi(RequestInterface $request)
     {
-        $startTime = \microtime(true);
+        $startTime = \microtime(\true);
 
-        $exception = null;
+        $exception = \null;
         try {
             $response = $this->httpClient->send($request);
         } catch (ClientException $exception) {
             $response = $exception->hasResponse()
                 ? $exception->getResponse()
-                : null;
+                : \null;
 
             $exception = $this->createCustomException($exception);
         }
 
-        $duration = \microtime(true) - $startTime;
+        $duration = \microtime(\true) - $startTime;
 
         return new Message(
             $this->getApi(),
@@ -202,10 +203,10 @@ abstract class BaseClient
      */
     private function createCustomException(ClientException $exception)
     {
-        $errorId = null;
+        $errorId = \null;
         $response = $exception->getResponse();
         if ($response) {
-            $data = \GuzzleHttp\json_decode($response->getBody(), true);
+            $data = guzzle_json_decode($response->getBody(), \true);
             $errorId = $data['sys']['id'];
         }
 
@@ -246,7 +247,7 @@ abstract class BaseClient
      */
     protected function getExceptionNamespace()
     {
-        return null;
+        return \null;
     }
 
     /**

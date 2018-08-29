@@ -12,6 +12,10 @@ namespace Contentful\Core\Api;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use function GuzzleHttp\json_decode as guzzle_json_decode;
+use function GuzzleHttp\Psr7\parse_request as guzzle_parse_request;
+use function GuzzleHttp\Psr7\parse_response as guzzle_parse_response;
+use function GuzzleHttp\Psr7\str as guzzle_stringify_message;
 
 /**
  * An Exception is thrown when an errors occurs while communicating with the API.
@@ -26,7 +30,7 @@ class Exception extends \RuntimeException implements \Serializable
     /**
      * @var string|null
      */
-    private $requestId = null;
+    private $requestId;
 
     /**
      * @var RequestInterface
@@ -69,8 +73,8 @@ class Exception extends \RuntimeException implements \Serializable
             'file' => $this->message,
             'line' => $this->line,
             'requestId' => $this->requestId,
-            'request' => \GuzzleHttp\Psr7\str($this->request),
-            'response' => $this->response ? \GuzzleHttp\Psr7\str($this->response) : null,
+            'request' => guzzle_stringify_message($this->request),
+            'response' => $this->response ? guzzle_stringify_message($this->response) : \null,
         ]);
     }
 
@@ -83,18 +87,18 @@ class Exception extends \RuntimeException implements \Serializable
         $this->file = $data['file'];
         $this->line = $data['line'];
         $this->requestId = $data['requestId'];
-        $this->request = \GuzzleHttp\Psr7\parse_request($data['request']);
-        $this->response = $data['response'] ? \GuzzleHttp\Psr7\parse_response($data['response']) : null;
+        $this->request = guzzle_parse_request($data['request']);
+        $this->response = $data['response'] ? guzzle_parse_response($data['response']) : \null;
     }
 
-    private static function createExceptionMessage(RequestException $previous, ResponseInterface $response = null)
+    private static function createExceptionMessage(RequestException $previous, ResponseInterface $response = \null)
     {
         if (!$response) {
             return $previous->getMessage();
         }
 
         try {
-            $result = \GuzzleHttp\json_decode($response->getBody(), true);
+            $result = guzzle_json_decode($response->getBody(), \true);
             if (isset($result['message'])) {
                 return $result['message'];
             }
@@ -132,7 +136,7 @@ class Exception extends \RuntimeException implements \Serializable
      */
     public function hasResponse()
     {
-        return null !== $this->response;
+        return \null !== $this->response;
     }
 
     /**

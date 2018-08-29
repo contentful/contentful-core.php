@@ -29,5 +29,5 @@ interface ResourceBuilderInterface
      *
      * @return ResourceInterface|ResourceArray
      */
-    public function build(array $data, ResourceInterface $resource = null);
+    public function build(array $data, ResourceInterface $resource = \null);
 }

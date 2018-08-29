@@ -142,7 +142,7 @@ class ConcreteResource implements ResourceInterface
 
     public function getSystemProperties()
     {
-        return null;
+        return \null;
     }
 
     public function asLink()
@@ -188,7 +188,7 @@ class SecretResource implements ResourceInterface
 
     public function getSystemProperties()
     {
-        return null;
+        return \null;
     }
 
     public function asLink()

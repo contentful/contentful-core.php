@@ -67,9 +67,9 @@ class ImageFile extends File
      *
      * @return string
      */
-    public function getUrl(ImageOptions $options = null)
+    public function getUrl(ImageOptions $options = \null)
     {
-        $query = null !== $options ? '?'.$options->getQueryString() : '';
+        $query = \null !== $options ? '?'.$options->getQueryString() : '';
 
         return parent::getUrl().$query;
     }
