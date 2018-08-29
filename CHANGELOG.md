@@ -3,7 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/1.3.0...HEAD)
+## [1.4.0](https://github.com/contentful/contentful-core.php/tree/1.4.0) (2018-08-29)
+
+### Added
+
+* Coding standards are implemented in a generic way so that it can be reused in all SDKs.
 
 ## [1.3.0](https://github.com/contentful/contentful-core.php/tree/1.3.0) (2018-08-28)
 
