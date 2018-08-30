@@ -3,7 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/1.4.0...HEAD)
+## [1.5.0](https://github.com/contentful/contentful-core.php/tree/1.5.0) (2018-08-30)
+
+### Added
+
+* Class `ObjectHydrator` has been introduced, to abstract resource hydration.
 
 ## [1.4.0](https://github.com/contentful/contentful-core.php/tree/1.4.0) (2018-08-29)
 
