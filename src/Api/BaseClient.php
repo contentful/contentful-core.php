@@ -155,7 +155,7 @@ abstract class BaseClient
             : \null;
 
         return $body
-            ? guzzle_json_decode((string) $body, \true)
+            ? guzzle_json_decode($body, \true)
             : [];
     }
 

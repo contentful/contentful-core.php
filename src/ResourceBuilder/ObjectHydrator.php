@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * This file is part of the contentful/contentful-core package.
+ *
+ * @copyright 2015-2018 Contentful GmbH
+ * @license   MIT
+ */
+
+namespace Contentful\Core\ResourceBuilder;
+
+/**
+ * Class ObjectHydrator.
+ *
+ * Utility class for handling updating private or protected properties of an object.
+ */
+class ObjectHydrator
+{
+    /**
+     * @var \Closure[]
+     */
+    private $hydrators = [];
+
+    /**
+     * If given a class name as target, the hydrator will create an instance of that class,
+     * but skipping the constructor. The hydrator will then update the internal properties,
+     * according to the keys defined in the $data parameter.
+     *
+     * @param string|object $target
+     * @param array         $data
+     *
+     * @return object
+     */
+    public function hydrate($target, array $data)
+    {
+        $class = \is_object($target) ? \get_class($target) : $target;
+        if (\is_string($target)) {
+            $target = (new \ReflectionClass($class))
+                ->newInstanceWithoutConstructor()
+            ;
+        }
+
+        $hydrator = $this->getHydrator($class);
+        $hydrator($target, $data);
+
+        return $target;
+    }
+
+    /**
+     * @param string $class
+     *
+     * @return \Closure
+     */
+    private function getHydrator($class)
+    {
+        if (isset($this->hydrators[$class])) {
+            return $this->hydrators[$class];
+        }
+
+        return $this->hydrators[$class] = \Closure::bind(function ($object, $properties) {
+            foreach ($properties as $property => $value) {
+                $object->$property = $value;
+            }
+        }, \null, $class);
+    }
+}

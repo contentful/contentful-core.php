@@ -56,6 +56,7 @@ class BaseClientTest extends TestCase
 
         $this->assertSame('DELIVERY', $client->getApi());
         $this->assertSame('https://cdn.contentful.com', $client->getHost());
+        $this->assertSame($logger, $client->getLogger());
 
         $jsonResponse = $client->request('GET', '/spaces/cfexampleapi');
 
