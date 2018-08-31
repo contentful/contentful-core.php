@@ -27,7 +27,10 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit"
+        "test": "vendor/bin/phpunit",
+        "test-quick-fail": "php vendor/bin/phpunit --stop-on-error --stop-on-failure -v",
+        "lint-syntax": "$([ -f php-cs-fixer.phar ] && echo \"php php-cs-fixer.phar\" || echo \"php-cs-fixer\") fix --dry-run --stop-on-violation -v",
+        "lint-static-analysis": "$([ -f phpstan.phar ] && echo \"php phpstan.phar\" || echo \"phpstan\") analyse --level=max src/"
     },
     "extra": {
         "branch-alias": {
