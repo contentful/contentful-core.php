@@ -7,7 +7,12 @@
  * @license   MIT
  */
 
-return function ($packageName, $usePhp7, array $directories, array $exclude = []) {
+declare(strict_types=1);
+
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+return function (string $packageName, bool $usePhp7, array $directories, array $exclude = []): Config {
     $year = \date('Y');
 
     $fileHeaderComment = <<<COMMENT
@@ -17,7 +22,7 @@ This file is part of the contentful/$packageName package.
 @license   MIT
 COMMENT;
 
-    $finder = PhpCsFixer\Finder::create();
+    $finder = Finder::create();
     foreach ($directories as $directory) {
         $finder = $finder->in($directory);
     }
@@ -72,7 +77,7 @@ COMMENT;
 
     $cache = \tempnam(\sys_get_temp_dir(), $packageName).'-php_cs.cache';
 
-    return PhpCsFixer\Config::create()
+    return Config::create()
         ->setFinder($finder)
         ->setRiskyAllowed(\true)
         ->setCacheFile($cache)

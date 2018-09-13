@@ -7,11 +7,14 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Api;
 
 use Contentful\Core\Log\NullLogger;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
+use Jean85\PrettyVersions;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
 use function GuzzleHttp\json_decode as guzzle_json_decode;
@@ -59,8 +62,12 @@ abstract class BaseClient
      * @param LoggerInterface|null $logger
      * @param HttpClient|null      $httpClient
      */
-    public function __construct($accessToken, $host, LoggerInterface $logger = \null, HttpClient $httpClient = \null)
-    {
+    public function __construct(
+        string $accessToken,
+        string $host,
+        LoggerInterface $logger = \null,
+        HttpClient $httpClient = \null
+    ) {
         $this->logger = $logger ?: new NullLogger();
         $this->httpClient = $httpClient ?: new HttpClient();
 
@@ -69,10 +76,7 @@ abstract class BaseClient
         }
         $this->host = $host;
 
-        $this->userAgentGenerator = new UserAgentGenerator(
-            $this->getSdkName(),
-            $this->getSdkVersion()
-        );
+        $this->userAgentGenerator = new UserAgentGenerator($this->getSdkName(), $this->getVersion());
         $this->requestBuilder = new RequestBuilder(
             $accessToken,
             $host,
@@ -82,14 +86,35 @@ abstract class BaseClient
     }
 
     /**
-     * Set the application name and version. The values are used as part of the X-Contentful-User-Agent header.
+     * @return string
+     */
+    private function getVersion(): string
+    {
+        try {
+            $version = PrettyVersions::getVersion($this->getPackageName());
+            $shortVersion = $version->getShortVersion();
+
+            // Removes the ".x-dev" part which is inserted during development
+            if ('.x-dev' === \mb_substr($shortVersion, -6)) {
+                $shortVersion = \mb_substr($shortVersion, 0, -6).'-dev';
+            }
+
+            return $shortVersion;
+        } catch (\OutOfBoundsException $exception) {
+            return '0.0.0-alpha';
+        }
+    }
+
+    /**
+     * Set the application name and version.
+     * The values are used as part of the X-Contentful-User-Agent header.
      *
-     * @param string|null $name
-     * @param string|null $version
+     * @param string $name
+     * @param string $version
      *
      * @return $this
      */
-    public function setApplication($name, $version = \null)
+    public function setApplication(string $name, string $version = '')
     {
         $this->userAgentGenerator->setApplication($name, $version);
 
@@ -97,14 +122,15 @@ abstract class BaseClient
     }
 
     /**
-     * Set the integration name and version. The values are used as part of the X-Contentful-User-Agent header.
+     * Set the integration name and version.
+     * The values are used as part of the X-Contentful-User-Agent header.
      *
-     * @param string|null $name
-     * @param string|null $version
+     * @param string $name
+     * @param string $version
      *
      * @return $this
      */
-    public function setIntegration($name, $version = \null)
+    public function setIntegration(string $name, string $version = '')
     {
         $this->userAgentGenerator->setIntegration($name, $version);
 
@@ -124,7 +150,7 @@ abstract class BaseClient
      *
      * @return array|null
      */
-    protected function request($method, $path, array $options = [])
+    protected function request(string $method, string $path, array $options = [])
     {
         $request = $this->requestBuilder->build($method, $path, $options);
 
@@ -146,12 +172,14 @@ abstract class BaseClient
         // This is a debug log, with all message details
         $this->logger->debug($logMessage, $message->jsonSerialize());
 
-        if ($message->getException()) {
-            throw $message->getException();
+        $exception = $message->getException();
+        if (\null !== $exception) {
+            throw $exception;
         }
 
-        $body = $message->getResponse()
-            ? (string) $message->getResponse()->getBody()
+        $response = $message->getResponse();
+        $body = $response
+            ? (string) $response->getBody()
             : \null;
 
         return $body
@@ -167,7 +195,7 @@ abstract class BaseClient
      *
      * @return Message
      */
-    private function callApi(RequestInterface $request)
+    private function callApi(RequestInterface $request): Message
     {
         $startTime = \microtime(\true);
 
@@ -201,13 +229,13 @@ abstract class BaseClient
      *
      * @return Exception
      */
-    private function createCustomException(ClientException $exception)
+    private function createCustomException(ClientException $exception): Exception
     {
-        $errorId = \null;
+        $errorId = '';
         $response = $exception->getResponse();
         if ($response) {
-            $data = guzzle_json_decode($response->getBody(), \true);
-            $errorId = $data['sys']['id'];
+            $data = guzzle_json_decode((string) $response->getBody(), \true);
+            $errorId = (string) $data['sys']['id'];
         }
 
         $exceptionClass = $this->getExceptionClass($errorId);
@@ -222,7 +250,7 @@ abstract class BaseClient
      *
      * @return string
      */
-    private function getExceptionClass($apiError)
+    private function getExceptionClass(string $apiError): string
     {
         $namespace = $this->getExceptionNamespace();
         if ($namespace) {
@@ -253,15 +281,18 @@ abstract class BaseClient
     /**
      * @return LoggerInterface
      */
-    public function getLogger()
+    public function getLogger(): LoggerInterface
     {
         return $this->logger;
     }
 
     /**
+     * Returns an array of Message objects.
+     * This can be used to inspect all API calls that have been made by the current client.
+     *
      * @return Message[]
      */
-    public function getMessages()
+    public function getMessages(): array
     {
         return $this->messages;
     }
@@ -269,7 +300,7 @@ abstract class BaseClient
     /**
      * @return string
      */
-    public function getHost()
+    public function getHost(): string
     {
         return $this->host;
     }
@@ -279,26 +310,26 @@ abstract class BaseClient
      *
      * @return string
      */
-    abstract public function getApi();
+    abstract public function getApi(): string;
+
+    /**
+     * Returns the packagist name of the current package.
+     *
+     * @return string
+     */
+    abstract protected function getPackageName(): string;
 
     /**
      * The name of the library to be used in the User-Agent header.
      *
      * @return string
      */
-    abstract protected function getSdkName();
-
-    /**
-     * The version of the library to be used in the User-Agent header.
-     *
-     * @return string
-     */
-    abstract protected function getSdkVersion();
+    abstract protected function getSdkName(): string;
 
     /**
      * Returns the Content-Type (MIME-Type) to be used when communication with the API.
      *
      * @return string
      */
-    abstract protected function getApiContentType();
+    abstract protected function getApiContentType(): string;
 }

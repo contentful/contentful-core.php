@@ -7,11 +7,13 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\File;
 
 use Contentful\Core\File\ImageFile;
 use Contentful\Core\File\ImageOptions;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\TestCase;
 
 class ImageFileTest extends TestCase
 {
@@ -58,9 +60,6 @@ class ImageFileTest extends TestCase
 
     public function testJsonSerialize()
     {
-        $this->assertJsonStringEqualsJsonString(
-            '{"fileName":"Nyan_cat_250px_frame.png","contentType":"image/png","details":{"image":{"width":250,"height":250},"size": 12273},"url": "//images.contentful.com/cfexampleapi/4gp6taAwW4CmSgumq2ekUm/9da0cd1936871b8d72343e895a00d611/Nyan_cat_250px_frame.png"}',
-            \json_encode($this->file)
-        );
+        $this->assertJsonFixtureEqualsJsonObject('serialized.json', $this->file);
     }
 }

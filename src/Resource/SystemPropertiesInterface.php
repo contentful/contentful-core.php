@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Resource;
 
 /**
@@ -24,10 +26,10 @@ interface SystemPropertiesInterface extends \JsonSerializable
     /**
      * @return string
      */
-    public function getId();
+    public function getId(): string;
 
     /**
      * @return string
      */
-    public function getType();
+    public function getType(): string;
 }

@@ -7,10 +7,12 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\Api;
 
 use Contentful\Core\Api\Link;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\TestCase;
 
 class LinkTest extends TestCase
 {
@@ -26,6 +28,6 @@ class LinkTest extends TestCase
     {
         $link = new Link('123', 'Entry');
 
-        $this->assertJsonStringEqualsJsonString('{"sys": {"type": "Link", "id": "123", "linkType": "Entry"}}', \json_encode($link));
+        $this->assertJsonFixtureEqualsJsonObject('serialized.json', $link);
     }
 }

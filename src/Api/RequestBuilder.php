@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Api;
 
 use GuzzleHttp\Psr7\Request;
@@ -30,7 +32,7 @@ class RequestBuilder
     /**
      * @var Uri
      */
-    private $baseUri;
+    private $host;
 
     /**
      * @var string
@@ -44,14 +46,18 @@ class RequestBuilder
 
     /**
      * @param string             $accessToken
-     * @param string             $baseUri
+     * @param string             $host
      * @param string             $apiContentType
      * @param UserAgentGenerator $userAgentGenerator
      */
-    public function __construct($accessToken, $baseUri, $apiContentType, UserAgentGenerator $userAgentGenerator)
-    {
+    public function __construct(
+        string $accessToken,
+        string $host,
+        string $apiContentType,
+        UserAgentGenerator $userAgentGenerator
+    ) {
         $this->accessToken = $accessToken;
-        $this->baseUri = new Uri($baseUri);
+        $this->host = new Uri($host);
         $this->userAgentGenerator = $userAgentGenerator;
         $this->apiContentType = $apiContentType;
     }
@@ -63,18 +69,18 @@ class RequestBuilder
      *
      * @return RequestInterface
      */
-    public function build($method, $path, array $options)
+    public function build(string $method, string $path, array $options): RequestInterface
     {
-        $body = isset($options['body']) ? $options['body'] : \null;
+        $body = $options['body'] ?? \null;
 
         $uri = $this->getUri(
             $path,
-            isset($options['baseUri']) ? $options['baseUri'] : \null,
-            isset($options['query']) ? $options['query'] : \null
+            $options['host'] ?? \null,
+            $options['query'] ?? []
         );
 
         $headers = $this->getHeaders(
-            isset($options['headers']) ? $options['headers'] : [],
+            $options['headers'] ?? [],
             $body
         );
 
@@ -83,20 +89,23 @@ class RequestBuilder
 
     /**
      * @param string      $path
-     * @param string|null $baseUri
-     * @param string|null $query
+     * @param string|null $host
+     * @param string[]    $query
      *
      * @return UriInterface
      */
-    private function getUri($path, $baseUri, $query)
+    private function getUri(string $path, string $host = \null, array $query = []): UriInterface
     {
-        $baseUri = $baseUri ? new Uri($baseUri) : $this->baseUri;
-
-        $uri = UriResolver::resolve($baseUri, new Uri($path));
+        $host = $host ? new Uri($host) : $this->host;
+        $uri = UriResolver::resolve($host, new Uri($path));
 
         if ($query) {
-            $serializedQuery = \http_build_query($query, \null, '&', \PHP_QUERY_RFC3986);
-            $uri = $uri->withQuery($serializedQuery);
+            $uri = $uri->withQuery(\http_build_query(
+                $query,
+                '',
+                '&',
+                \PHP_QUERY_RFC3986
+            ));
         }
 
         return $uri;
@@ -108,7 +117,7 @@ class RequestBuilder
      *
      * @return string[]
      */
-    private function getHeaders(array $userHeaders, $body)
+    private function getHeaders(array $userHeaders, $body): array
     {
         $headers = [
             'X-Contentful-User-Agent' => $this->userAgentGenerator->getUserAgent(),

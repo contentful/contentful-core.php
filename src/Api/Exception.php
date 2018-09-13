@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Api;
 
 use GuzzleHttp\Exception\RequestException;
@@ -48,7 +50,7 @@ class Exception extends \RuntimeException implements \Serializable
      * @param RequestException $previous
      * @param string           $message
      */
-    public function __construct(RequestException $previous, $message = '')
+    public function __construct(RequestException $previous, string $message = '')
     {
         $this->previous = $previous;
         $this->request = $previous->getRequest();
@@ -65,7 +67,10 @@ class Exception extends \RuntimeException implements \Serializable
         parent::__construct($message, 0, $previous);
     }
 
-    public function serialize()
+    /**
+     * {@inheritdoc}
+     */
+    public function serialize(): string
     {
         return \serialize([
             'message' => $this->message,
@@ -78,6 +83,9 @@ class Exception extends \RuntimeException implements \Serializable
         ]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function unserialize($serialized)
     {
         $data = \unserialize($serialized);
@@ -91,14 +99,22 @@ class Exception extends \RuntimeException implements \Serializable
         $this->response = $data['response'] ? guzzle_parse_response($data['response']) : \null;
     }
 
-    private static function createExceptionMessage(RequestException $previous, ResponseInterface $response = \null)
-    {
+    /**
+     * @param RequestException       $previous
+     * @param ResponseInterface|null $response
+     *
+     * @return string
+     */
+    private static function createExceptionMessage(
+        RequestException $previous,
+        ResponseInterface $response = \null
+    ): string {
         if (!$response) {
             return $previous->getMessage();
         }
 
         try {
-            $result = guzzle_json_decode($response->getBody(), \true);
+            $result = guzzle_json_decode((string) $response->getBody(), \true);
             if (isset($result['message'])) {
                 return $result['message'];
             }
@@ -114,7 +130,7 @@ class Exception extends \RuntimeException implements \Serializable
      *
      * @return RequestInterface
      */
-    public function getRequest()
+    public function getRequest(): RequestInterface
     {
         return $this->request;
     }
@@ -134,7 +150,7 @@ class Exception extends \RuntimeException implements \Serializable
      *
      * @return bool
      */
-    public function hasResponse()
+    public function hasResponse(): bool
     {
         return \null !== $this->response;
     }

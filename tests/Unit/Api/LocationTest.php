@@ -7,10 +7,12 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\Api;
 
 use Contentful\Core\Api\Location;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\TestCase;
 
 class LocationTest extends TestCase
 {
@@ -28,7 +30,7 @@ class LocationTest extends TestCase
     {
         $loc = new Location(15.0, 17.8);
 
-        $this->assertJsonStringEqualsJsonString('{"lat":15,"lon":17.8}', \json_encode($loc));
+        $this->assertJsonFixtureEqualsJsonObject('serialized.json', $loc);
     }
 
     public function testQueryStringFormatted()

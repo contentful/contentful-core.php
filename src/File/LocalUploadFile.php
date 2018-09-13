@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\File;
 
 use Contentful\Core\Api\Link;
@@ -31,7 +33,7 @@ class LocalUploadFile implements UnprocessedFileInterface
      */
     private $uploadFrom;
 
-    public function __construct($fileName, $contentType, Link $uploadFrom)
+    public function __construct(string $fileName, string $contentType, Link $uploadFrom)
     {
         $this->fileName = $fileName;
         $this->contentType = $contentType;
@@ -39,21 +41,17 @@ class LocalUploadFile implements UnprocessedFileInterface
     }
 
     /**
-     * The name of this file.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName;
     }
 
     /**
-     * The Content- (or MIME-)Type of this file.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getContentType()
+    public function getContentType(): string
     {
         return $this->contentType;
     }
@@ -61,7 +59,7 @@ class LocalUploadFile implements UnprocessedFileInterface
     /**
      * @return Link
      */
-    public function getUploadFrom()
+    public function getUploadFrom(): Link
     {
         return $this->uploadFrom;
     }
@@ -69,7 +67,7 @@ class LocalUploadFile implements UnprocessedFileInterface
     /**
      * {@inheritdoc}
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'fileName' => $this->fileName,

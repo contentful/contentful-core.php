@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Api;
 
 /**
@@ -32,7 +34,7 @@ class Link implements \JsonSerializable
      * @param string $linkId
      * @param string $linkType
      */
-    public function __construct($linkId, $linkType)
+    public function __construct(string $linkId, string $linkType)
     {
         $this->linkId = $linkId;
         $this->linkType = $linkType;
@@ -43,7 +45,7 @@ class Link implements \JsonSerializable
      *
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->linkId;
     }
@@ -53,7 +55,7 @@ class Link implements \JsonSerializable
      *
      * @return string
      */
-    public function getLinkType()
+    public function getLinkType(): string
     {
         return $this->linkType;
     }
@@ -61,7 +63,7 @@ class Link implements \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'sys' => [

@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Resource;
 
 use Contentful\Core\Api\Link;
@@ -31,7 +33,7 @@ interface ResourceInterface extends \JsonSerializable
      *
      * @return Link
      */
-    public function asLink();
+    public function asLink(): Link;
 
     /**
      * Shortcut for retrieving the resource ID
@@ -39,7 +41,7 @@ interface ResourceInterface extends \JsonSerializable
      *
      * @return string
      */
-    public function getId();
+    public function getId(): string;
 
     /**
      * Shortcut for retrieving the resource type
@@ -47,5 +49,5 @@ interface ResourceInterface extends \JsonSerializable
      *
      * @return string
      */
-    public function getType();
+    public function getType(): string;
 }

@@ -7,10 +7,14 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\ResourceBuilder;
 
 use Contentful\Core\ResourceBuilder\ObjectHydrator;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\Core\Implementation\Person;
+use Contentful\Tests\Core\Implementation\Videogame;
+use Contentful\Tests\TestCase;
 
 class ObjectHydratorTest extends TestCase
 {
@@ -18,8 +22,8 @@ class ObjectHydratorTest extends TestCase
     {
         $hydrator = new ObjectHydrator();
 
-        /** @var TestPerson $person */
-        $person = $hydrator->hydrate(TestPerson::class, [
+        /** @var Person $person */
+        $person = $hydrator->hydrate(Person::class, [
             'name' => 'Kanji Tatsumi',
             'age' => 15,
         ]);
@@ -27,8 +31,8 @@ class ObjectHydratorTest extends TestCase
         $this->assertSame('Kanji Tatsumi', $person->getName());
         $this->assertSame(15, $person->getAge());
 
-        /** @var TestPerson $person */
-        $person = $hydrator->hydrate(TestPerson::class, [
+        /** @var Person $person */
+        $person = $hydrator->hydrate(Person::class, [
             'name' => 'Makoto Niijima',
             'age' => 17,
         ]);
@@ -36,9 +40,9 @@ class ObjectHydratorTest extends TestCase
         $this->assertSame('Makoto Niijima', $person->getName());
         $this->assertSame(17, $person->getAge());
 
-        $videogame = new TestVideogame();
-        $this->assertNull($videogame->getTitle());
-        $this->assertNull($videogame->getConsole());
+        $videogame = new Videogame();
+        $this->assertSame('', $videogame->getTitle());
+        $this->assertSame('', $videogame->getConsole());
 
         $hydrator->hydrate($videogame, [
             'title' => 'Persona 5',
@@ -54,48 +58,10 @@ class ObjectHydratorTest extends TestCase
         $hydrators = $property->getValue($hydrator);
 
         $this->assertCount(2, $hydrators);
-        $this->assertArrayHasKey(TestPerson::class, $hydrators);
-        $this->assertArrayHasKey(TestVideogame::class, $hydrators);
+        $this->assertArrayHasKey(Person::class, $hydrators);
+        $this->assertArrayHasKey(Videogame::class, $hydrators);
 
-        $this->assertInstanceOf(\Closure::class, $hydrators[TestPerson::class]);
-        $this->assertInstanceOf(\Closure::class, $hydrators[TestVideogame::class]);
-    }
-}
-
-class TestPerson
-{
-    private $name;
-
-    private $age;
-
-    private function __construct()
-    {
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function getAge()
-    {
-        return $this->age;
-    }
-}
-
-class TestVideogame
-{
-    private $title;
-
-    private $console;
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    public function getConsole()
-    {
-        return $this->console;
+        $this->assertInstanceOf(\Closure::class, $hydrators[Person::class]);
+        $this->assertInstanceOf(\Closure::class, $hydrators[Videogame::class]);
     }
 }

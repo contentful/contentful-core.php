@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\File;
 
 /**
@@ -34,7 +36,7 @@ class ImageFile extends File
      * @param int    $width
      * @param int    $height
      */
-    public function __construct($fileName, $contentType, $url, $size, $width, $height)
+    public function __construct(string $fileName, string $contentType, string $url, int $size, int $width, int $height)
     {
         parent::__construct($fileName, $contentType, $url, $size);
 
@@ -47,7 +49,7 @@ class ImageFile extends File
      *
      * @return int
      */
-    public function getWidth()
+    public function getWidth(): int
     {
         return $this->width;
     }
@@ -57,17 +59,17 @@ class ImageFile extends File
      *
      * @return int
      */
-    public function getHeight()
+    public function getHeight(): int
     {
         return $this->height;
     }
 
     /**
-     * @param ImageOptions|null $options
+     * @param UrlOptionsInterface|null $options
      *
      * @return string
      */
-    public function getUrl(ImageOptions $options = \null)
+    public function getUrl(UrlOptionsInterface $options = \null): string
     {
         $query = \null !== $options ? '?'.$options->getQueryString() : '';
 
@@ -77,7 +79,7 @@ class ImageFile extends File
     /**
      * {@inheritdoc}
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         $file = parent::jsonSerialize();
         $file['details']['image'] = [

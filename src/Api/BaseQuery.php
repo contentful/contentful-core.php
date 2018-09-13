@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Api;
 
 /**
@@ -22,6 +24,42 @@ abstract class BaseQuery
      * @var string
      */
     const DATE_FORMAT = 'Y-m-d\TH:i:00P';
+
+    /**
+     * @var string[]
+     */
+    protected static $validOperators = [
+        'ne', // Not equal
+        'all', // Multiple values
+        'in', // Includes
+        'nin', // Excludes
+        'exists', // Exists
+        'lt', // Less than
+        'lte', // Less than or equal to
+        'gt', // Greater than
+        'gte', // Greater than or equal to,
+        'match', // Full text search
+        'near', // Nearby (for locations)
+        'within', // Within an rectangle (for locations)
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected static $validGroups = [
+        'attachment',
+        'plaintext',
+        'image',
+        'audio',
+        'video',
+        'richtext',
+        'presentation',
+        'spreadsheet',
+        'pdfdocument',
+        'archive',
+        'code',
+        'markup',
+    ];
 
     /**
      * Maximum number of results to retrieve.
@@ -54,23 +92,23 @@ abstract class BaseQuery
     /**
      * List of fields to order by.
      *
-     * @var array
+     * @var string[]
      */
     private $orderConditions = [];
 
     /**
      * List of fields for filters.
      *
-     * @var array
+     * @var string[]
      */
     private $whereConditions = [];
 
     /**
      * Filter entity result.
      *
-     * @var array
+     * @var string|null
      */
-    private $select = [];
+    private $select;
 
     /**
      * The ID of the entry to look for.
@@ -87,18 +125,11 @@ abstract class BaseQuery
     private $linksToAsset;
 
     /**
-     * Query constructor.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Returns the parameters to execute this query.
      *
      * @return array
      */
-    public function getQueryData()
+    public function getQueryData(): array
     {
         return \array_merge($this->whereConditions, [
             'limit' => $this->limit,
@@ -117,7 +148,7 @@ abstract class BaseQuery
      *
      * @return string
      */
-    public function getQueryString()
+    public function getQueryString(): string
     {
         return \http_build_query($this->getQueryData(), '', '&', \PHP_QUERY_RFC3986);
     }
@@ -131,7 +162,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function setSkip($skip)
+    public function setSkip(int $skip = \null)
     {
         if (\null !== $skip && $skip < 0) {
             throw new \RangeException(\sprintf(
@@ -154,7 +185,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function setLimit($limit)
+    public function setLimit(int $limit = \null)
     {
         if (\null !== $limit && ($limit < 1 || $limit > 1000)) {
             throw new \RangeException(\sprintf(
@@ -179,8 +210,14 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function orderBy($field, $reverse = \false)
+    public function orderBy(string $field = \null, bool $reverse = \false)
     {
+        if (\null === $field) {
+            $this->orderConditions = [];
+
+            return $this;
+        }
+
         if ($reverse) {
             $field = '-'.$field;
         }
@@ -199,7 +236,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function setContentType($contentType)
+    public function setContentType(string $contentType = \null)
     {
         $this->contentType = $contentType;
 
@@ -213,27 +250,13 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function setMimeTypeGroup($group)
+    public function setMimeTypeGroup(string $group = \null)
     {
-        $validGroups = [
-            'attachment',
-            'plaintext',
-            'image',
-            'audio',
-            'video',
-            'richtext',
-            'presentation',
-            'spreadsheet',
-            'pdfdocument',
-            'archive',
-            'code',
-            'markup',
-        ];
-        if (\null !== $group && !\in_array($group, $validGroups, \true)) {
+        if (\null !== $group && !\in_array($group, self::$validGroups, \true)) {
             throw new \InvalidArgumentException(\sprintf(
                 'Unknown MIME-type group "%s" given. Expected "%s" or null.',
                 $group,
-                \implode(', ', $validGroups)
+                \implode(', ', self::$validGroups)
             ));
         }
 
@@ -245,51 +268,28 @@ abstract class BaseQuery
     /**
      * Add a filter condition to this query.
      *
-     * Valid operators are
-     * - ne
-     * - all
-     * - in
-     * - nin
-     * - exists
-     * - lt
-     * - lte
-     * - gt
-     * - gte
-     * - match
-     * - near
-     * - within
-     *
      * @param string                                   $field
      * @param string|array|\DateTimeInterface|Location $value
-     * @param string|null                              $operator the operator to use for this condition.
-     *                                                           Default is strict equality
      *
      * @throws \InvalidArgumentException If $operator is not one of the valid values
      *
      * @return $this
      */
-    public function where($field, $value, $operator = \null)
+    public function where(string $field, $value)
     {
-        $validOperators = [
-            'ne', // Not equal
-            'all', // Multiple values
-            'in', // Includes
-            'nin', // Excludes
-            'exists', // Exists
-            'lt', // Less than
-            'lte', // Less than or equal to
-            'gt', // Greater than
-            'gte', // Greater than or equal to,
-            'match', // Full text search
-            'near', // Nearby (for locations)
-            'within', // Within an rectangle (for locations)
-        ];
-        if (\null !== $operator && !\in_array($operator, $validOperators, \true)) {
-            throw new \InvalidArgumentException(\sprintf(
-                'Unknown operator "%s" given. Expected "%s" or null.',
-                $operator,
-                \implode(', ', $validOperators)
-            ));
+        $matches = [];
+        // We check whether there is a specific operator in the field name,
+        // and if so we validate it against a whitelist
+        if (\preg_match('/(.+)\[([a-zA-Z]+)\]/', $field, $matches)) {
+            $operator = \mb_strtolower($matches[2]);
+
+            if (!\in_array($operator, self::$validOperators, \true)) {
+                throw new \InvalidArgumentException(\sprintf(
+                    'Unknown operator "%s" given. Expected "%s" or no operator.',
+                    $operator,
+                    \implode(', ', self::$validOperators)
+                ));
+            }
         }
 
         if ($value instanceof \DateTimeInterface) {
@@ -302,11 +302,7 @@ abstract class BaseQuery
             $value = \implode(',', $value);
         }
 
-        $urlParameter = $operator
-            ? $field.'['.$operator.']'
-            : $field;
-
-        $this->whereConditions[$urlParameter] = $value;
+        $this->whereConditions[$field] = $value;
 
         return $this;
     }
@@ -317,21 +313,18 @@ abstract class BaseQuery
      *
      * To only request the metadata simply query for 'sys'.
      *
-     * @param array $select
+     * @param string[] $select
      *
      * @return $this
      */
     public function select(array $select)
     {
-        $parts = ['sys'];
-        foreach ($select as $part) {
-            if ('sys' === $part || 0 === \mb_strpos($part, 'sys.')) {
-                continue;
-            }
-            $parts[] = $part;
-        }
+        $select = \array_filter($select, function (string $value): bool {
+            return 0 !== \mb_strpos($value, 'sys');
+        });
+        $select[] = 'sys';
 
-        $this->select = \implode(',', $parts);
+        $this->select = \implode(',', $select);
 
         return $this;
     }
@@ -343,7 +336,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function linksToEntry($entryId)
+    public function linksToEntry(string $entryId)
     {
         $this->linksToEntry = $entryId;
 
@@ -357,7 +350,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function linksToAsset($assetId)
+    public function linksToAsset(string $assetId)
     {
         $this->linksToAsset = $assetId;
 

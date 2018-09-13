@@ -7,10 +7,12 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\Api;
 
 use Contentful\Core\Api\UserAgentGenerator;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\TestCase;
 
 class UserAgentGeneratorTest extends TestCase
 {
@@ -43,7 +45,7 @@ class UserAgentGeneratorTest extends TestCase
         );
 
         // Reset the app
-        $generator->setApplication(\null);
+        $generator->setApplication('');
         $this->assertRegExp(
             '/^sdk contentful.php\/[0-9\.]*(-(dev|beta|alpha|RC))?; platform PHP\/[0-9\.]*; os (Windows|Linux|macOS);$/',
             $generator->getUserAgent()
@@ -69,7 +71,7 @@ class UserAgentGeneratorTest extends TestCase
         );
 
         // Reset the integration
-        $generator->setIntegration(\null);
+        $generator->setIntegration('');
         $this->assertRegExp(
             '/^sdk contentful.php\/[0-9\.]*(-(dev|beta|alpha|RC))?; platform PHP\/[0-9\.]*; os (Windows|Linux|macOS);$/',
             $generator->getUserAgent()

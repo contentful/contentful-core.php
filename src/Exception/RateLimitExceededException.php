@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Exception;
 
 use Contentful\Core\Api\Exception;
@@ -31,12 +33,13 @@ class RateLimitExceededException extends Exception
      * @param RequestException $previous
      * @param string           $message
      */
-    public function __construct(RequestException $previous, $message = '')
+    public function __construct(RequestException $previous, string $message = '')
     {
         parent::__construct($previous, $message);
 
-        if ($this->getResponse()) {
-            $this->rateLimitReset = (int) $this->getResponse()->getHeader('X-Contentful-RateLimit-Reset')[0];
+        $response = $this->getResponse();
+        if ($response) {
+            $this->rateLimitReset = (int) $response->getHeader('X-Contentful-RateLimit-Reset')[0];
         }
     }
 
