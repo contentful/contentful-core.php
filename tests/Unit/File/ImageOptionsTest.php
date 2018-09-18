@@ -7,10 +7,12 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\File;
 
 use Contentful\Core\File\ImageOptions;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\TestCase;
 
 class ImageOptionsTest extends TestCase
 {
@@ -151,6 +153,24 @@ class ImageOptionsTest extends TestCase
         ;
 
         $this->assertSame('fm=jpg&fl=progressive', $options->getQueryString());
+    }
+
+    public function testQueryPng8Bit()
+    {
+        $options = new ImageOptions();
+        $options->setPng8Bit(\true);
+
+        $this->assertSame('fm=png&fl=png8', $options->getQueryString());
+    }
+
+    public function testQueryPng8BitOverridesFormat()
+    {
+        $options = (new ImageOptions())
+            ->setFormat('jpg')
+            ->setPng8Bit(\true)
+        ;
+
+        $this->assertSame('fm=png&fl=png8', $options->getQueryString());
     }
 
     /**

@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Api;
 
 use Psr\Http\Message\RequestInterface;
@@ -41,7 +43,7 @@ class Message implements \Serializable, \JsonSerializable
     private $response;
 
     /**
-     * @var float|null
+     * @var float
      */
     private $duration;
 
@@ -54,14 +56,14 @@ class Message implements \Serializable, \JsonSerializable
      * Constructor.
      *
      * @param string                 $api
-     * @param float|null             $duration
+     * @param float                  $duration
      * @param RequestInterface       $request
      * @param ResponseInterface|null $response
      * @param Exception|null         $exception
      */
     public function __construct(
-        $api,
-        $duration,
+        string $api,
+        float $duration,
         RequestInterface $request,
         ResponseInterface $response = \null,
         Exception $exception = \null
@@ -87,7 +89,7 @@ class Message implements \Serializable, \JsonSerializable
      *
      * @return self
      */
-    public static function createFromString($json)
+    public static function createFromString(string $json): self
     {
         $data = guzzle_json_decode($json, \true);
 
@@ -115,7 +117,7 @@ class Message implements \Serializable, \JsonSerializable
     /**
      * @return string
      */
-    public function getLogLevel()
+    public function getLogLevel(): string
     {
         return $this->isError()
             ? 'ERROR'
@@ -125,7 +127,7 @@ class Message implements \Serializable, \JsonSerializable
     /**
      * @return string
      */
-    public function getApi()
+    public function getApi(): string
     {
         return $this->api;
     }
@@ -133,7 +135,7 @@ class Message implements \Serializable, \JsonSerializable
     /**
      * @return RequestInterface
      */
-    public function getRequest()
+    public function getRequest(): RequestInterface
     {
         return $this->request;
     }
@@ -147,9 +149,11 @@ class Message implements \Serializable, \JsonSerializable
     }
 
     /**
-     * @return float|null
+     * The duration in microseconds.
+     *
+     * @return float
      */
-    public function getDuration()
+    public function getDuration(): float
     {
         return $this->duration;
     }
@@ -167,15 +171,15 @@ class Message implements \Serializable, \JsonSerializable
      *
      * @return bool
      */
-    public function isError()
+    public function isError(): bool
     {
         return \null !== $this->exception;
     }
 
     /**
-     * @return string[]
+     * @return array
      */
-    private function asSerializableArray()
+    private function asSerializableArray(): array
     {
         return [
             'api' => $this->api,
@@ -189,7 +193,7 @@ class Message implements \Serializable, \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->asSerializableArray();
     }
@@ -197,7 +201,7 @@ class Message implements \Serializable, \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function serialize()
+    public function serialize(): string
     {
         return \serialize($this->asSerializableArray());
     }
@@ -221,7 +225,7 @@ class Message implements \Serializable, \JsonSerializable
      *
      * @return string
      */
-    public function asString()
+    public function asString(): string
     {
         return guzzle_json_encode($this);
     }
@@ -229,7 +233,7 @@ class Message implements \Serializable, \JsonSerializable
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->asString();
     }

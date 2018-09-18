@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Api;
 
 use Contentful\Core\Resource\ResourceInterface;
@@ -19,5 +21,5 @@ interface LinkResolverInterface
      *
      * @return ResourceInterface
      */
-    public function resolveLink(Link $link, array $parameters = []);
+    public function resolveLink(Link $link, array $parameters = []): ResourceInterface;
 }

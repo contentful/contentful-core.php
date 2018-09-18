@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Api;
 
 /**
@@ -28,7 +30,7 @@ class Location implements \JsonSerializable
      * @param float $latitude
      * @param float $longitude
      */
-    public function __construct($latitude, $longitude)
+    public function __construct(float $latitude, float $longitude)
     {
         $this->latitude = $latitude;
         $this->longitude = $longitude;
@@ -39,7 +41,7 @@ class Location implements \JsonSerializable
      *
      * @return float
      */
-    public function getLatitude()
+    public function getLatitude(): float
     {
         return $this->latitude;
     }
@@ -49,7 +51,7 @@ class Location implements \JsonSerializable
      *
      * @return float
      */
-    public function getLongitude()
+    public function getLongitude(): float
     {
         return $this->longitude;
     }
@@ -57,7 +59,7 @@ class Location implements \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'lat' => $this->latitude,

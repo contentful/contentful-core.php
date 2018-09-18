@@ -7,12 +7,16 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Resource;
 
 /**
- * A ResourceArray holds the response of an API request if more than one resource has been requested.
+ * A ResourceArray holds the response of an API request
+ * if more than one resource has been requested.
  *
- * In addition to the retrieved items themselves it also provides some access to metadata.
+ * In addition to the retrieved items themselves
+ * it also provides some access to metadata.
  */
 class ResourceArray implements \Countable, \ArrayAccess, \IteratorAggregate, \JsonSerializable
 {
@@ -44,7 +48,7 @@ class ResourceArray implements \Countable, \ArrayAccess, \IteratorAggregate, \Js
      * @param int   $limit
      * @param int   $skip
      */
-    public function __construct(array $items, $total, $limit, $skip)
+    public function __construct(array $items, int $total, int $limit, int $skip)
     {
         $this->items = $items;
         $this->total = $total;
@@ -57,7 +61,7 @@ class ResourceArray implements \Countable, \ArrayAccess, \IteratorAggregate, \Js
      *
      * @return int
      */
-    public function getTotal()
+    public function getTotal(): int
     {
         return $this->total;
     }
@@ -67,7 +71,7 @@ class ResourceArray implements \Countable, \ArrayAccess, \IteratorAggregate, \Js
      *
      * @return int
      */
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->limit;
     }
@@ -77,7 +81,7 @@ class ResourceArray implements \Countable, \ArrayAccess, \IteratorAggregate, \Js
      *
      * @return int
      */
-    public function getSkip()
+    public function getSkip(): int
     {
         return $this->skip;
     }
@@ -85,9 +89,9 @@ class ResourceArray implements \Countable, \ArrayAccess, \IteratorAggregate, \Js
     /**
      * Get the returned values as a PHP array.
      *
-     * @return array
+     * @return ResourceInterface[]
      */
-    public function getItems()
+    public function getItems(): array
     {
         return $this->items;
     }
@@ -95,7 +99,7 @@ class ResourceArray implements \Countable, \ArrayAccess, \IteratorAggregate, \Js
     /**
      * {@inheritdoc}
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'sys' => [
@@ -109,62 +113,39 @@ class ResourceArray implements \Countable, \ArrayAccess, \IteratorAggregate, \Js
     }
 
     /**
-     * Returns the number of resources in this array.
-     *
-     * @return int
-     *
-     * @see http://php.net/manual/en/countable.count.php Countable::count
+     * {@inheritdoc}
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->items);
     }
 
     /**
-     * Returns a \Traversable to allow iterating the ResourceArray.
-     *
-     * @return \Traversable
-     *
-     * @see http://php.net/manual/en/iteratoraggregate.getiterator.php IteratorAggregate::getIterator
+     * {@inheritdoc}
      */
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->items);
     }
 
     /**
-     * @param mixed $offset
-     *
-     * @return bool
-     *
-     * @see http://php.net/manual/en/arrayaccess.offsetexists.php ArrayAccess::offsetExists
+     * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->items[$offset]);
     }
 
     /**
-     * @param mixed $offset
-     *
-     * @return mixed
-     *
-     * @see http://php.net/manual/en/arrayaccess.offsetget.php ArrayAccess::offsetGet
+     * {@inheritdoc}
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): ResourceInterface
     {
         return $this->items[$offset];
     }
 
     /**
-     * This method is not implemented since a ResourceArray is read-only.
-     *
-     * @param mixed $offset
-     * @param mixed $value
-     *
-     * @throws \BadMethodCallException always thrown since ResourceArray is read-only
-     *
-     * @see http://php.net/manual/en/arrayaccess.offsetset.php ArrayAccess::offsetSet
+     * {@inheritdoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -175,13 +156,7 @@ class ResourceArray implements \Countable, \ArrayAccess, \IteratorAggregate, \Js
     }
 
     /**
-     * This method is not implemented since a ResourceArray is read-only.
-     *
-     * @param mixed $offset
-     *
-     * @throws \BadMethodCallException always thrown since ResourceArray is read-only
-     *
-     * @see http://php.net/manual/en/arrayaccess.offsetunset.php ArrayAccess::offsetUnset
+     * {@inheritdoc}
      */
     public function offsetUnset($offset)
     {

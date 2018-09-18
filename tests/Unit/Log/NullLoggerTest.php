@@ -7,10 +7,12 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\Log;
 
 use Contentful\Core\Log\NullLogger;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\TestCase;
 
 class NullLoggerTest extends TestCase
 {

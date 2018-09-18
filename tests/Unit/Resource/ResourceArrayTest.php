@@ -7,10 +7,13 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\Resource;
 
 use Contentful\Core\Resource\ResourceArray;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\Core\Implementation\Resource;
+use Contentful\Tests\TestCase;
 
 class ResourceArrayTest extends TestCase
 {
@@ -33,33 +36,32 @@ class ResourceArrayTest extends TestCase
 
     public function testArrayAccess()
     {
-        $array = new ResourceArray(['abc'], 10, 2, 0);
+        $resource = new Resource('resourceId', 'resourceType', 'Some title');
+        $array = new ResourceArray([$resource], 10, 2, 0);
 
         $this->assertInstanceOf('\Countable', $array);
         $this->assertTrue(isset($array[0]));
-        $this->assertSame('abc', $array[0]);
+        $this->assertSame($resource, $array[0]);
     }
 
     public function testJsonSerializeEmpty()
     {
         $array = new ResourceArray([], 0, 10, 0);
 
-        $this->assertJsonStringEqualsJsonString(
-            '{"sys":{"type":"Array"},"total":0,"limit":10,"skip":0,"items":[]}',
-            \json_encode($array)
-        );
+        $this->assertJsonFixtureEqualsJsonObject('serialized.json', $array);
     }
 
     public function testIsIterable()
     {
-        $array = new ResourceArray(['abc'], 10, 2, 0);
+        $array = new ResourceArray([], 10, 2, 0);
 
         $this->assertInstanceOf('\Traversable', $array);
     }
 
     public function testIteration()
     {
-        $array = new ResourceArray(['abc', 'def'], 10, 2, 0);
+        $resource = new Resource('resourceId', 'resourceType', 'Some title');
+        $array = new ResourceArray([$resource, $resource], 10, 2, 0);
         $count = 0;
 
         foreach ($array as $key => $elem) {

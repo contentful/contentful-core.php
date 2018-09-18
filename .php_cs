@@ -4,6 +4,6 @@ $config = require __DIR__.'/scripts/php-cs-fixer.php';
 
 return $config(
     'contentful-core',
-    false,
+    true,
     ['scripts', 'src', 'tests']
 );

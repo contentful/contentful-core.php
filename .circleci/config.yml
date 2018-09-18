@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Static analysis
           command: |
-            wget https://github.com/phpstan/phpstan/releases/download/0.9.2/phpstan.phar -q -O phpstan.phar
+            wget https://github.com/phpstan/phpstan/releases/download/0.10.3/phpstan.phar -q -O phpstan.phar
             composer run lint-static-analysis
 
   test56:
@@ -52,10 +52,22 @@ jobs:
       - run: { name: "Test suite", command: "composer test-quick-fail" }
 
   test72:
+    environment:
+      CC_TEST_REPORTER_ID: 12e3510bd320a9a0acecb33d12f6c95318256eab19ffd3cca5520705140ba836
     docker:
       - image: circleci/php:7.2-cli
     steps:
       - checkout
+      - run:
+          name: Set up Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
       - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
-      - run: { name: "Test suite", command: "composer test-quick-fail" }
-      - run: { name: "Upload code coverage", command: "bash <(curl -s https://codecov.io/bash) -f build/logs/clover.xml" }
+      - run:
+          name: Test suite
+          command: |
+            sudo docker-php-ext-enable xdebug
+            ./cc-test-reporter before-build
+            composer test-quick-fail
+            ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?

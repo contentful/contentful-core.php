@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Api;
 
 /**
@@ -21,7 +23,7 @@ class DateTimeImmutable extends \DateTimeImmutable implements \JsonSerializable
      *
      * @return string
      */
-    public function formatForJson()
+    public function formatForJson(): string
     {
         $date = $this->setTimezone(new \DateTimeZone('Etc/UTC'));
         $result = $date->format('Y-m-d\TH:i:s');
@@ -39,7 +41,7 @@ class DateTimeImmutable extends \DateTimeImmutable implements \JsonSerializable
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->formatForJson();
     }
@@ -49,7 +51,7 @@ class DateTimeImmutable extends \DateTimeImmutable implements \JsonSerializable
      *
      * @return string
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): string
     {
         return $this->formatForJson();
     }

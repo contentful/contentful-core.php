@@ -7,11 +7,13 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\Exception;
 
 use Contentful\Core\Api\RequestBuilder;
 use Contentful\Core\Api\UserAgentGenerator;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\TestCase;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
@@ -70,7 +72,7 @@ class RequestBuilderTest extends TestCase
 
         yield ['POST', '/another-path', [
             'query' => ['anotherParam' => 'anotherValue'],
-            'baseUri' => 'https://www.google.com',
+            'host' => 'https://www.google.com',
             'headers' => ['X-Contentful-Version' => '1'],
             'body' => '{"message": "Hello, world!"}',
         ], new Request('POST', 'https://www.google.com/another-path?anotherParam=anotherValue', [], '{"message": "Hello, world!"}'), [

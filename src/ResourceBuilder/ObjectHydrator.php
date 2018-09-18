@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\ResourceBuilder;
 
 /**
@@ -51,13 +53,13 @@ class ObjectHydrator
      *
      * @return \Closure
      */
-    private function getHydrator($class)
+    private function getHydrator($class): \Closure
     {
         if (isset($this->hydrators[$class])) {
             return $this->hydrators[$class];
         }
 
-        return $this->hydrators[$class] = \Closure::bind(function ($object, $properties) {
+        return $this->hydrators[$class] = \Closure::bind(function ($object, array $properties) {
             foreach ($properties as $property => $value) {
                 $object->$property = $value;
             }

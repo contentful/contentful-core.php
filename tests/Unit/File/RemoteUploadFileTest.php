@@ -7,10 +7,12 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\File;
 
 use Contentful\Core\File\RemoteUploadFile;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\TestCase;
 
 class RemoteUploadFileTest extends TestCase
 {
@@ -37,9 +39,6 @@ class RemoteUploadFileTest extends TestCase
 
     public function testJsonSerialize()
     {
-        $this->assertJsonStringEqualsJsonString(
-            '{"fileName":"the_great_gatsby.txt","contentType":"image/png","upload": "https://www.example.com/the_great_gatsby.txt"}',
-            \json_encode($this->file)
-        );
+        $this->assertJsonFixtureEqualsJsonObject('serialized.json', $this->file);
     }
 }

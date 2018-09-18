@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\File;
 
 /**
@@ -29,7 +31,14 @@ class RemoteUploadFile implements UnprocessedFileInterface
      */
     private $upload;
 
-    public function __construct($fileName, $contentType, $upload)
+    /**
+     * RemoteUploadFile constructor.
+     *
+     * @param string $fileName
+     * @param string $contentType
+     * @param string $upload
+     */
+    public function __construct(string $fileName, string $contentType, string $upload)
     {
         $this->fileName = $fileName;
         $this->contentType = $contentType;
@@ -37,21 +46,17 @@ class RemoteUploadFile implements UnprocessedFileInterface
     }
 
     /**
-     * The name of this file.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName;
     }
 
     /**
-     * The Content- (or MIME-)Type of this file.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getContentType()
+    public function getContentType(): string
     {
         return $this->contentType;
     }
@@ -59,7 +64,7 @@ class RemoteUploadFile implements UnprocessedFileInterface
     /**
      * @return string
      */
-    public function getUpload()
+    public function getUpload(): string
     {
         return $this->upload;
     }
@@ -67,7 +72,7 @@ class RemoteUploadFile implements UnprocessedFileInterface
     /**
      * {@inheritdoc}
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'fileName' => $this->fileName,

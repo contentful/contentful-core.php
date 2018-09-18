@@ -7,11 +7,13 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\File;
 
 use Contentful\Core\Api\Link;
 use Contentful\Core\File\LocalUploadFile;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\TestCase;
 
 class LocalUploadFileTest extends TestCase
 {
@@ -39,9 +41,6 @@ class LocalUploadFileTest extends TestCase
 
     public function testJsonSerialize()
     {
-        $this->assertJsonStringEqualsJsonString(
-            '{"fileName":"the_great_gatsby.txt","contentType":"image\/png","uploadFrom":{"sys":{"type":"Link","id":"1reper3p12RdEVfC13QsUR","linkType":"Upload"}}}',
-            \json_encode($this->file)
-        );
+        $this->assertJsonFixtureEqualsJsonObject('serialized.json', $this->file);
     }
 }

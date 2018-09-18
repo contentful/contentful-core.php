@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\File;
 
 /**
@@ -19,12 +21,12 @@ interface FileInterface extends \JsonSerializable
      *
      * @return string
      */
-    public function getFileName();
+    public function getFileName(): string;
 
     /**
      * The Content- (or MIME-)Type of this file.
      *
      * @return string
      */
-    public function getContentType();
+    public function getContentType(): string;
 }

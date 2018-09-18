@@ -7,10 +7,12 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\Exception;
 
 use Contentful\Core\Exception\BadRequestException;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\TestCase;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;

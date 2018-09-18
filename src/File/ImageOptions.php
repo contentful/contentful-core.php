@@ -7,6 +7,8 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\File;
 
 /**
@@ -17,7 +19,7 @@ namespace Contentful\Core\File;
  *
  * @see https://www.contentful.com/developers/docs/references/images-api/#/reference Image API Reference
  */
-class ImageOptions
+class ImageOptions implements UrlOptionsInterface
 {
     /**
      * @var int|null
@@ -45,6 +47,11 @@ class ImageOptions
     private $progressive = \false;
 
     /**
+     * @var bool
+     */
+    private $png8bit = \false;
+
+    /**
      * @var string|null
      */
     private $resizeFit;
@@ -65,11 +72,9 @@ class ImageOptions
     private $backgroundColor;
 
     /**
-     * The urlencoded query string for these options.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getQueryString()
+    public function getQueryString(): string
     {
         $options = [
             'w' => $this->width,
@@ -82,9 +87,16 @@ class ImageOptions
         if (\null !== $this->quality || $this->progressive) {
             $options['fm'] = 'jpg';
         }
+
         if ($this->progressive) {
             $options['fl'] = 'progressive';
         }
+
+        if ($this->png8bit) {
+            $options['fm'] = 'png';
+            $options['fl'] = 'png8';
+        }
+
         if (\null !== $this->resizeFit) {
             $options['fit'] = $this->resizeFit;
 
@@ -114,7 +126,7 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setWidth($width = \null)
+    public function setWidth(int $width = \null)
     {
         if (\null !== $width && $width < 0) {
             throw new \InvalidArgumentException('Width must not be negative.');
@@ -140,7 +152,7 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setHeight($height = \null)
+    public function setHeight(int $height = \null)
     {
         if (\null !== $height && $height < 0) {
             throw new \InvalidArgumentException('Height must not be negative.');
@@ -161,7 +173,7 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setFormat($format = \null)
+    public function setFormat(string $format = \null)
     {
         $validValues = ['png', 'jpg', 'webp'];
 
@@ -188,7 +200,7 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setQuality($quality = \null)
+    public function setQuality(int $quality = \null)
     {
         if (\null !== $quality && ($quality < 1 || $quality > 100)) {
             throw new \InvalidArgumentException(\sprintf(
@@ -206,13 +218,28 @@ class ImageOptions
      * Set to true to load the image as a progressive JPEG.
      * The image format will be forced to JPEG.
      *
-     * @param bool|null $progressive
+     * @param bool $progressive
      *
      * @return $this
      */
-    public function setProgressive($progressive = \null)
+    public function setProgressive(bool $progressive)
     {
-        $this->progressive = (bool) $progressive;
+        $this->progressive = $progressive;
+
+        return $this;
+    }
+
+    /**
+     * Set to true to load the image as a 8-bit PNG.
+     * The image format will be forced to PNG.
+     *
+     * @param bool $png8Bit
+     *
+     * @return $this
+     */
+    public function setPng8Bit(bool $png8Bit)
+    {
+        $this->png8bit = $png8Bit;
 
         return $this;
     }
@@ -237,7 +264,7 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setResizeFit($resizeFit = \null)
+    public function setResizeFit(string $resizeFit = \null)
     {
         $validValues = ['pad', 'crop', 'fill', 'thumb', 'scale'];
 
@@ -268,7 +295,7 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setResizeFocus($resizeFocus = \null)
+    public function setResizeFocus(string $resizeFocus = \null)
     {
         $validValues = [
             'face',
@@ -305,7 +332,7 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setRadius($radius = \null)
+    public function setRadius(float $radius = \null)
     {
         if (\null !== $radius && $radius < 0) {
             throw new \InvalidArgumentException('Radius must not be negative.');
@@ -326,7 +353,7 @@ class ImageOptions
      *
      * @return $this
      */
-    public function setBackgroundColor($backgroundColor = \null)
+    public function setBackgroundColor(string $backgroundColor = \null)
     {
         if (\null !== $backgroundColor && !\preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $backgroundColor)) {
             throw new \InvalidArgumentException('Background color must be in hexadecimal format.');

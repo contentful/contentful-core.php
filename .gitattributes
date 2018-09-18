@@ -1,0 +1,11 @@
+* text=auto
+
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.editorconfig export-ignore
+/.php_cs export-ignore
+/phpunit.xml.dist export-ignore
+/tests export-ignore
+/sami.php export-ignore
+/.github export-ignore
+/UPGRADE-2.0.md

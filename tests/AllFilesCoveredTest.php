@@ -7,8 +7,11 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core;
 
+use Contentful\Tests\TestCase;
 use Symfony\Component\Finder\Finder;
 
 class AllFilesCoveredTest extends TestCase

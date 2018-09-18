@@ -7,8 +7,17 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\Api;
 
+/**
+ * UserAgentGenerator class.
+ *
+ * This class is responsible for generating the "X-Contentful-User-Agent" header,
+ * which collects the PHP version, SDK version, and possibly application and integration
+ * names and versions.
+ */
 class UserAgentGenerator
 {
     /**
@@ -37,22 +46,23 @@ class UserAgentGenerator
      * @param string $name
      * @param string $version
      */
-    public function __construct($name, $version)
+    public function __construct(string $name, string $version)
     {
         $this->sdk = $name.'/'.$version;
     }
 
     /**
-     * Set the application name and version. The values are used as part of the X-Contentful-User-Agent header.
+     * Set the application name and version.
+     * The values are used as part of the X-Contentful-User-Agent header.
      *
-     * @param string|null $name
-     * @param string|null $version
+     * @param string $name
+     * @param string $version
      *
      * @return $this
      */
-    public function setApplication($name, $version = \null)
+    public function setApplication(string $name, string $version = '')
     {
-        $this->application = $name ? $name.($version ? '/'.$version : '') : '';
+        $this->application = $name.($version ? '/'.$version : '');
 
         // Reset the cached value
         $this->cachedUserAgent = \null;
@@ -61,16 +71,17 @@ class UserAgentGenerator
     }
 
     /**
-     * Set the application name and version. The values are used as part of the X-Contentful-User-Agent header.
+     * Set the application name and version.
+     * The values are used as part of the X-Contentful-User-Agent header.
      *
-     * @param string|null $name
-     * @param string|null $version
+     * @param string $name
+     * @param string $version
      *
      * @return $this
      */
-    public function setIntegration($name, $version = \null)
+    public function setIntegration(string $name, string $version = '')
     {
-        $this->integration = $name ? $name.($version ? '/'.$version : '') : '';
+        $this->integration = $name.($version ? '/'.$version : '');
 
         // Reset the cached value
         $this->cachedUserAgent = \null;
@@ -81,7 +92,7 @@ class UserAgentGenerator
     /**
      * @return string
      */
-    private function generate()
+    private function generate(): string
     {
         $possibleOS = [
             'WINNT' => 'Windows',
@@ -92,8 +103,13 @@ class UserAgentGenerator
             'app' => $this->application,
             'integration' => $this->integration,
             'sdk' => $this->sdk,
-            'platform' => 'PHP/'.\PHP_MAJOR_VERSION.'.'.\PHP_MINOR_VERSION.'.'.\PHP_RELEASE_VERSION,
-            'os' => isset($possibleOS[\PHP_OS]) ? $possibleOS[\PHP_OS] : 'Linux',
+            'platform' => \sprintf(
+                'PHP/%d.%d.%d',
+                \PHP_MAJOR_VERSION,
+                \PHP_MINOR_VERSION,
+                \PHP_RELEASE_VERSION
+            ),
+            'os' => $possibleOS[\PHP_OS] ?? 'Linux',
         ]);
 
         $userAgent = '';
@@ -109,7 +125,7 @@ class UserAgentGenerator
      *
      * @return string
      */
-    public function getUserAgent()
+    public function getUserAgent(): string
     {
         if (\null === $this->cachedUserAgent) {
             $this->cachedUserAgent = $this->generate();

@@ -7,10 +7,13 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\Api;
 
 use Contentful\Core\Api\DateTimeImmutable;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\TestCase;
+use function GuzzleHttp\json_encode as guzzle_json_encode;
 
 class DateTimeImmutableTest extends TestCase
 {
@@ -25,6 +28,6 @@ class DateTimeImmutableTest extends TestCase
 
         $this->assertSame('1988-09-19T00:00:00Z', $date->formatForJson());
         $this->assertSame('1988-09-19T00:00:00Z', (string) $date);
-        $this->assertSame('"1988-09-19T00:00:00Z"', \json_encode($date));
+        $this->assertSame('"1988-09-19T00:00:00Z"', guzzle_json_encode($date));
     }
 }

@@ -7,12 +7,15 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\Api;
 
-use Contentful\Core\Api\BaseClient;
-use Contentful\Core\Api\Exception;
-use Contentful\Tests\Core\TestCase;
-use Contentful\Tests\Core\Unit\Api\Exception\BadRequestException;
+use Contentful\Tests\Core\Implementation\Client;
+use Contentful\Tests\Core\Implementation\ClientCustomException;
+use Contentful\Tests\Core\Implementation\Exception\BadRequestException;
+use Contentful\Tests\Core\Implementation\InvalidPackageNameClient;
+use Contentful\Tests\TestCase;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Handler\CurlHandler;
@@ -21,23 +24,19 @@ use GuzzleHttp\Psr7\Response;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use function GuzzleHttp\Psr7\parse_request as guzzle_parse_request;
 use function GuzzleHttp\Psr7\parse_response as guzzle_parse_response;
 
 class BaseClientTest extends TestCase
 {
-    /**
-     * @var \Closure
-     */
-    private $requestHandler;
-
-    public function createHttpClient()
+    public function createHttpClient(callable $handlerOverride = \null)
     {
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());
-        $stack->push(function (callable $handler) {
-            return function (RequestInterface $request, array $options) use ($handler) {
-                $handler = $this->requestHandler ?: $handler;
+        $stack->push(function (callable $handler) use ($handlerOverride) {
+            return function (RequestInterface $request, array $options) use ($handler, $handlerOverride) {
+                $handler = $handlerOverride ?: $handler;
 
                 return $handler($request, $options);
             };
@@ -51,7 +50,7 @@ class BaseClientTest extends TestCase
         $handler = new TestHandler();
         $logger = new Logger('test', [$handler]);
         $httpClient = $this->createHttpClient();
-        $client = new ConcreteClient('b4c0n73n7fu1', 'https://cdn.contentful.com/', $logger, $httpClient);
+        $client = new Client('b4c0n73n7fu1', 'https://cdn.contentful.com/', $logger, $httpClient);
         $client->setApplication('sdk-test-application', '1.0');
 
         $this->assertSame('DELIVERY', $client->getApi());
@@ -104,28 +103,19 @@ class BaseClientTest extends TestCase
      */
     public function testErrorPage()
     {
-        $httpClient = $this->createHttpClient();
-        $client = new ConcreteClient('b4c0n73n7fu1', 'https://cdn.contentful.com', \null, $httpClient);
-
-        $this->requestHandler = function (RequestInterface $request, array $options) {
+        $httpClient = $this->createHttpClient(function (RequestInterface $request, array $options) {
             $response = new Response(404, [], $this->getFixtureContent('not_found.json'));
 
             throw new ClientException('Not Found', $request, $response);
-        };
+        });
+        $client = new Client('b4c0n73n7fu1', 'https://cdn.contentful.com', \null, $httpClient);
 
         $client->request('GET', '/spaces/invalid');
     }
 
     public function testCustomException()
     {
-        $httpClient = $this->createHttpClient();
-        $client = new CustomExceptionConcreteClient('b4c0n73n7fu1', 'https://api.contentful.com', \null, $httpClient);
-        $client->setIntegration('sdk-test-integration', '1.0.0-beta');
-
-        $this->assertSame('MANAGEMENT', $client->getApi());
-        $this->assertSame('https://api.contentful.com', $client->getHost());
-
-        $this->requestHandler = function (RequestInterface $request, array $options) {
+        $httpClient = $this->createHttpClient(function (RequestInterface $request) {
             $response = new Response(
                 401,
                 ['X-Contentful-Request-Id' => 'd533d76293f8bb047467344a28beffe0'],
@@ -133,16 +123,22 @@ class BaseClientTest extends TestCase
             );
 
             throw new ClientException('Bad Request', $request, $response);
-        };
+        });
+
+        $client = new ClientCustomException('b4c0n73n7fu1', 'https://api.contentful.com', \null, $httpClient);
+        $client->setIntegration('sdk-test-integration', '1.0.0-beta');
+
+        $this->assertSame('MANAGEMENT', $client->getApi());
+        $this->assertSame('https://api.contentful.com', $client->getHost());
 
         try {
             $client->request('POST', '/custom-url', [
                 'query' => ['someVar' => 'someValue', 'anotherVar' => 'anotherValue'],
                 'headers' => ['X-Contentful-Is' => 'Awesome'],
                 'body' => '{"message": "Hello, world!"}',
-                'baseUri' => 'https://www.example.com',
+                'host' => 'https://www.example.com',
             ]);
-        } catch (Exception $exception) {
+        } catch (BadRequestException $exception) {
             $this->assertInstanceOf(BadRequestException::class, $exception);
             $this->assertSame('Unknown locale: invalidLocale', $exception->getMessage());
             $this->assertSame('What kind of request did you send?', $exception->getBadRequestMessage());
@@ -169,65 +165,22 @@ class BaseClientTest extends TestCase
             $this->assertSame(401, $exception->getResponse()->getStatusCode());
         }
     }
-}
 
-class ConcreteClient extends BaseClient
-{
-    public function request($method, $path, array $options = [])
+    public function testInvalidPackageNameVersion()
     {
-        return parent::request($method, $path, $options);
-    }
+        $httpClient = $this->createHttpClient(function (): ResponseInterface {
+            return new Response(200);
+        });
 
-    public function getApi()
-    {
-        return 'DELIVERY';
-    }
+        $client = new InvalidPackageNameClient('b4c0n73n7fu1', 'https://cdn.contentful.com', \null, $httpClient);
+        $client->request('GET', '/');
 
-    protected function getSdkName()
-    {
-        return 'contentful-core.php';
-    }
-
-    protected function getSdkVersion()
-    {
-        return '1.0';
-    }
-
-    protected function getApiContentType()
-    {
-        return 'application/vnd.contentful.delivery.v1+json';
-    }
-}
-
-class CustomExceptionConcreteClient extends BaseClient
-{
-    public function request($method, $path, array $options = [])
-    {
-        return parent::request($method, $path, $options);
-    }
-
-    public function getApi()
-    {
-        return 'MANAGEMENT';
-    }
-
-    protected function getSdkName()
-    {
-        return 'contentful-core.php';
-    }
-
-    protected function getSdkVersion()
-    {
-        return '1.0';
-    }
-
-    protected function getApiContentType()
-    {
-        return 'application/vnd.contentful.management.v1+json';
-    }
-
-    protected function getExceptionNamespace()
-    {
-        return __NAMESPACE__.'\\Exception';
+        $request = $client->getMessages()[0]->getRequest();
+        // When the current package name is invalid,
+        //the version will automatically be set to 0.0.0-alpha
+        $this->assertRegExp(
+            '/sdk invalid\/0.0.0-alpha; platform PHP\/[0-9\.]*; os (Windows|Linux|macOS);$/',
+            $request->getHeaderLine('X-Contentful-User-Agent')
+        );
     }
 }

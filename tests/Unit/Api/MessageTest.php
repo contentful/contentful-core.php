@@ -7,11 +7,13 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Tests\Core\Unit\Api;
 
 use Contentful\Core\Api\Exception;
 use Contentful\Core\Api\Message;
-use Contentful\Tests\Core\TestCase;
+use Contentful\Tests\TestCase;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -34,13 +36,7 @@ class MessageTest extends TestCase
         );
         $exception = new Exception(new RequestException('Not Found', $request, $response));
 
-        $message = new Message(
-            'DELIVERY',
-            0.5,
-            $request,
-            $response,
-            $exception
-        );
+        $message = new Message('DELIVERY', 0.5, $request, $response, $exception);
 
         $this->assertSame('DELIVERY', $message->getApi());
         $this->assertSame(0.5, $message->getDuration());
@@ -130,14 +126,14 @@ class MessageTest extends TestCase
         };
         $closure1($closure2);
 
-        $message = new Message('DELIVERY', 0, $request, $response, $exception);
+        $message = new Message('DELIVERY', 0.0, $request, $response, $exception);
         $serialized = \unserialize(\serialize($message));
 
         $this->assertInstanceOf(RequestException::class, $message->getException()->getPrevious());
         $this->assertNull($serialized->getException()->getPrevious());
 
         $this->assertSame('DELIVERY', $serialized->getApi());
-        $this->assertSame(0, $serialized->getDuration());
+        $this->assertSame(0.0, $serialized->getDuration());
         $this->assertSame('Error message', $serialized->getException()->getMessage());
         $this->assertSame('ddbaaceaced126fc7d29a4d8335f06d9', $message->getException()->getRequestId());
         $this->assertSame('ddbaaceaced126fc7d29a4d8335f06d9', $serialized->getException()->getRequestId());

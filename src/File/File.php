@@ -7,12 +7,14 @@
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\Core\File;
 
 /**
  * File class.
  */
-class File implements FileInterface
+class File implements ProcessedFileInterface
 {
     /**
      * @var string
@@ -42,7 +44,7 @@ class File implements FileInterface
      * @param string $url
      * @param int    $size        Size in bytes
      */
-    public function __construct($fileName, $contentType, $url, $size)
+    public function __construct(string $fileName, string $contentType, string $url, int $size)
     {
         $this->fileName = $fileName;
         $this->contentType = $contentType;
@@ -53,7 +55,7 @@ class File implements FileInterface
     /**
      * {@inheritdoc}
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName;
     }
@@ -61,17 +63,15 @@ class File implements FileInterface
     /**
      * {@inheritdoc}
      */
-    public function getContentType()
+    public function getContentType(): string
     {
         return $this->contentType;
     }
 
     /**
-     * The URL where this file can be retrieved.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getUrl()
+    public function getUrl(UrlOptionsInterface $options = \null): string
     {
         return $this->url;
     }
@@ -81,7 +81,7 @@ class File implements FileInterface
      *
      * @return int
      */
-    public function getSize()
+    public function getSize(): int
     {
         return $this->size;
     }
@@ -89,7 +89,7 @@ class File implements FileInterface
     /**
      * {@inheritdoc}
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'fileName' => $this->fileName,
