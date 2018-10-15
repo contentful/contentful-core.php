@@ -57,7 +57,7 @@ class BaseClientTest extends TestCase
         $this->assertSame('https://cdn.contentful.com', $client->getHost());
         $this->assertSame($logger, $client->getLogger());
 
-        $jsonResponse = $client->request('GET', '/spaces/cfexampleapi');
+        $jsonResponse = $client->callApi('GET', '/spaces/cfexampleapi');
 
         $this->assertSame('cfexampleapi', $jsonResponse['sys']['id']);
         $logs = $handler->getRecords();
@@ -110,7 +110,7 @@ class BaseClientTest extends TestCase
         });
         $client = new Client('b4c0n73n7fu1', 'https://cdn.contentful.com', \null, $httpClient);
 
-        $client->request('GET', '/spaces/invalid');
+        $client->callApi('GET', '/spaces/invalid');
     }
 
     public function testCustomException()
@@ -132,7 +132,7 @@ class BaseClientTest extends TestCase
         $this->assertSame('https://api.contentful.com', $client->getHost());
 
         try {
-            $client->request('POST', '/custom-url', [
+            $client->callApi('POST', '/custom-url', [
                 'query' => ['someVar' => 'someValue', 'anotherVar' => 'anotherValue'],
                 'headers' => ['X-Contentful-Is' => 'Awesome'],
                 'body' => '{"message": "Hello, world!"}',
@@ -173,7 +173,7 @@ class BaseClientTest extends TestCase
         });
 
         $client = new InvalidPackageNameClient('b4c0n73n7fu1', 'https://cdn.contentful.com', \null, $httpClient);
-        $client->request('GET', '/');
+        $client->callApi('GET', '/');
 
         $request = $client->getMessages()[0]->getRequest();
         // When the current package name is invalid,

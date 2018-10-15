@@ -205,19 +205,13 @@ abstract class BaseQuery
      * Note that when ordering Entries by fields you must set the content_type URI query parameter to the ID of
      * the Content Type you want to filter by. Can be called multiple times to order by multiple values.
      *
-     * @param string|null $field
-     * @param bool        $reverse
+     * @param string $field
+     * @param bool   $reverse
      *
      * @return $this
      */
-    public function orderBy(string $field = \null, bool $reverse = \false)
+    public function orderBy(string $field, bool $reverse = \false)
     {
-        if (\null === $field) {
-            $this->orderConditions = [];
-
-            return $this;
-        }
-
         if ($reverse) {
             $field = '-'.$field;
         }

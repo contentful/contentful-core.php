@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Contentful\Core\Resource;
 
+use Contentful\Core\Api\Link;
+
 /**
  * A ResourceArray holds the response of an API request
  * if more than one resource has been requested.
@@ -18,7 +20,7 @@ namespace Contentful\Core\Resource;
  * In addition to the retrieved items themselves
  * it also provides some access to metadata.
  */
-class ResourceArray implements \Countable, \ArrayAccess, \IteratorAggregate, \JsonSerializable
+class ResourceArray implements ResourceInterface, \Countable, \ArrayAccess, \IteratorAggregate
 {
     /**
      * @var array
@@ -94,6 +96,38 @@ class ResourceArray implements \Countable, \ArrayAccess, \IteratorAggregate, \Js
     public function getItems(): array
     {
         return $this->items;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSystemProperties(): SystemPropertiesInterface
+    {
+        return new ArraySystemProperties([]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function asLink(): Link
+    {
+        throw new \LogicException('Resource of type Array can not be represented as a Link object.');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getId(): string
+    {
+        throw new \LogicException('Resource of type Array does not have an ID.');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getType(): string
+    {
+        return 'Array';
     }
 
     /**

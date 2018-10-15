@@ -12,15 +12,20 @@ declare(strict_types=1);
 namespace Contentful\Tests\Core\Implementation;
 
 use Contentful\Core\Api\BaseClient;
+use Contentful\Core\Resource\ResourceInterface;
 
 class ClientCustomException extends BaseClient
 {
+    public function request(string $method, string $uri, array $options = []): ResourceInterface
+    {
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function request(string $method, string $path, array $options = [])
+    public function callApi(string $method, string $path, array $options = []): array
     {
-        return parent::request($method, $path, $options);
+        return parent::callApi($method, $path, $options);
     }
 
     /**
@@ -34,7 +39,7 @@ class ClientCustomException extends BaseClient
     /**
      * {@inheritdoc}
      */
-    protected function getPackageName(): string
+    protected static function getPackageName(): string
     {
         return 'contentful/core';
     }
@@ -42,7 +47,7 @@ class ClientCustomException extends BaseClient
     /**
      * {@inheritdoc}
      */
-    protected function getSdkName(): string
+    protected static function getSdkName(): string
     {
         return 'contentful-core.php';
     }
@@ -50,7 +55,7 @@ class ClientCustomException extends BaseClient
     /**
      * {@inheritdoc}
      */
-    protected function getApiContentType(): string
+    protected static function getApiContentType(): string
     {
         return 'application/vnd.contentful.management.v1+json';
     }
