@@ -3,7 +3,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.0.0-beta1...HEAD)
+## [2.0.0-beta2](https://github.com/contentful/contentful-core.php/tree/2.0.0-beta2) (2018-10-15)
+
+### Added
+
+* The following interfaces have been added: `AssetInterface`, `ContentTypeInterface`, `EntryInterface`, `ClientInterface`, `ResourcePoolInterface`.
+
+### Changed
+
+* Client objects now must declare a `request` method defined in `ClientInterface`.
+* `ResourceArray` now implements `ResourceInterface`.
+* Logic for querying the API has been refactored into the new `Requester` class.
+* Client methods `getVersion`, `getPackageName`, `getSdkName`, and `getApiContentType` are now static. **[BREAKING]**
 
 ## [2.0.0-beta1](https://github.com/contentful/contentful-core.php/tree/2.0.0-beta1) (2018-09-18)
 
