@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Contentful\Tests\Core\Unit\Resource;
 
+use Contentful\Core\Resource\ArraySystemProperties;
 use Contentful\Core\Resource\ResourceArray;
 use Contentful\Tests\Core\Implementation\Resource;
 use Contentful\Tests\TestCase;
@@ -24,6 +25,32 @@ class ResourceArrayTest extends TestCase
         $this->assertSame(10, $array->getTotal());
         $this->assertSame(2, $array->getLimit());
         $this->assertSame(0, $array->getSkip());
+
+        $this->assertSame('Array', $array->getType());
+
+        $this->assertInstanceOf(ArraySystemProperties::class, $array->getSystemProperties());
+    }
+
+    /**
+     * @expectedException        \LogicException
+     * @expectedExceptionMessage Resource of type Array can not be represented as a Link object.
+     */
+    public function testArrayCantBeConvertedToLink()
+    {
+        (new ResourceArray([], 1, 0, 0))
+            ->asLink()
+        ;
+    }
+
+    /**
+     * @expectedException        \LogicException
+     * @expectedExceptionMessage Resource of type Array does not have an ID.
+     */
+    public function testArrayDoesNotHaveAnId()
+    {
+        (new ResourceArray([], 1, 0, 0))
+            ->getId()
+        ;
     }
 
     public function testCountable()

@@ -13,21 +13,20 @@ namespace Contentful\Core\Api;
 
 use Contentful\Core\Log\NullLogger;
 use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\Exception\ClientException;
 use Jean85\PrettyVersions;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use function GuzzleHttp\json_decode as guzzle_json_decode;
 
 /**
  * Abstract client for common code for the different clients.
  */
-abstract class BaseClient
+abstract class BaseClient implements ClientInterface
 {
     /**
-     * @var HttpClient
+     * @var Requester
      */
-    private $httpClient;
+    private $requester;
 
     /**
      * @var LoggerInterface
@@ -69,14 +68,18 @@ abstract class BaseClient
         HttpClient $httpClient = \null
     ) {
         $this->logger = $logger ?: new NullLogger();
-        $this->httpClient = $httpClient ?: new HttpClient();
+        $this->requester = new Requester(
+            $httpClient ?: new HttpClient(),
+            $this->getApi(),
+            $this->getExceptionNamespace()
+        );
 
         if ('/' === \mb_substr($host, -1)) {
             $host = \mb_substr($host, 0, -1);
         }
         $this->host = $host;
 
-        $this->userAgentGenerator = new UserAgentGenerator($this->getSdkName(), $this->getVersion());
+        $this->userAgentGenerator = new UserAgentGenerator($this->getSdkName(), self::getVersion());
         $this->requestBuilder = new RequestBuilder(
             $accessToken,
             $host,
@@ -86,81 +89,48 @@ abstract class BaseClient
     }
 
     /**
-     * @return string
-     */
-    private function getVersion(): string
-    {
-        try {
-            $version = PrettyVersions::getVersion($this->getPackageName());
-            $shortVersion = $version->getShortVersion();
-
-            // Removes the ".x-dev" part which is inserted during development
-            if ('.x-dev' === \mb_substr($shortVersion, -6)) {
-                $shortVersion = \mb_substr($shortVersion, 0, -6).'-dev';
-            }
-
-            return $shortVersion;
-        } catch (\OutOfBoundsException $exception) {
-            return '0.0.0-alpha';
-        }
-    }
-
-    /**
-     * Set the application name and version.
-     * The values are used as part of the X-Contentful-User-Agent header.
+     * Make a call to the API and returns the parsed JSON.
      *
-     * @param string $name
-     * @param string $version
-     *
-     * @return $this
-     */
-    public function setApplication(string $name, string $version = '')
-    {
-        $this->userAgentGenerator->setApplication($name, $version);
-
-        return $this;
-    }
-
-    /**
-     * Set the integration name and version.
-     * The values are used as part of the X-Contentful-User-Agent header.
-     *
-     * @param string $name
-     * @param string $version
-     *
-     * @return $this
-     */
-    public function setIntegration(string $name, string $version = '')
-    {
-        $this->userAgentGenerator->setIntegration($name, $version);
-
-        return $this;
-    }
-
-    /**
      * @param string $method  The HTTP method
-     * @param string $path    The URI path
+     * @param string $uri     The URI path
      * @param array  $options An array of optional parameters. The following keys are accepted:
      *                        * query   An array of query parameters that will be appended to the URI
      *                        * headers An array of headers that will be added to the request
      *                        * body    The request body
-     *                        * baseUri A string that can be used to override the default client base URI
+     *                        * host    A string that can be used to override the default client base URI
      *
      * @throws \Exception
      *
-     * @return array|null
+     * @return array
      */
-    protected function request(string $method, string $path, array $options = [])
+    protected function callApi(string $method, string $uri, array $options = []): array
     {
-        $request = $this->requestBuilder->build($method, $path, $options);
+        $request = $this->requestBuilder->build($method, $uri, $options);
 
-        $message = $this->callApi($request);
+        $message = $this->requester->sendRequest($request);
         $this->messages[] = $message;
 
+        $this->logMessage($message);
+
+        $exception = $message->getException();
+        if (\null !== $exception) {
+            throw $exception;
+        }
+
+        return $this->parseResponse($message->getResponse());
+    }
+
+    /**
+     * Write information about a message object into the logger.
+     *
+     * @param Message $message
+     */
+    private function logMessage(Message $message)
+    {
         $logMessage = \sprintf(
             '%s %s (%.3Fs)',
-            $request->getMethod(),
-            (string) $request->getUri(),
+            $message->getRequest()->getMethod(),
+            (string) $message->getRequest()->getUri(),
             $message->getDuration()
         );
 
@@ -169,15 +139,20 @@ abstract class BaseClient
             $message->getLogLevel(),
             $logMessage
         );
-        // This is a debug log, with all message details
+
+        // This is a debug log, with all message details, useful for debugging
         $this->logger->debug($logMessage, $message->jsonSerialize());
+    }
 
-        $exception = $message->getException();
-        if (\null !== $exception) {
-            throw $exception;
-        }
-
-        $response = $message->getResponse();
+    /**
+     * Parse the body of a JSON response.
+     *
+     * @param ResponseInterface|null $response
+     *
+     * @return array
+     */
+    private function parseResponse(ResponseInterface $response = \null): array
+    {
         $body = $response
             ? (string) $response->getBody()
             : \null;
@@ -185,85 +160,6 @@ abstract class BaseClient
         return $body
             ? guzzle_json_decode($body, \true)
             : [];
-    }
-
-    /**
-     * Performs a query to the API, and returns a message object
-     * which contains all information needed for processing and logging.
-     *
-     * @param RequestInterface $request
-     *
-     * @return Message
-     */
-    private function callApi(RequestInterface $request): Message
-    {
-        $startTime = \microtime(\true);
-
-        $exception = \null;
-        try {
-            $response = $this->httpClient->send($request);
-        } catch (ClientException $exception) {
-            $response = $exception->hasResponse()
-                ? $exception->getResponse()
-                : \null;
-
-            $exception = $this->createCustomException($exception);
-        }
-
-        $duration = \microtime(\true) - $startTime;
-
-        return new Message(
-            $this->getApi(),
-            $duration,
-            $request,
-            $response,
-            $exception
-        );
-    }
-
-    /**
-     * Attempts to create a custom exception.
-     * It will return a default exception if no suitable class is found.
-     *
-     * @param ClientException $exception
-     *
-     * @return Exception
-     */
-    private function createCustomException(ClientException $exception): Exception
-    {
-        $errorId = '';
-        $response = $exception->getResponse();
-        if ($response) {
-            $data = guzzle_json_decode((string) $response->getBody(), \true);
-            $errorId = (string) $data['sys']['id'];
-        }
-
-        $exceptionClass = $this->getExceptionClass($errorId);
-
-        return new $exceptionClass($exception);
-    }
-
-    /**
-     * Returns the FQCN of an exception class to be used for the given API error.
-     *
-     * @param string $apiError
-     *
-     * @return string
-     */
-    private function getExceptionClass(string $apiError): string
-    {
-        $namespace = $this->getExceptionNamespace();
-        if ($namespace) {
-            $class = $namespace.'\\'.$apiError.'Exception';
-
-            if (\class_exists($class)) {
-                return $class;
-            }
-        }
-
-        $class = '\\Contentful\\Core\\Exception\\'.$apiError.'Exception';
-
-        return \class_exists($class) ? $class : Exception::class;
     }
 
     /**
@@ -306,30 +202,64 @@ abstract class BaseClient
     }
 
     /**
-     * Returns a string representation of the API currently in use.
-     *
+     * {@inheritdoc}
+     */
+    public function setApplication(string $name, string $version = '')
+    {
+        $this->userAgentGenerator->setApplication($name, $version);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setIntegration(string $name, string $version = '')
+    {
+        $this->userAgentGenerator->setIntegration($name, $version);
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
-    abstract public function getApi(): string;
+    public static function getVersion(): string
+    {
+        try {
+            $shortVersion = PrettyVersions::getVersion(static::getPackageName())
+                ->getShortVersion()
+            ;
+
+            // Removes the ".x-dev" part which is inserted during development
+            if ('.x-dev' === \mb_substr($shortVersion, -6)) {
+                $shortVersion = \mb_substr($shortVersion, 0, -6).'-dev';
+            }
+
+            return $shortVersion;
+        } catch (\OutOfBoundsException $exception) {
+            return '0.0.0-alpha';
+        }
+    }
 
     /**
      * Returns the packagist name of the current package.
      *
      * @return string
      */
-    abstract protected function getPackageName(): string;
+    abstract protected static function getPackageName(): string;
 
     /**
      * The name of the library to be used in the User-Agent header.
      *
      * @return string
      */
-    abstract protected function getSdkName(): string;
+    abstract protected static function getSdkName(): string;
 
     /**
      * Returns the Content-Type (MIME-Type) to be used when communication with the API.
      *
      * @return string
      */
-    abstract protected function getApiContentType(): string;
+    abstract protected static function getApiContentType(): string;
 }
