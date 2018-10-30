@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.0.0-beta2...HEAD)
 
+**ATTENTION**: This release contains breaking changes. Please take extra care when updating to this version. See [the upgrade guide](UPGRADE-2.0.md) for more.
+
 ## [2.0.0-beta2](https://github.com/contentful/contentful-core.php/tree/2.0.0-beta2) (2018-10-15)
 
 ### Added
@@ -19,10 +21,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Client methods `getVersion`, `getPackageName`, `getSdkName`, and `getApiContentType` are now static. **[BREAKING]**
 
 ## [2.0.0-beta1](https://github.com/contentful/contentful-core.php/tree/2.0.0-beta1) (2018-09-18)
-
-### Upgrade
-
-Please refer to the [upgrade guide](UPGRADE-2.0.md) for detailed info about the new version.
 
 ### Added
 
