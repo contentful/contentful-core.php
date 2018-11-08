@@ -29,10 +29,10 @@ interface LinkResolverInterface
      * to reduce the amount of necessary API calls, or simply forward this
      * to the "resolveLink" method.
      *
-     * @param Link[]      $links
-     * @param string|null $locale
+     * @param Link[]   $links
+     * @param string[] $parameters
      *
      * @return ResourceInterface[]
      */
-    public function resolveLinkCollection(array $links, string $locale = \null): array;
+    public function resolveLinkCollection(array $links, array $parameters = []): array;
 }

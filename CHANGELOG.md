@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.1.0...HEAD)
 
+### Fixed
+
+* Method `LinkResolverInterface::resolveLinkCollection()`'s second parameter was fixed, changing from `string $locale = null` to `array $parameters = []`.
+
 ## [2.1.0](https://github.com/contentful/contentful-core.php/tree/2.1.0) (2018-11-07)
 
 ### Added
