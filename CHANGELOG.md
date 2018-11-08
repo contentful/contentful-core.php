@@ -3,11 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.1.0...HEAD)
+## [2.1.1](https://github.com/contentful/contentful-core.php/tree/2.1.1) (2018-11-08)
 
 ### Fixed
 
-* Method `LinkResolverInterface::resolveLinkCollection()`'s second parameter was fixed, changing from `string $locale = null` to `array $parameters = []`.
+* Method `LinkResolverInterface::resolveLinkCollection()`'s second parameter was fixed, as it was incorrectly set to `string $locale = null` instead of `array $parameters = []`.
 
 ## [2.1.0](https://github.com/contentful/contentful-core.php/tree/2.1.0) (2018-11-07)
 
