@@ -33,13 +33,31 @@ interface ClientInterface
     public function request(string $method, string $uri, array $options = []): ResourceInterface;
 
     /**
+     * Sets the current application.
+     * The values are used as part of the X-Contentful-User-Agent header.
+     *
+     * @param ApplicationInterface $application
+     */
+    public function useApplication(ApplicationInterface $application);
+
+    /**
      * Set the application name and version.
      * The values are used as part of the X-Contentful-User-Agent header.
      *
      * @param string $name
      * @param string $version
+     *
+     * @deprecated 2.2.0 Use useApplication instead
      */
     public function setApplication(string $name, string $version = '');
+
+    /**
+     * Sets the current integration.
+     * The values are used as part of the X-Contentful-User-Agent header.
+     *
+     * @param IntegrationInterface $integration
+     */
+    public function useIntegration(IntegrationInterface $integration);
 
     /**
      * Set the integration name and version.
@@ -47,6 +65,8 @@ interface ClientInterface
      *
      * @param string $name
      * @param string $version
+     *
+     * @deprecated 2.2.0 Use useIntegration instead
      */
     public function setIntegration(string $name, string $version = '');
 

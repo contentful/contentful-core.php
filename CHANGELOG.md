@@ -6,7 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.1.1...HEAD)
 
 <!-- PENDING-CHANGES -->
-> No meaningful changes since last release.
+### Added
+
+* Interface `ApplicationInterface` and `IntegrationInterface` have been added, as well as `ClientInterface::useApplication(ApplicationInterface $application)` and `ClientInterface::useIntegration(IntegrationInterface $integration)`. The `BaseClient` class already provides an implementation of these methods.
 <!-- /PENDING-CHANGES -->
 
 ## [2.1.1](https://github.com/contentful/contentful-core.php/tree/2.1.1) (2018-11-08)

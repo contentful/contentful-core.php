@@ -204,11 +204,37 @@ abstract class BaseClient implements ClientInterface
     /**
      * {@inheritdoc}
      */
+    public function useApplication(ApplicationInterface $application)
+    {
+        $version = $application->isPackagedApplication()
+            ? self::getVersionForPackage($application->getApplicationPackageName())
+            : $application->getApplicationVersion();
+
+        $this->userAgentGenerator->setApplication(
+            $application->getApplicationName(),
+            $version
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setApplication(string $name, string $version = '')
     {
         $this->userAgentGenerator->setApplication($name, $version);
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function useIntegration(IntegrationInterface $integration)
+    {
+        $this->userAgentGenerator->setIntegration(
+            $integration->getIntegrationName(),
+            self::getVersionForPackage($integration->getIntegrationPackageName())
+        );
     }
 
     /**
@@ -225,6 +251,16 @@ abstract class BaseClient implements ClientInterface
      * @return string
      */
     public static function getVersion(): string
+    {
+        return self::getVersionForPackage(static::getPackageName());
+    }
+
+    /**
+     * @param string $package
+     *
+     * @return string
+     */
+    protected static function getVersionForPackage(string $package): string
     {
         try {
             $shortVersion = PrettyVersions::getVersion(static::getPackageName())

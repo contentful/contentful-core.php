@@ -11,9 +11,11 @@ declare(strict_types=1);
 
 namespace Contentful\Tests\Core\Unit\Api;
 
+use Contentful\Tests\Core\Implementation\Application;
 use Contentful\Tests\Core\Implementation\Client;
 use Contentful\Tests\Core\Implementation\ClientCustomException;
 use Contentful\Tests\Core\Implementation\Exception\BadRequestException;
+use Contentful\Tests\Core\Implementation\Integration;
 use Contentful\Tests\Core\Implementation\InvalidPackageNameClient;
 use Contentful\Tests\TestCase;
 use GuzzleHttp\Client as HttpClient;
@@ -177,9 +179,52 @@ class BaseClientTest extends TestCase
 
         $request = $client->getMessages()[0]->getRequest();
         // When the current package name is invalid,
-        //the version will automatically be set to 0.0.0-alpha
+        // the version will automatically be set to 0.0.0-alpha
         $this->assertRegExp(
             '/sdk invalid\/0.0.0-alpha; platform PHP\/[0-9\.]*; os (Windows|Linux|macOS);$/',
+            $request->getHeaderLine('X-Contentful-User-Agent')
+        );
+    }
+
+    public function testCustomApplication()
+    {
+        $httpClient = $this->createHttpClient(function (): ResponseInterface {
+            return new Response(201);
+        });
+        $client = new Client('irrelevant', 'https://cdn.contentful.com', \null, $httpClient);
+
+        $client->useApplication(new Application(\false));
+        $client->callApi('GET', '/');
+
+        $request = $client->getMessages()[0]->getRequest();
+        $this->assertRegExp(
+            '/^app the-example-app\/1.0.0; sdk contentful-core.php\/[0-9\.]*(-(dev|beta|alpha|RC))?; platform PHP\/[0-9\.]*; os (Windows|Linux|macOS);$/',
+            $request->getHeaderLine('X-Contentful-User-Agent')
+        );
+
+        $client->useApplication(new Application(\true));
+        $client->callApi('GET', '/');
+
+        $request = $client->getMessages()[0]->getRequest();
+        $this->assertRegExp(
+            '/^app the-example-app\/[0-9\.]*(-(dev|beta|alpha|RC))?; sdk contentful-core.php\/[0-9\.]*(-(dev|beta|alpha|RC))?; platform PHP\/[0-9\.]*; os (Windows|Linux|macOS);$/',
+            $request->getHeaderLine('X-Contentful-User-Agent')
+        );
+    }
+
+    public function testCustomIntegration()
+    {
+        $httpClient = $this->createHttpClient(function (): ResponseInterface {
+            return new Response(201);
+        });
+        $client = new Client('irrelevant', 'https://cdn.contentful.com', \null, $httpClient);
+
+        $client->useIntegration(new Integration());
+        $client->callApi('GET', '/');
+
+        $request = $client->getMessages()[0]->getRequest();
+        $this->assertRegExp(
+            '/^integration contentful.symfony\/[0-9\.]*(-(dev|beta|alpha|RC))?; sdk contentful-core.php\/[0-9\.]*(-(dev|beta|alpha|RC))?; platform PHP\/[0-9\.]*; os (Windows|Linux|macOS);$/',
             $request->getHeaderLine('X-Contentful-User-Agent')
         );
     }
