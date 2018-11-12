@@ -19,7 +19,7 @@ function exit_message(string $message, int $status)
 
 function message(string $message = '')
 {
-    echo '## '.$message."\n";
+    echo '##  '.$message."\n";
 }
 
 if (!isset($argv[1])) {
@@ -43,9 +43,12 @@ if (isset($argv[2])) {
 
 $changelogPath = \getcwd().'/CHANGELOG.md';
 $composerConfigPath = \getcwd().'/composer.json';
+$url = \shell_exec('git remote get-url origin');
+$url = \str_replace('github.com:', 'github.com/', $url);
+$url = 'https://'.\mb_substr($url, 4, -5);
 
 try {
-    $updater = new ReleaseUpdater($changelogPath, $composerConfigPath);
+    $updater = new ReleaseUpdater($changelogPath, $composerConfigPath, $url);
     $updater->updateChangelog($version);
     if (\null !== $composerAliasVersion) {
         $updater->updateComposerAliasVersion($composerAliasVersion);
@@ -76,18 +79,14 @@ if (\null !== $composerAliasVersion) {
 
 message();
 
-$url = \shell_exec('git remote get-url origin');
-$url = \str_replace('github.com:', 'github.com/', $url);
-$url = 'https://'.\mb_substr($url, 4, -5).'/releases/tag/'.$version;
-
 message('Release created!');
 message('Execute the following command to push to Github:');
 message();
-message('  git push --follow-tags');
+message('    git push --follow-tags');
 message();
 message('Then open the Github page at this URL:');
 message();
-message('  '.$url);
+message('    '.$url.'/releases/tag/'.$version);
 message();
 message('and then update the Github release, the content is already copied in your clipboard!');
 message();

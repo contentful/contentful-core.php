@@ -27,14 +27,6 @@ jobs:
             wget https://github.com/phpstan/phpstan/releases/download/0.10.3/phpstan.phar -q -O phpstan.phar
             composer run lint-static-analysis
 
-  test56:
-    docker:
-      - image: circleci/php:5.6-cli
-    steps:
-      - checkout
-      - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
-      - run: { name: "Test suite", command: "composer test-quick-fail" }
-
   test70:
     docker:
       - image: circleci/php:7.0-cli

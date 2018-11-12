@@ -29,12 +29,12 @@ class ReleaseUpdater
     /**
      * @var string
      */
-    const UNRELEASED_CHANGES_HEADER = '## [Unreleased](https://github.com/contentful/contentful-core.php/compare/%s...HEAD)';
+    const UNRELEASED_CHANGES_HEADER = '## [Unreleased](%s/compare/%s...HEAD)';
 
     /**
      * @var string
      */
-    const NEW_RELEASE_HEADER = '## [%s](https://github.com/contentful/contentful-core.php/tree/%s) (%s)';
+    const NEW_RELEASE_HEADER = '## [%s](%s/tree/%s) (%s)';
 
     /**
      * @var string
@@ -46,10 +46,16 @@ class ReleaseUpdater
      */
     private $composerConfigPath;
 
-    public function __construct(string $changelogPath, string $composerConfigPath)
+    /**
+     * @var string
+     */
+    private $githubUrl;
+
+    public function __construct(string $changelogPath, string $composerConfigPath, string $githubUrl)
     {
         $this->changelogPath = $changelogPath;
         $this->composerConfigPath = $composerConfigPath;
+        $this->githubUrl = $githubUrl;
     }
 
     public function updateChangelog(string $version)
@@ -102,11 +108,17 @@ class ReleaseUpdater
 
         return \strtr($changelogTemplate, [
             '[START]' => $changelogStart,
-            '[UNRELEASED_HEADER]' => \sprintf(self::UNRELEASED_CHANGES_HEADER, $version),
+            '[UNRELEASED_HEADER]' => \sprintf(self::UNRELEASED_CHANGES_HEADER, $this->githubUrl, $version),
             '[PENDING_CHANGES_START]' => self::PENDING_CHANGES_START,
             '[PENDING_CHANGES_PLACEHOLDER]' => self::PENDING_CHANGES_PLACEHOLDER,
             '[PENDING_CHANGES_END]' => self::PENDING_CHANGES_END,
-            '[NEW_RELEASE_HEADER]' => \sprintf(self::NEW_RELEASE_HEADER, $version, $version, \date('Y-m-d')),
+            '[NEW_RELEASE_HEADER]' => \sprintf(
+                self::NEW_RELEASE_HEADER,
+                $version,
+                $this->githubUrl,
+                $version,
+                \date('Y-m-d')
+            ),
             '[NEW_RELEASE_CHANGES]' => $newReleaseChanges,
             '[END]' => $changelogEnd,
         ]);

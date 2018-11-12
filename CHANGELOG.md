@@ -6,7 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.2.0...HEAD)
 
 <!-- PENDING-CHANGES -->
-> No meaningful changes since last release.
+### Fixed
+
+* Fixed hardcoded Github URL in the release script.
 <!-- /PENDING-CHANGES -->
 
 ## [2.2.0](https://github.com/contentful/contentful-core.php/tree/2.2.0) (2018-11-12)
