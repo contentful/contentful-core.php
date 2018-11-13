@@ -44,7 +44,7 @@ class MessageTest extends TestCase
         $this->assertSame($response, $message->getResponse());
         $this->assertInstanceOf(\Exception::class, $message->getException());
 
-        $this->assertSame('ERROR', $message->getLogLevel());
+        $this->assertSame('error', $message->getLogLevel());
         $this->assertTrue($message->isError());
 
         // Exceptions and their stack traces are a bit brittle to test,

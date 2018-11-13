@@ -13,6 +13,7 @@ namespace Contentful\Core\Api;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LogLevel;
 use function GuzzleHttp\json_decode as guzzle_json_decode;
 use function GuzzleHttp\json_encode as guzzle_json_encode;
 use function GuzzleHttp\Psr7\parse_request as guzzle_parse_request;
@@ -120,8 +121,8 @@ class Message implements \Serializable, \JsonSerializable
     public function getLogLevel(): string
     {
         return $this->isError()
-            ? 'ERROR'
-            : 'INFO';
+            ? LogLevel::ERROR
+            : LogLevel::INFO;
     }
 
     /**

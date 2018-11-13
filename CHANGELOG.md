@@ -6,7 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.2.1...HEAD)
 
 <!-- PENDING-CHANGES -->
-> No meaningful changes since last release.
+### Fixed
+
+* The message log levels are no longer hardcoded but instead use the `Psr\Log\LogLevel` constants, so there should be better compatibility with stricter PSR-3 implementations.
 <!-- /PENDING-CHANGES -->
 
 ## [2.2.1](https://github.com/contentful/contentful-core.php/tree/2.2.1) (2018-11-12)
