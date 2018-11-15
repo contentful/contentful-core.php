@@ -263,7 +263,7 @@ abstract class BaseClient implements ClientInterface
     protected static function getVersionForPackage(string $package): string
     {
         try {
-            $shortVersion = PrettyVersions::getVersion(static::getPackageName())
+            $shortVersion = PrettyVersions::getVersion($package)
                 ->getShortVersion()
             ;
 
