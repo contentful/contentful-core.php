@@ -205,9 +205,9 @@ class BaseClientTest extends TestCase
         $client->useApplication(new Application(\true));
         $client->callApi('GET', '/');
 
-        $request = $client->getMessages()[0]->getRequest();
+        $request = $client->getMessages()[1]->getRequest();
         $this->assertRegExp(
-            '/^app the-example-app\/[0-9\.]*(-(dev|beta|alpha|RC))?; sdk contentful-core.php\/[0-9\.]*(-(dev|beta|alpha|RC))?; platform PHP\/[0-9\.]*; os (Windows|Linux|macOS);$/',
+            '/^app the-example-app\/0.0.0-alpha; sdk contentful-core.php\/[0-9\.]*(-(dev|beta|alpha|RC))?; platform PHP\/[0-9\.]*; os (Windows|Linux|macOS);$/',
             $request->getHeaderLine('X-Contentful-User-Agent')
         );
     }
@@ -224,7 +224,7 @@ class BaseClientTest extends TestCase
 
         $request = $client->getMessages()[0]->getRequest();
         $this->assertRegExp(
-            '/^integration contentful.symfony\/[0-9\.]*(-(dev|beta|alpha|RC))?; sdk contentful-core.php\/[0-9\.]*(-(dev|beta|alpha|RC))?; platform PHP\/[0-9\.]*; os (Windows|Linux|macOS);$/',
+            '/^integration contentful.symfony\/0.0.0-alpha; sdk contentful-core.php\/[0-9\.]*(-(dev|beta|alpha|RC))?; platform PHP\/[0-9\.]*; os (Windows|Linux|macOS);$/',
             $request->getHeaderLine('X-Contentful-User-Agent')
         );
     }
