@@ -27,8 +27,11 @@ abstract class BaseResourcePool implements ResourcePoolInterface
      */
     protected function sanitize(string $value): string
     {
-        return \preg_replace_callback('/[\.\-\_\*]/', function (array $matches): string {
-            return '___'.\ord($matches[0]).'___';
-        }, $value);
+        return \strtr($value, [
+            '.' => '___46___',
+            '-' => '___45___',
+            '_' => '___95___',
+            '*' => '___42___',
+        ]);
     }
 }

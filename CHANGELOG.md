@@ -6,7 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.2.3...HEAD)
 
 <!-- PENDING-CHANGES -->
-> No meaningful changes since last release.
+### Fixed
+
+* Optimized cache key sanitization to avoid using `preg_replace_callback`.
 <!-- /PENDING-CHANGES -->
 
 ## [2.2.3](https://github.com/contentful/contentful-core.php/tree/2.2.3) (2018-11-15)
