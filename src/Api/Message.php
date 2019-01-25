@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2019 Contentful GmbH
  * @license   MIT
  */
 
@@ -11,14 +11,14 @@ declare(strict_types=1);
 
 namespace Contentful\Core\Api;
 
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Log\LogLevel;
 use function GuzzleHttp\json_decode as guzzle_json_decode;
 use function GuzzleHttp\json_encode as guzzle_json_encode;
 use function GuzzleHttp\Psr7\parse_request as guzzle_parse_request;
 use function GuzzleHttp\Psr7\parse_response as guzzle_parse_response;
 use function GuzzleHttp\Psr7\str as guzzle_stringify_message;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LogLevel;
 
 /**
  * Message class.
