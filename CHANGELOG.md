@@ -6,7 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.2.4...HEAD)
 
 <!-- PENDING-CHANGES -->
-> No meaningful changes since last release.
+### Internal
+* Minor changes in how tests are handled. These should not have any impact on users.
 <!-- /PENDING-CHANGES -->
 
 ## [2.2.4](https://github.com/contentful/contentful-core.php/tree/2.2.4) (2018-11-26)

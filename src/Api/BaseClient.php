@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2019 Contentful GmbH
  * @license   MIT
  */
 
@@ -13,10 +13,10 @@ namespace Contentful\Core\Api;
 
 use Contentful\Core\Log\NullLogger;
 use GuzzleHttp\Client as HttpClient;
+use function GuzzleHttp\json_decode as guzzle_json_decode;
 use Jean85\PrettyVersions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
-use function GuzzleHttp\json_decode as guzzle_json_decode;
 
 /**
  * Abstract client for common code for the different clients.

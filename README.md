@@ -20,4 +20,4 @@ This package provides foundation components for both [Delivery SDK](https://gith
 
 ## License
 
-Copyright (c) 2015-2018 Contentful GmbH. Code released under the MIT license. See [LICENSE](LICENSE) for further details.
+Copyright (c) 2015-2019 Contentful GmbH. Code released under the MIT license. See [LICENSE](LICENSE) for further details.

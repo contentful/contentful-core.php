@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2018 Contentful GmbH
+ * @copyright 2015-2019 Contentful GmbH
  * @license   MIT
  */
 
@@ -13,8 +13,8 @@ namespace Contentful\Core\Api;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
-use Psr\Http\Message\RequestInterface;
 use function GuzzleHttp\json_decode as guzzle_json_decode;
+use Psr\Http\Message\RequestInterface;
 
 class Requester
 {
