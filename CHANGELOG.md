@@ -3,12 +3,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.2.4...HEAD)
+## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.2.5...HEAD)
 
 <!-- PENDING-CHANGES -->
+> No meaningful changes since last release.
+<!-- /PENDING-CHANGES -->
+
+## [2.2.5](https://github.com/contentful/contentful-core.php/tree/2.2.5) (2019-01-25)
+
 ### Internal
 * Minor changes in how tests are handled. These should not have any impact on users.
-<!-- /PENDING-CHANGES -->
 
 ## [2.2.4](https://github.com/contentful/contentful-core.php/tree/2.2.4) (2018-11-26)
 
