@@ -65,7 +65,7 @@ class UserAgentGenerator
         $this->application = $name.($version ? '/'.$version : '');
 
         // Reset the cached value
-        $this->cachedUserAgent = \null;
+        $this->cachedUserAgent = null;
 
         return $this;
     }
@@ -84,7 +84,7 @@ class UserAgentGenerator
         $this->integration = $name.($version ? '/'.$version : '');
 
         // Reset the cached value
-        $this->cachedUserAgent = \null;
+        $this->cachedUserAgent = null;
 
         return $this;
     }
@@ -127,7 +127,7 @@ class UserAgentGenerator
      */
     public function getUserAgent(): string
     {
-        if (\null === $this->cachedUserAgent) {
+        if (null === $this->cachedUserAgent) {
             $this->cachedUserAgent = $this->generate();
         }
 

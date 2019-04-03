@@ -32,8 +32,8 @@ COMMENT;
     }
 
     $rules = [
-        '@Symfony' => \true,
-        '@Symfony:risky' => \true,
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
         'array_syntax' => [
             'syntax' => 'short',
         ],
@@ -43,43 +43,43 @@ COMMENT;
             'location' => 'after_open',
             'separate' => 'both',
         ],
-        'linebreak_after_opening_tag' => \true,
-        'logical_operators' => \true,
-        'mb_str_functions' => \true,
-        'method_chaining_indentation' => \true,
+        'linebreak_after_opening_tag' => true,
+        'logical_operators' => true,
+        'mb_str_functions' => true,
+        'method_chaining_indentation' => true,
         'multiline_whitespace_before_semicolons' => [
             'strategy' => 'new_line_for_chained_calls',
         ],
-        'multiline_comment_opening_closing' => \true,
+        'multiline_comment_opening_closing' => true,
         'native_constant_invocation' => [
-            'exclude' => [],
+            'exclude' => ['null', 'false', 'true'],
         ],
-        'native_function_invocation' => \true,
-        'no_php4_constructor' => \true,
-        'no_unreachable_default_argument_value' => \true,
-        'no_useless_else' => \true,
-        'no_useless_return' => \true,
-        'ordered_imports' => \true,
-        'php_unit_construct' => \true,
-        'php_unit_dedicate_assert' => \true,
-        'php_unit_strict' => \true,
-        'phpdoc_add_missing_param_annotation' => \true,
-        'phpdoc_order' => \true,
-        'semicolon_after_instruction' => \true,
-        'strict_comparison' => \true,
-        'strict_param' => \true,
+        'native_function_invocation' => true,
+        'no_php4_constructor' => true,
+        'no_unreachable_default_argument_value' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'ordered_imports' => true,
+        'php_unit_construct' => true,
+        'php_unit_dedicate_assert' => true,
+        'php_unit_strict' => true,
+        'phpdoc_add_missing_param_annotation' => true,
+        'phpdoc_order' => true,
+        'semicolon_after_instruction' => true,
+        'strict_comparison' => true,
+        'strict_param' => true,
     ];
 
     if ($usePhp7) {
-        $rules['declare_strict_types'] = \true;
-        $rules['ternary_to_null_coalescing'] = \true;
+        $rules['declare_strict_types'] = true;
+        $rules['ternary_to_null_coalescing'] = true;
     }
 
     $cache = \tempnam(\sys_get_temp_dir(), $packageName).'-php_cs.cache';
 
     return Config::create()
         ->setFinder($finder)
-        ->setRiskyAllowed(\true)
+        ->setRiskyAllowed(true)
         ->setCacheFile($cache)
         ->setRules($rules)
     ;

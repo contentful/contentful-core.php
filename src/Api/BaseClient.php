@@ -64,8 +64,8 @@ abstract class BaseClient implements ClientInterface
     public function __construct(
         string $accessToken,
         string $host,
-        LoggerInterface $logger = \null,
-        HttpClient $httpClient = \null
+        LoggerInterface $logger = null,
+        HttpClient $httpClient = null
     ) {
         $this->logger = $logger ?: new NullLogger();
         $this->requester = new Requester(
@@ -113,7 +113,7 @@ abstract class BaseClient implements ClientInterface
         $this->logMessage($message);
 
         $exception = $message->getException();
-        if (\null !== $exception) {
+        if (null !== $exception) {
             throw $exception;
         }
 
@@ -151,14 +151,14 @@ abstract class BaseClient implements ClientInterface
      *
      * @return array
      */
-    private function parseResponse(ResponseInterface $response = \null): array
+    private function parseResponse(ResponseInterface $response = null): array
     {
         $body = $response
             ? (string) $response->getBody()
-            : \null;
+            : null;
 
         return $body
-            ? guzzle_json_decode($body, \true)
+            ? guzzle_json_decode($body, true)
             : [];
     }
 
@@ -171,7 +171,7 @@ abstract class BaseClient implements ClientInterface
      */
     protected function getExceptionNamespace()
     {
-        return \null;
+        return null;
     }
 
     /**

@@ -79,7 +79,7 @@ class Exception extends \RuntimeException implements \Serializable
             'line' => $this->line,
             'requestId' => $this->requestId,
             'request' => guzzle_stringify_message($this->request),
-            'response' => $this->response ? guzzle_stringify_message($this->response) : \null,
+            'response' => $this->response ? guzzle_stringify_message($this->response) : null,
         ]);
     }
 
@@ -96,7 +96,7 @@ class Exception extends \RuntimeException implements \Serializable
         $this->line = $data['line'];
         $this->requestId = $data['requestId'];
         $this->request = guzzle_parse_request($data['request']);
-        $this->response = $data['response'] ? guzzle_parse_response($data['response']) : \null;
+        $this->response = $data['response'] ? guzzle_parse_response($data['response']) : null;
     }
 
     /**
@@ -107,14 +107,14 @@ class Exception extends \RuntimeException implements \Serializable
      */
     private static function createExceptionMessage(
         RequestException $previous,
-        ResponseInterface $response = \null
+        ResponseInterface $response = null
     ): string {
         if (!$response) {
             return $previous->getMessage();
         }
 
         try {
-            $result = guzzle_json_decode((string) $response->getBody(), \true);
+            $result = guzzle_json_decode((string) $response->getBody(), true);
             if (isset($result['message'])) {
                 return $result['message'];
             }
@@ -152,7 +152,7 @@ class Exception extends \RuntimeException implements \Serializable
      */
     public function hasResponse(): bool
     {
-        return \null !== $this->response;
+        return null !== $this->response;
     }
 
     /**
