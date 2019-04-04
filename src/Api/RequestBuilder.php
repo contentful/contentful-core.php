@@ -71,11 +71,11 @@ class RequestBuilder
      */
     public function build(string $method, string $path, array $options): RequestInterface
     {
-        $body = $options['body'] ?? \null;
+        $body = $options['body'] ?? null;
 
         $uri = $this->getUri(
             $path,
-            $options['host'] ?? \null,
+            $options['host'] ?? null,
             $options['query'] ?? []
         );
 
@@ -94,7 +94,7 @@ class RequestBuilder
      *
      * @return UriInterface
      */
-    private function getUri(string $path, string $host = \null, array $query = []): UriInterface
+    private function getUri(string $path, string $host = null, array $query = []): UriInterface
     {
         $host = $host ? new Uri($host) : $this->host;
         $uri = UriResolver::resolve($host, new Uri($path));

@@ -136,7 +136,7 @@ abstract class BaseQuery
             'skip' => $this->skip,
             'content_type' => $this->contentType,
             'mimetype_group' => $this->mimeTypeGroup,
-            'order' => $this->orderConditions ? \implode(',', $this->orderConditions) : \null,
+            'order' => $this->orderConditions ? \implode(',', $this->orderConditions) : null,
             'select' => $this->select,
             'links_to_entry' => $this->linksToEntry,
             'links_to_asset' => $this->linksToAsset,
@@ -162,9 +162,9 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function setSkip(int $skip = \null)
+    public function setSkip(int $skip = null)
     {
-        if (\null !== $skip && $skip < 0) {
+        if (null !== $skip && $skip < 0) {
             throw new \RangeException(\sprintf(
                 'Skip value must be 0 or bigger, "%d" given.',
                 $skip
@@ -185,9 +185,9 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function setLimit(int $limit = \null)
+    public function setLimit(int $limit = null)
     {
-        if (\null !== $limit && ($limit < 1 || $limit > 1000)) {
+        if (null !== $limit && ($limit < 1 || $limit > 1000)) {
             throw new \RangeException(\sprintf(
                 'Limit value must be between 0 and 1000, "%d" given.',
                 $limit
@@ -210,7 +210,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function orderBy(string $field, bool $reverse = \false)
+    public function orderBy(string $field, bool $reverse = false)
     {
         if ($reverse) {
             $field = '-'.$field;
@@ -230,7 +230,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function setContentType(string $contentType = \null)
+    public function setContentType(string $contentType = null)
     {
         $this->contentType = $contentType;
 
@@ -244,9 +244,9 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function setMimeTypeGroup(string $group = \null)
+    public function setMimeTypeGroup(string $group = null)
     {
-        if (\null !== $group && !\in_array($group, self::$validGroups, \true)) {
+        if (null !== $group && !\in_array($group, self::$validGroups, true)) {
             throw new \InvalidArgumentException(\sprintf(
                 'Unknown MIME-type group "%s" given. Expected "%s" or null.',
                 $group,
@@ -277,7 +277,7 @@ abstract class BaseQuery
         if (\preg_match('/(.+)\[([a-zA-Z]+)\]/', $field, $matches)) {
             $operator = \mb_strtolower($matches[2]);
 
-            if (!\in_array($operator, self::$validOperators, \true)) {
+            if (!\in_array($operator, self::$validOperators, true)) {
                 throw new \InvalidArgumentException(\sprintf(
                     'Unknown operator "%s" given. Expected "%s" or no operator.',
                     $operator,

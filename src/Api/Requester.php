@@ -40,7 +40,7 @@ class Requester
      * @param string      $api
      * @param string|null $exceptionNamespace
      */
-    public function __construct(HttpClient $client, string $api, string $exceptionNamespace = \null)
+    public function __construct(HttpClient $client, string $api, string $exceptionNamespace = null)
     {
         $this->httpClient = $client;
         $this->api = $api;
@@ -57,20 +57,20 @@ class Requester
      */
     public function sendRequest(RequestInterface $request): Message
     {
-        $startTime = \microtime(\true);
+        $startTime = \microtime(true);
 
-        $exception = \null;
+        $exception = null;
         try {
             $response = $this->httpClient->send($request);
         } catch (ClientException $exception) {
             $response = $exception->hasResponse()
                 ? $exception->getResponse()
-                : \null;
+                : null;
 
             $exception = $this->createCustomException($exception);
         }
 
-        $duration = \microtime(\true) - $startTime;
+        $duration = \microtime(true) - $startTime;
 
         return new Message(
             $this->api,
@@ -94,7 +94,7 @@ class Requester
         $errorId = '';
         $response = $exception->getResponse();
         if ($response) {
-            $data = guzzle_json_decode((string) $response->getBody(), \true);
+            $data = guzzle_json_decode((string) $response->getBody(), true);
             $errorId = (string) $data['sys']['id'] ?? '';
         }
 
