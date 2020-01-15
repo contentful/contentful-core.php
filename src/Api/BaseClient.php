@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Contentful\Core\Api;
 
+use Contentful\Core\Exception\RateLimitExceededException;
 use Contentful\Core\Log\NullLogger;
 use GuzzleHttp\Client as HttpClient;
 use function GuzzleHttp\json_decode as guzzle_json_decode;
@@ -52,6 +53,10 @@ abstract class BaseClient implements ClientInterface
      * @var Message[]
      */
     private $messages = [];
+
+    private $maxRateLimitRetries = null;
+
+    private $maxRateLimitWait = 60;
 
     /**
      * Client constructor.
@@ -114,7 +119,31 @@ abstract class BaseClient implements ClientInterface
 
         $exception = $message->getException();
         if (null !== $exception) {
-            throw $exception;
+
+            if($exception instanceof RateLimitExceededException) {
+                if(is_null($this->maxRateLimitRetries)) {
+                    $this->maxRateLimitRetries =  isset($options['max_rate_limit_retries'])?$options['max_rate_limit_retries']:0;
+                }
+
+                $secondsRemaing =  $message->getResponse()->getHeader('X-Contentful-RateLimit-Second-Remaining');
+                if(isset($secondsRemaing[0])) {
+                    if($secondsRemaing[0] > $this->maxRateLimitWait) {
+                        throw $exception;
+                    }
+                }
+
+                if($this->maxRateLimitRetries > 0) {
+                    $this->maxRateLimitRetries--;
+                    return $this->callApi($method, $uri, $options);
+                }
+                else {
+                    throw $exception;
+                }
+            }
+            else {
+                throw $exception;
+            }
+
         }
 
         return $this->parseResponse($message->getResponse());

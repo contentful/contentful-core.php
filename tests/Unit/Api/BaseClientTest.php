@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Contentful\Tests\Core\Unit\Api;
 
+use Contentful\Core\Exception\RateLimitExceededException;
 use Contentful\Tests\Core\Implementation\Application;
 use Contentful\Tests\Core\Implementation\Client;
 use Contentful\Tests\Core\Implementation\ClientCustomException;
@@ -113,6 +114,49 @@ class BaseClientTest extends TestCase
         $client = new Client('b4c0n73n7fu1', 'https://cdn.contentful.com', \null, $httpClient);
 
         $client->callApi('GET', '/spaces/invalid');
+    }
+
+    public function testRetryLimitReachedWithLimit() {
+
+    }
+
+    public function testRetryLimiteReachedNoLimit() {
+
+    }
+
+    public function testMaxRetryLimitWaitExceeded() {
+
+    }
+
+    public function testRetrylimitTwo() {
+        $callCount = 0;
+        $httpClient = $this->createHttpClient(function (RequestInterface $request) use (&$callCount) {
+            $callCount++;
+            if($callCount < 3) {
+                $response = new Response(
+                    429,
+                    [
+                        'X-Contentful-Request-Id' => 'd533d76293f8bb047467344a28beffe0',
+                        'X-Contentful-RateLimit-Reset' => 2,
+                        'X-Contentful-RateLimit-Second-Remaining' => 5
+                    ],
+                    $this->getFixtureContent('rate_limit.json')
+                );
+
+                throw new ClientException('Reached rate limit', $request, $response);
+            }
+            else {
+                return new Response(200);
+            }
+        });
+
+        $client = new ClientCustomException('irrelevant', 'https://api.contentful.com', \null, $httpClient);
+        $client->callApi('GET', '/', ['max_rate_limit_retries' => 2]);
+
+        $this->assertEquals(429, $client->getMessages()[0]->getResponse()->getStatusCode());
+        $this->assertEquals(429, $client->getMessages()[1]->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getMessages()[2]->getResponse()->getStatusCode());
+
     }
 
     public function testCustomException()

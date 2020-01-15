@@ -1,0 +1,8 @@
+{
+  "requestId":"d533d76293f8bb047467344a28beffe0",
+  "message":"Reached rate limit for environment creation for space pmgjoasidv3w",
+  "sys":{
+    "type":"Error",
+    "id":"RateLimitExceeded"
+  }
+}
