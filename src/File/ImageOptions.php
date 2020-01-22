@@ -308,6 +308,7 @@ class ImageOptions implements UrlOptionsInterface
             'top_left',
             'bottom_right',
             'bottom_left',
+            'center'
         ];
 
         if (\null !== $resizeFocus && !\in_array($resizeFocus, $validValues, \true)) {
