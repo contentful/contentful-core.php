@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -202,7 +202,7 @@ class ImageOptionsTest extends TestCase
 
     /**
      * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Unknown resize focus "invalid" given. Expected "face, faces, top, bottom, right, left, top_right, top_left, bottom_right, bottom_left" or null.
+     * @expectedExceptionMessage Unknown resize focus "invalid" given. Expected "face, faces, top, bottom, right, left, top_right, top_left, bottom_right, bottom_left, center" or null.
      */
     public function testSetResizeFocusInvalid()
     {

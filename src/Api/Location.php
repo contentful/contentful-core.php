@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -26,10 +26,6 @@ class Location implements \JsonSerializable
      */
     private $longitude;
 
-    /**
-     * @param float $latitude
-     * @param float $longitude
-     */
     public function __construct(float $latitude, float $longitude)
     {
         $this->latitude = $latitude;
@@ -38,8 +34,6 @@ class Location implements \JsonSerializable
 
     /**
      * Returns the latitude.
-     *
-     * @return float
      */
     public function getLatitude(): float
     {
@@ -48,8 +42,6 @@ class Location implements \JsonSerializable
 
     /**
      * Returns the longitude.
-     *
-     * @return float
      */
     public function getLongitude(): float
     {

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -34,10 +34,6 @@ class SecretResource implements ResourceInterface
 
     /**
      * SecretResource constructor.
-     *
-     * @param string $id
-     * @param string $type
-     * @param string $secretId
      */
     public function __construct(string $id, string $type, string $secretId)
     {

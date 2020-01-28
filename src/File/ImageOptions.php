@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -100,7 +100,7 @@ class ImageOptions implements UrlOptionsInterface
         if (\null !== $this->resizeFit) {
             $options['fit'] = $this->resizeFit;
 
-            if ( (
+            if ((
                     'pad' === $this->resizeFit ||
                     'fill' === $this->resizeFit ||
                     'crop' === $this->resizeFit ||
@@ -184,11 +184,7 @@ class ImageOptions implements UrlOptionsInterface
         $validValues = ['png', 'jpg', 'webp'];
 
         if (\null !== $format && !\in_array($format, $validValues, \true)) {
-            throw new \InvalidArgumentException(\sprintf(
-                'Unknown format "%s" given. Expected "%s" or null.',
-                $format,
-                \implode(', ', $validValues)
-            ));
+            throw new \InvalidArgumentException(\sprintf('Unknown format "%s" given. Expected "%s" or null.', $format, \implode(', ', $validValues)));
         }
 
         $this->format = $format;
@@ -209,10 +205,7 @@ class ImageOptions implements UrlOptionsInterface
     public function setQuality(int $quality = \null)
     {
         if (\null !== $quality && ($quality < 1 || $quality > 100)) {
-            throw new \InvalidArgumentException(\sprintf(
-                'Quality must be between 1 and 100, "%d" given.',
-                $quality
-            ));
+            throw new \InvalidArgumentException(\sprintf('Quality must be between 1 and 100, "%d" given.', $quality));
         }
 
         $this->quality = $quality;
@@ -223,8 +216,6 @@ class ImageOptions implements UrlOptionsInterface
     /**
      * Set to true to load the image as a progressive JPEG.
      * The image format will be forced to JPEG.
-     *
-     * @param bool $progressive
      *
      * @return $this
      */
@@ -238,8 +229,6 @@ class ImageOptions implements UrlOptionsInterface
     /**
      * Set to true to load the image as a 8-bit PNG.
      * The image format will be forced to PNG.
-     *
-     * @param bool $png8Bit
      *
      * @return $this
      */
@@ -275,11 +264,7 @@ class ImageOptions implements UrlOptionsInterface
         $validValues = ['pad', 'crop', 'fill', 'thumb', 'scale'];
 
         if (\null !== $resizeFit && !\in_array($resizeFit, $validValues, \true)) {
-            throw new \InvalidArgumentException(\sprintf(
-                'Unknown resize fit "%s" given. Expected "%s" or null.',
-                $resizeFit,
-                \implode(', ', $validValues)
-            ));
+            throw new \InvalidArgumentException(\sprintf('Unknown resize fit "%s" given. Expected "%s" or null.', $resizeFit, \implode(', ', $validValues)));
         }
 
         $this->resizeFit = $resizeFit;
@@ -314,15 +299,11 @@ class ImageOptions implements UrlOptionsInterface
             'top_left',
             'bottom_right',
             'bottom_left',
-            'center'
+            'center',
         ];
 
         if (\null !== $resizeFocus && !\in_array($resizeFocus, $validValues, \true)) {
-            throw new \InvalidArgumentException(\sprintf(
-                'Unknown resize focus "%s" given. Expected "%s" or null.',
-                $resizeFocus,
-                \implode(', ', $validValues)
-            ));
+            throw new \InvalidArgumentException(\sprintf('Unknown resize focus "%s" given. Expected "%s" or null.', $resizeFocus, \implode(', ', $validValues)));
         }
 
         $this->resizeFocus = $resizeFocus;

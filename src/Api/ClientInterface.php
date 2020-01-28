@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -27,25 +27,18 @@ interface ClientInterface
      *                        * host    A string that can be used to override the default client base URI
      *
      * @throws \RuntimeException
-     *
-     * @return ResourceInterface
      */
     public function request(string $method, string $uri, array $options = []): ResourceInterface;
 
     /**
      * Sets the current application.
      * The values are used as part of the X-Contentful-User-Agent header.
-     *
-     * @param ApplicationInterface $application
      */
     public function useApplication(ApplicationInterface $application);
 
     /**
      * Set the application name and version.
      * The values are used as part of the X-Contentful-User-Agent header.
-     *
-     * @param string $name
-     * @param string $version
      *
      * @deprecated 2.2.0 Use useApplication instead
      */
@@ -54,8 +47,6 @@ interface ClientInterface
     /**
      * Sets the current integration.
      * The values are used as part of the X-Contentful-User-Agent header.
-     *
-     * @param IntegrationInterface $integration
      */
     public function useIntegration(IntegrationInterface $integration);
 
@@ -63,17 +54,12 @@ interface ClientInterface
      * Set the integration name and version.
      * The values are used as part of the X-Contentful-User-Agent header.
      *
-     * @param string $name
-     * @param string $version
-     *
      * @deprecated 2.2.0 Use useIntegration instead
      */
     public function setIntegration(string $name, string $version = '');
 
     /**
      * Returns a string representation of the API currently in use.
-     *
-     * @return string
      */
     public function getApi(): string;
 }

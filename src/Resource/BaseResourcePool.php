@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -20,10 +20,6 @@ abstract class BaseResourcePool implements ResourcePoolInterface
 
     /**
      * Sanitizes potentially problematic characters for resource keys.
-     *
-     * @param string $value
-     *
-     * @return string
      */
     protected function sanitize(string $value): string
     {

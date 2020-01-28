@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -36,11 +36,6 @@ class TestCase extends BaseTestCase
 
     /**
      * Asserts that a Link object has a certain ID and type.
-     *
-     * @param string $id
-     * @param string $linkType
-     * @param Link   $link
-     * @param string $message
      */
     protected function assertLink(string $id, string $linkType, Link $link, string $message = '')
     {
@@ -51,9 +46,7 @@ class TestCase extends BaseTestCase
     /**
      * Asserts that the JSON serialization of a certain object equals to the given fixture (as file path).
      *
-     * @param string $file
      * @param object $object
-     * @param string $message
      */
     protected function assertJsonFixtureEqualsJsonObject(string $file, $object, string $message = '')
     {
@@ -64,10 +57,6 @@ class TestCase extends BaseTestCase
 
     /**
      * Asserts that the given JSON equals to the given fixture (as file path).
-     *
-     * @param string $file
-     * @param string $string
-     * @param string $message
      */
     protected function assertJsonFixtureEqualsJsonString(string $file, string $string, string $message = '')
     {
@@ -79,9 +68,8 @@ class TestCase extends BaseTestCase
     /**
      * Asserts that any two variables will be serialized to the same JSON structure.
      *
-     * @param        $expected
-     * @param        $object
-     * @param string $message
+     * @param $expected
+     * @param $object
      */
     protected function assertJsonStructuresAreEqual($expected, $object, string $message = '')
     {
@@ -92,11 +80,6 @@ class TestCase extends BaseTestCase
         );
     }
 
-    /**
-     * @param string $file
-     *
-     * @return string
-     */
     protected function getFixtureContent(string $file): string
     {
         $dir = $this->convertClassToFixturePath(\debug_backtrace()[1]['class']);
@@ -105,8 +88,6 @@ class TestCase extends BaseTestCase
     }
 
     /**
-     * @param string $file
-     *
      * @return array|null
      */
     protected function getParsedFixture(string $file)
@@ -116,9 +97,6 @@ class TestCase extends BaseTestCase
         return guzzle_json_decode(\file_get_contents($dir.'/'.$file), \true);
     }
 
-    /**
-     * @return string
-     */
     protected function getTestFixturesPath(): string
     {
         return $this->convertClassToFixturePath(\debug_backtrace()[1]['class']);
@@ -129,10 +107,6 @@ class TestCase extends BaseTestCase
      * For instance, it will convert a the class
      * Contentful\Tests\Core\Unit\Api\BaseClient
      * to 'tests/Fixtures/Unit/Api/BaseClient/'.$file.
-     *
-     * @param string $class
-     *
-     * @return string
      */
     protected function convertClassToFixturePath(string $class): string
     {

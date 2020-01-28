@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -30,9 +30,6 @@ class Link implements \JsonSerializable
 
     /**
      * Link constructor.
-     *
-     * @param string $linkId
-     * @param string $linkType
      */
     public function __construct(string $linkId, string $linkType)
     {
@@ -42,8 +39,6 @@ class Link implements \JsonSerializable
 
     /**
      * Get the ID of the referenced resource.
-     *
-     * @return string
      */
     public function getId(): string
     {
@@ -52,8 +47,6 @@ class Link implements \JsonSerializable
 
     /**
      * Get the type of the Link.
-     *
-     * @return string
      */
     public function getLinkType(): string
     {

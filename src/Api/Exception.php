@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -46,9 +46,6 @@ class Exception extends \RuntimeException implements \Serializable
 
     /**
      * Exception constructor.
-     *
-     * @param RequestException $previous
-     * @param string           $message
      */
     public function __construct(RequestException $previous, string $message = '')
     {
@@ -99,12 +96,6 @@ class Exception extends \RuntimeException implements \Serializable
         $this->response = $data['response'] ? guzzle_parse_response($data['response']) : null;
     }
 
-    /**
-     * @param RequestException       $previous
-     * @param ResponseInterface|null $response
-     *
-     * @return string
-     */
     private static function createExceptionMessage(
         RequestException $previous,
         ResponseInterface $response = null
@@ -127,8 +118,6 @@ class Exception extends \RuntimeException implements \Serializable
 
     /**
      * Get the request that caused the exception.
-     *
-     * @return RequestInterface
      */
     public function getRequest(): RequestInterface
     {
@@ -147,8 +136,6 @@ class Exception extends \RuntimeException implements \Serializable
 
     /**
      * Check if a response was received.
-     *
-     * @return bool
      */
     public function hasResponse(): bool
     {

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -37,11 +37,10 @@ class RequestBuilderTest extends TestCase
     /**
      * @dataProvider requestProvider
      *
-     * @param string           $method
-     * @param string           $path
-     * @param string[]         $options
-     * @param RequestInterface $request
-     * @param array            $headers
+     * @param string   $method
+     * @param string   $path
+     * @param string[] $options
+     * @param array    $headers
      */
     public function testBuilder($method, $path, $options, RequestInterface $request, $headers = [])
     {
