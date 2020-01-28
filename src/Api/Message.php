@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -55,12 +55,6 @@ class Message implements \Serializable, \JsonSerializable
 
     /**
      * Constructor.
-     *
-     * @param string                 $api
-     * @param float                  $duration
-     * @param RequestInterface       $request
-     * @param ResponseInterface|null $response
-     * @param Exception|null         $exception
      */
     public function __construct(
         string $api,
@@ -70,10 +64,7 @@ class Message implements \Serializable, \JsonSerializable
         Exception $exception = null
     ) {
         if (!\in_array($api, ['DELIVERY', 'PREVIEW', 'MANAGEMENT'], true)) {
-            throw new \InvalidArgumentException(\sprintf(
-                'Unknown API value "%s".',
-                $api
-            ));
+            throw new \InvalidArgumentException(\sprintf('Unknown API value "%s".', $api));
         }
 
         $this->api = $api;
@@ -85,10 +76,6 @@ class Message implements \Serializable, \JsonSerializable
 
     /**
      * Creates a new instance of the class from a JSON string.
-     *
-     * @param string $json
-     *
-     * @return self
      */
     public static function createFromString(string $json): self
     {
@@ -101,9 +88,7 @@ class Message implements \Serializable, \JsonSerializable
             !isset($data['duration']) ||
             !isset($data['exception'])
         ) {
-            throw new \InvalidArgumentException(
-                'String passed to Message::createFromString() is valid JSON but does not contain required fields.'
-            );
+            throw new \InvalidArgumentException('String passed to Message::createFromString() is valid JSON but does not contain required fields.');
         }
 
         return new self(
@@ -115,9 +100,6 @@ class Message implements \Serializable, \JsonSerializable
         );
     }
 
-    /**
-     * @return string
-     */
     public function getLogLevel(): string
     {
         return $this->isError()
@@ -125,17 +107,11 @@ class Message implements \Serializable, \JsonSerializable
             : LogLevel::INFO;
     }
 
-    /**
-     * @return string
-     */
     public function getApi(): string
     {
         return $this->api;
     }
 
-    /**
-     * @return RequestInterface
-     */
     public function getRequest(): RequestInterface
     {
         return $this->request;
@@ -151,8 +127,6 @@ class Message implements \Serializable, \JsonSerializable
 
     /**
      * The duration in microseconds.
-     *
-     * @return float
      */
     public function getDuration(): float
     {
@@ -169,17 +143,12 @@ class Message implements \Serializable, \JsonSerializable
 
     /**
      * True if the requests threw an error.
-     *
-     * @return bool
      */
     public function isError(): bool
     {
         return null !== $this->exception;
     }
 
-    /**
-     * @return array
-     */
     private function asSerializableArray(): array
     {
         return [
@@ -223,17 +192,12 @@ class Message implements \Serializable, \JsonSerializable
 
     /**
      * Returns a string representation of the current message.
-     *
-     * @return string
      */
     public function asString(): string
     {
         return guzzle_json_encode($this);
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return $this->asString();

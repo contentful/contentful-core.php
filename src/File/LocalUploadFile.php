@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -56,9 +56,6 @@ class LocalUploadFile implements UnprocessedFileInterface
         return $this->contentType;
     }
 
-    /**
-     * @return Link
-     */
     public function getUploadFrom(): Link
     {
         return $this->uploadFrom;

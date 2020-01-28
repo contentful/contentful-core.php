@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -17,16 +17,12 @@ interface IntegrationInterface
      * Returns the name of the current integration.
      * This value must be the one that is sent as part of
      * the "X-Contentful-User-Agent" header to the API.
-     *
-     * @return string
      */
     public function getIntegrationName(): string;
 
     /**
      * Returns the package name of the current integration.
      * This value must be the one defined in the "composer.json" file.
-     *
-     * @return string
      */
     public function getIntegrationPackageName(): string;
 }

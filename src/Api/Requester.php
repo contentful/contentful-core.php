@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -35,10 +35,6 @@ class Requester
 
     /**
      * ApiRequester constructor.
-     *
-     * @param HttpClient  $client
-     * @param string      $api
-     * @param string|null $exceptionNamespace
      */
     public function __construct(HttpClient $client, string $api, string $exceptionNamespace = null)
     {
@@ -50,10 +46,6 @@ class Requester
     /**
      * Queries the API, and returns a message object
      * which contains all information needed for processing and logging.
-     *
-     * @param RequestInterface $request
-     *
-     * @return Message
      */
     public function sendRequest(RequestInterface $request): Message
     {
@@ -84,10 +76,6 @@ class Requester
     /**
      * Attempts to create a custom exception.
      * It will return a default exception if no suitable class is found.
-     *
-     * @param ClientException $exception
-     *
-     * @return Exception
      */
     private function createCustomException(ClientException $exception): Exception
     {
@@ -105,10 +93,6 @@ class Requester
 
     /**
      * Returns the FQCN of an exception class to be used for the given API error.
-     *
-     * @param string $apiError
-     *
-     * @return string
      */
     private function getExceptionClass(string $apiError): string
     {

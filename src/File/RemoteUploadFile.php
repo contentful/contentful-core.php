@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -33,10 +33,6 @@ class RemoteUploadFile implements UnprocessedFileInterface
 
     /**
      * RemoteUploadFile constructor.
-     *
-     * @param string $fileName
-     * @param string $contentType
-     * @param string $upload
      */
     public function __construct(string $fileName, string $contentType, string $upload)
     {
@@ -61,9 +57,6 @@ class RemoteUploadFile implements UnprocessedFileInterface
         return $this->contentType;
     }
 
-    /**
-     * @return string
-     */
     public function getUpload(): string
     {
         return $this->upload;

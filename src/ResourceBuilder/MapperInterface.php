@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -31,7 +31,6 @@ interface MapperInterface
      * a new instance of the appropriate class.
      *
      * @param ResourceInterface|null $resource
-     * @param array                  $data
      *
      * @return ResourceInterface|ResourceArray
      */

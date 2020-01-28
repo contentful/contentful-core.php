@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -55,11 +55,6 @@ abstract class BaseClient implements ClientInterface
 
     /**
      * Client constructor.
-     *
-     * @param string               $accessToken
-     * @param string               $host
-     * @param LoggerInterface|null $logger
-     * @param HttpClient|null      $httpClient
      */
     public function __construct(
         string $accessToken,
@@ -100,8 +95,6 @@ abstract class BaseClient implements ClientInterface
      *                        * host    A string that can be used to override the default client base URI
      *
      * @throws \Exception
-     *
-     * @return array
      */
     protected function callApi(string $method, string $uri, array $options = []): array
     {
@@ -122,8 +115,6 @@ abstract class BaseClient implements ClientInterface
 
     /**
      * Write information about a message object into the logger.
-     *
-     * @param Message $message
      */
     private function logMessage(Message $message)
     {
@@ -146,10 +137,6 @@ abstract class BaseClient implements ClientInterface
 
     /**
      * Parse the body of a JSON response.
-     *
-     * @param ResponseInterface|null $response
-     *
-     * @return array
      */
     private function parseResponse(ResponseInterface $response = null): array
     {
@@ -174,9 +161,6 @@ abstract class BaseClient implements ClientInterface
         return null;
     }
 
-    /**
-     * @return LoggerInterface
-     */
     public function getLogger(): LoggerInterface
     {
         return $this->logger;
@@ -193,9 +177,6 @@ abstract class BaseClient implements ClientInterface
         return $this->messages;
     }
 
-    /**
-     * @return string
-     */
     public function getHost(): string
     {
         return $this->host;
@@ -247,19 +228,11 @@ abstract class BaseClient implements ClientInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public static function getVersion(): string
     {
         return self::getVersionForPackage(static::getPackageName());
     }
 
-    /**
-     * @param string $package
-     *
-     * @return string
-     */
     protected static function getVersionForPackage(string $package): string
     {
         try {
@@ -280,22 +253,16 @@ abstract class BaseClient implements ClientInterface
 
     /**
      * Returns the packagist name of the current package.
-     *
-     * @return string
      */
     abstract protected static function getPackageName(): string;
 
     /**
      * The name of the library to be used in the User-Agent header.
-     *
-     * @return string
      */
     abstract protected static function getSdkName(): string;
 
     /**
      * Returns the Content-Type (MIME-Type) to be used when communication with the API.
-     *
-     * @return string
      */
     abstract protected static function getApiContentType(): string;
 }

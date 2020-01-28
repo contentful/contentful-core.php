@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2019 Contentful GmbH
+ * @copyright 2015-2020 Contentful GmbH
  * @license   MIT
  */
 
@@ -23,8 +23,6 @@ interface ResourcePoolInterface
     /**
      * Saves the given resource into the pool.
      *
-     * @param ResourceInterface $resource
-     *
      * @throws \RuntimeException If the saving process fails
      *
      * @return bool True is the resource was successfully added, false if it was already present
@@ -34,35 +32,17 @@ interface ResourcePoolInterface
     /**
      * Returns the resource for the given key.
      *
-     * @param string $type
-     * @param string $id
-     * @param array  $options
-     *
      * @throws \OutOfBoundsException If the given key does not represent any stored resource
-     *
-     * @return ResourceInterface
      */
     public function get(string $type, string $id, array $options = []): ResourceInterface;
 
     /**
      * Returns whether the pool contains the given resource.
-     *
-     * @param string $type
-     * @param string $id
-     * @param array  $options
-     *
-     * @return bool
      */
     public function has(string $type, string $id, array $options = []): bool;
 
     /**
      * Generates a unique key for the given data.
-     *
-     * @param string $type
-     * @param string $id
-     * @param array  $options
-     *
-     * @return string
      */
     public function generateKey(string $type, string $id, array $options = []): string;
 }
