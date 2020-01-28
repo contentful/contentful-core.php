@@ -3,11 +3,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.2.2...HEAD)
+## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.2.7...HEAD)
 
 <!-- PENDING-CHANGES -->
 > No meaningful changes since last release.
 <!-- /PENDING-CHANGES -->
+
+## [2.2.7](https://github.com/contentful/contentful-core.php/tree/2.2.7) (2020-01-28)
+
+### Fixed
+
+> Added the missing 'center' option. Consider resizeFit options 'pad', 'fill' and 'crop' per the documentation.
 
 ## [2.2.2](https://github.com/contentful/contentful-core.php/tree/2.2.2) (2020-01-28)
 
