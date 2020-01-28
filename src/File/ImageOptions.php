@@ -100,7 +100,13 @@ class ImageOptions implements UrlOptionsInterface
         if (\null !== $this->resizeFit) {
             $options['fit'] = $this->resizeFit;
 
-            if ('thumb' === $this->resizeFit && \null !== $this->resizeFocus) {
+            if ( (
+                    'pad' === $this->resizeFit ||
+                    'fill' === $this->resizeFit ||
+                    'crop' === $this->resizeFit ||
+                    'thumb' === $this->resizeFit
+                )
+                && \null !== $this->resizeFocus) {
                 $options['f'] = $this->resizeFocus;
             }
             if ('pad' === $this->resizeFit && \null !== $this->backgroundColor) {
@@ -308,6 +314,7 @@ class ImageOptions implements UrlOptionsInterface
             'top_left',
             'bottom_right',
             'bottom_left',
+            'center'
         ];
 
         if (\null !== $resizeFocus && !\in_array($resizeFocus, $validValues, \true)) {
