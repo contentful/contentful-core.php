@@ -3,11 +3,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.2.7...HEAD)
+## [Unreleased](https://github.com/contentful/contentful-core.php/compare/2.2.8...HEAD)
 
 <!-- PENDING-CHANGES -->
 > No meaningful changes since last release.
 <!-- /PENDING-CHANGES -->
+
+## [2.2.8](https://github.com/contentful/contentful-core.php/tree/2.2.8) (2020-01-28)
+
+### Fixed
+
+> Updated unit tests for the new center option. Coding standards.
 
 ## [2.2.7](https://github.com/contentful/contentful-core.php/tree/2.2.7) (2020-01-28)
 
