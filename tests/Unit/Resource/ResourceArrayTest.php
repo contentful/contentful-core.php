@@ -30,24 +30,22 @@ class ResourceArrayTest extends TestCase
 
         $this->assertInstanceOf(ArraySystemProperties::class, $array->getSystemProperties());
     }
-
-    /**
-     * @expectedException        \LogicException
-     * @expectedExceptionMessage Resource of type Array can not be represented as a Link object.
-     */
+    
     public function testArrayCantBeConvertedToLink()
     {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage("Resource of type Array can not be represented as a Link object.");
+        
         (new ResourceArray([], 1, 0, 0))
             ->asLink()
         ;
     }
-
-    /**
-     * @expectedException        \LogicException
-     * @expectedExceptionMessage Resource of type Array does not have an ID.
-     */
+    
     public function testArrayDoesNotHaveAnId()
     {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage("Resource of type Array does not have an ID.");
+        
         (new ResourceArray([], 1, 0, 0))
             ->getId()
         ;
@@ -105,24 +103,22 @@ class ResourceArrayTest extends TestCase
 
         $this->assertSame(['abc', 'def'], $array->getItems());
     }
-
-    /**
-     * @expectedException        \BadMethodCallException
-     * @expectedExceptionMessage "Contentful\Core\Resource\ResourceArray" is read-only.
-     */
+    
     public function testOffsetSetThrows()
     {
+        $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage("\"Contentful\Core\Resource\ResourceArray\" is read-only.");
+        
         $array = new ResourceArray([], 0, 2, 0);
 
         $array[0] = 'abc';
     }
-
-    /**
-     * @expectedException        \BadMethodCallException
-     * @expectedExceptionMessage "Contentful\Core\Resource\ResourceArray" is read-only.
-     */
+    
     public function testOffsetUnsetThrows()
     {
+        $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage("\"Contentful\Core\Resource\ResourceArray\" is read-only.");
+        
         $array = new ResourceArray(['abc'], 10, 2, 0);
 
         unset($array[0]);

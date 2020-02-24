@@ -24,7 +24,7 @@ class RequestBuilderTest extends TestCase
      */
     private $requestBuilder;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->requestBuilder = new RequestBuilder(
             '<accessToken>',
