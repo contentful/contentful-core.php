@@ -33,7 +33,7 @@ class BaseQueryTest extends TestCase
 
         $this->assertSame('limit=150', $query->getQueryString());
     }
-    
+
     public function testLimitThrowsOnValueTooLarge()
     {
         $this->expectException(\RangeException::class);
@@ -42,20 +42,20 @@ class BaseQueryTest extends TestCase
             ->setLimit(1500)
         ;
     }
-    
+
     public function testLimitThrowsOnValueZero()
     {
         $this->expectException(\RangeException::class);
-        $this->expectExceptionMessage("Limit value must be between 0 and 1000, \"0\" given.");
+        $this->expectExceptionMessage('Limit value must be between 0 and 1000, "0" given.');
         (new Query())
             ->setLimit(0)
         ;
     }
-    
+
     public function testLimitThrowsOnValueNegative()
     {
         $this->expectException(\RangeException::class);
-        $this->expectExceptionMessage("Limit value must be between 0 and 1000, \"-1\" given.");
+        $this->expectExceptionMessage('Limit value must be between 0 and 1000, "-1" given.');
         (new Query())
             ->setLimit(-1)
         ;
@@ -80,11 +80,11 @@ class BaseQueryTest extends TestCase
 
         $this->assertSame('skip=10', $query->getQueryString());
     }
-    
+
     public function testSkipThrowsOnValueNegative()
     {
         $this->expectException(\RangeException::class);
-        $this->expectExceptionMessage("Skip value must be 0 or bigger, \"-1\" given.");
+        $this->expectExceptionMessage('Skip value must be 0 or bigger, "-1" given.');
         (new Query())
             ->setSkip(-1)
         ;
@@ -180,20 +180,20 @@ class BaseQueryTest extends TestCase
 
         $this->assertSame('fields.favoriteColor%5Ball%5D=blue%2Cred', $query->getQueryString());
     }
-    
+
     public function testWhereUnknownOperator()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("Unknown operator \"wrong\" given. Expected \"ne, all, in, nin, exists, lt, lte, gt, gte, match, near, within\" or no operator.");
+        $this->expectExceptionMessage('Unknown operator "wrong" given. Expected "ne, all, in, nin, exists, lt, lte, gt, gte, match, near, within" or no operator.');
         (new Query())
             ->where('sys.id[wrong]', 'nyancat')
         ;
     }
-    
+
     public function testSetMimeTypeGroupInvalid()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("Unknown MIME-type group \"invalid\" given. Expected \"attachment, plaintext, image, audio, video, richtext, presentation, spreadsheet, pdfdocument, archive, code, markup\" or null.");
+        $this->expectExceptionMessage('Unknown MIME-type group "invalid" given. Expected "attachment, plaintext, image, audio, video, richtext, presentation, spreadsheet, pdfdocument, archive, code, markup" or null.');
         (new Query())
             ->setMimeTypeGroup('invalid')
         ;

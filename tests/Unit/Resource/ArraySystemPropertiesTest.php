@@ -23,12 +23,12 @@ class ArraySystemPropertiesTest extends TestCase
         $this->assertSame('Array', $sys->getType());
         $this->assertSame(['type' => 'Array'], $sys->jsonSerialize());
     }
-    
+
     public function testGetIdThrowsException()
     {
         $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage("Resource of type Array does not have an ID.");
-        
+        $this->expectExceptionMessage('Resource of type Array does not have an ID.');
+
         (new ArraySystemProperties([]))
             ->getId()
         ;

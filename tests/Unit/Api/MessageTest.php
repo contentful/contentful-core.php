@@ -53,11 +53,11 @@ class MessageTest extends TestCase
         $this->assertJsonFixtureEqualsJsonString('message.json', (string) $message);
         $this->assertJsonFixtureEqualsJsonString('message.json', $message->asString());
     }
-    
+
     public function testInvalidApi()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("Unknown API value \"INVALID_API\".");
+        $this->expectExceptionMessage('Unknown API value "INVALID_API".');
         $request = new Request(
             'POST',
             'http://www.example.com/',
@@ -93,11 +93,11 @@ class MessageTest extends TestCase
         $this->assertSame([], $response->getHeaders());
         $this->assertSame('{"message":"Hello to who?"}', (string) $response->getBody());
     }
-    
+
     public function testCreateFromStringInvalid()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("String passed to Message::createFromString() is valid JSON but does not contain required fields.");
+        $this->expectExceptionMessage('String passed to Message::createFromString() is valid JSON but does not contain required fields.');
         Message::createFromString('{}');
     }
 

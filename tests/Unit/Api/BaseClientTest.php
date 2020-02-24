@@ -72,7 +72,7 @@ class BaseClientTest extends TestCase
         $this->assertSame('DEBUG', $logs[1]['level_name']);
         $context = $logs[1]['context'];
         $this->assertSame('DELIVERY', $context['api']);
-        $this->assertIsFloat( $context['duration']);
+        $this->assertIsFloat($context['duration']);
         $this->assertNull(\unserialize($context['exception']));
 
         try {
@@ -99,7 +99,7 @@ class BaseClientTest extends TestCase
         $this->assertFalse($request->hasHeader('Content-Type'));
         $this->assertSame('application/vnd.contentful.delivery.v1+json', $request->getHeaderLine('Accept'));
     }
-    
+
     public function testErrorPage()
     {
         $httpClient = $this->createHttpClient(function (RequestInterface $request, array $options) {
@@ -108,9 +108,9 @@ class BaseClientTest extends TestCase
             throw new ClientException('Not Found', $request, $response);
         });
         $client = new Client('b4c0n73n7fu1', 'https://cdn.contentful.com', \null, $httpClient);
-        
+
         $this->expectException(NotFoundException::class);
-        $this->expectExceptionMessage("The resource could not be found.");
+        $this->expectExceptionMessage('The resource could not be found.');
 
         $client->callApi('GET', '/spaces/invalid');
     }
