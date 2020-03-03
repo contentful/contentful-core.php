@@ -12,7 +12,7 @@
 
 ## Requirements
 
-This package requires PHP 7.0 or above.
+This package requires PHP 7.2 or above.
 
 ## About
 
