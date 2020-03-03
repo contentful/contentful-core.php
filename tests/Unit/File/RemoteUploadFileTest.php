@@ -21,7 +21,7 @@ class RemoteUploadFileTest extends TestCase
      */
     protected $file;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->file = new RemoteUploadFile(
             'the_great_gatsby.txt',

@@ -70,12 +70,11 @@ class BaseResourceBuilderTest extends TestCase
         $this->assertSame('My awesome entry', $resource->getTitle());
     }
 
-    /**
-     * @expectedException        \RuntimeException
-     * @expectedExceptionMessage Mapper class "MyInvalidMapper" does not exist.
-     */
     public function testInvalidMatch()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Mapper class "MyInvalidMapper" does not exist.');
+
         $builder = new ResourceBuilder();
         $builder->setDataMapperMatcher('Entry', function (array $data) {
             return 'MyInvalidMapper';

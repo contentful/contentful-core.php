@@ -21,7 +21,7 @@ class FileTest extends TestCase
      */
     protected $file;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->file = new File(
             'Nyan_cat_250px_frame.png',

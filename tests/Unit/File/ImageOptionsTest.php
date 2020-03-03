@@ -31,12 +31,10 @@ class ImageOptionsTest extends TestCase
         $this->assertSame('', $options->getQueryString());
     }
 
-    /**
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Width must not be negative.
-     */
     public function testSetWidthNegative()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Width must not be negative.');
         $options = new ImageOptions();
         $options->setWidth(-50);
     }
@@ -57,12 +55,11 @@ class ImageOptionsTest extends TestCase
         $this->assertSame('', $options->getQueryString());
     }
 
-    /**
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Height must not be negative.
-     */
     public function testSetHeightNegative()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Height must not be negative.');
+
         $options = new ImageOptions();
         $options->setHeight(-50);
     }
@@ -83,12 +80,11 @@ class ImageOptionsTest extends TestCase
         $this->assertSame('', $options->getQueryString());
     }
 
-    /**
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Unknown format "invalid" given. Expected "png, jpg, webp" or null.
-     */
     public function testSetFormatInvalid()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown format "invalid" given. Expected "png, jpg, webp" or null.');
+
         $options = new ImageOptions();
         $options->setFormat('invalid');
     }
@@ -109,12 +105,10 @@ class ImageOptionsTest extends TestCase
         $this->assertSame('', $options->getQueryString());
     }
 
-    /**
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Quality must be between 1 and 100, "-50" given.
-     */
     public function testSetQualityNegative()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Quality must be between 1 and 100, "-50" given.');
         $options = new ImageOptions();
         $options->setQuality(-50);
     }
@@ -173,12 +167,10 @@ class ImageOptionsTest extends TestCase
         $this->assertSame('fm=png&fl=png8', $options->getQueryString());
     }
 
-    /**
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Unknown resize fit "invalid" given. Expected "pad, crop, fill, thumb, scale" or null.
-     */
     public function testSetResizeFitInvalid()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown resize fit "invalid" given. Expected "pad, crop, fill, thumb, scale" or null.');
         $options = new ImageOptions();
         $options->setResizeFit('invalid');
     }
@@ -200,12 +192,11 @@ class ImageOptionsTest extends TestCase
         $this->assertSame('', $options->getQueryString());
     }
 
-    /**
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Unknown resize focus "invalid" given. Expected "face, faces, top, bottom, right, left, top_right, top_left, bottom_right, bottom_left, center" or null.
-     */
     public function testSetResizeFocusInvalid()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown resize focus "invalid" given. Expected "face, faces, top, bottom, right, left, top_right, top_left, bottom_right, bottom_left, center" or null.');
+
         $options = new ImageOptions();
         $options->setResizeFocus('invalid');
     }
@@ -228,12 +219,11 @@ class ImageOptionsTest extends TestCase
         $this->assertSame('', $options->getQueryString());
     }
 
-    /**
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Radius must not be negative.
-     */
     public function testSetRadiusNegative()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Radius must not be negative.');
+
         $options = new ImageOptions();
         $options->setRadius(-13.2);
     }
@@ -276,32 +266,29 @@ class ImageOptionsTest extends TestCase
         $this->assertSame('fit=pad&bg=rgb%3AA0F326', $options->getQueryString());
     }
 
-    /**
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Background color must be in hexadecimal format.
-     */
     public function testSetBackgroundColorTooShort()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Background color must be in hexadecimal format.');
+
         $options = new ImageOptions();
         $options->setBackgroundColor('#A0F36');
     }
 
-    /**
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Background color must be in hexadecimal format.
-     */
     public function testSetBackgroundInvalidCharacter()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Background color must be in hexadecimal format.');
+
         $options = new ImageOptions();
         $options->setBackgroundColor('#A0H326');
     }
 
-    /**
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Background color must be in hexadecimal format.
-     */
     public function testSetBackgroundNoHash()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Background color must be in hexadecimal format.');
+
         $options = new ImageOptions();
         $options->setBackgroundColor('A0F326');
     }

@@ -22,7 +22,7 @@ class LocalUploadFileTest extends TestCase
      */
     protected $file;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->file = new LocalUploadFile(
             'the_great_gatsby.txt',
