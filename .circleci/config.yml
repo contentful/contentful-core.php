@@ -9,6 +9,9 @@ workflows:
       - test73
       - test74
       - release:
+          branches:
+            only:
+              - master
           requires:
             - lint
             - test72
