@@ -2,23 +2,22 @@ version: 2
 
 workflows:
   version: 2
-  lint_and_test:
+  
+  main:
     jobs:
       - lint
       - test72
       - test73
       - test74
-  release:
-    branches:
-      only:
-        - master
-    jobs:
-      release:
-        requires:
-          - lint
-          - test72
-          - test73
-          - test74
+      - release:
+          requires:
+            - lint
+            - test72
+            - test73
+            - test74
+          filters:
+            branches:
+              only: master
 
 jobs:
   lint:
