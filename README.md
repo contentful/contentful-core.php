@@ -3,7 +3,7 @@
 [![Packagist](https://img.shields.io/packagist/v/contentful/core.svg?style=for-the-badge)](https://packagist.org/packages/contentful/core)
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/contentful/core.svg?style=for-the-badge)](https://packagist.org/packages/contentful/core)
 [![Packagist](https://img.shields.io/github/license/contentful/contentful-core.php.svg?style=for-the-badge)](https://packagist.org/packages/contentful/core)
-<img height="28px" src="https://circleci.com/gh/contentful/contentful-core.php.svg?style=svg"/>
+<img height="28px" src="https://circleci.com/gh/contentful/contentful-core.php.svg?style=shield"/>
 
 ## What is Contentful?
 
