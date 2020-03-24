@@ -11,9 +11,9 @@ workflows:
       - release:
           requires:
             - lint
-              - test72
-              - test73
-              - test74
+            - test72
+            - test73
+            - test74
 
 jobs:
   lint:
