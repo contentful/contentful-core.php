@@ -104,7 +104,6 @@ abstract class BaseClient implements ClientInterface
         $this->messages[] = $message;
 
         $this->logMessage($message);
-        $a=1;
 
         $exception = $message->getException();
         if (null !== $exception) {
