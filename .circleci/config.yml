@@ -8,15 +8,17 @@ workflows:
       - test72
       - test73
       - test74
-      - release:
-          branches:
-            only:
-              - master
-          requires:
-            - lint
-            - test72
-            - test73
-            - test74
+  release:
+    branches:
+      only:
+        - master
+    jobs:
+      release:
+        requires:
+          - lint
+          - test72
+          - test73
+          - test74
 
 jobs:
   lint:
