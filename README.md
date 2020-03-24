@@ -2,7 +2,7 @@
 
 [![Packagist](https://img.shields.io/packagist/v/contentful/core.svg?style=for-the-badge)](https://packagist.org/packages/contentful/core)
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/contentful/core.svg?style=for-the-badge)](https://packagist.org/packages/contentful/core)
-[![CircleCI](https://circleci.com/gh/contentful/contentful-core.php.svg?style=svg)](https://circleci.com/gh/contentful/contentful-core.php.svg?style=svg)
+[![CircleCI](https://circleci.com/gh/contentful/contentful-core.php.svg?style=shield)](https://circleci.com/gh/contentful/contentful-core.php.svg?style=svg)
 [![Packagist](https://img.shields.io/github/license/contentful/contentful-core.php.svg?style=for-the-badge)](https://packagist.org/packages/contentful/core)
 [![Codecov](https://img.shields.io/codecov/c/github/contentful/contentful-core.php.svg?style=for-the-badge)](https://codecov.io/gh/contentful/contentful-core.php)
 
