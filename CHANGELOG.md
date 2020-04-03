@@ -3,11 +3,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/3.0.0...HEAD)
+## [Unreleased](https://github.com/contentful/contentful-core.php/compare/3.0.2...HEAD)
 
 <!-- PENDING-CHANGES -->
 > No meaningful changes since last release.
 <!-- /PENDING-CHANGES -->
+
+## [3.0.2](https://github.com/contentful/contentful-core.php/tree/3.0.2) (2020-04-03)
+
+### Added
+
+> Added new exception type to better cover guzzle errors
 
 ## [3.0.0](https://github.com/contentful/contentful-core.php/tree/3.0.0) (2020-03-03)
 
