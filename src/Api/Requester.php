@@ -14,6 +14,7 @@ namespace Contentful\Core\Api;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
 use function GuzzleHttp\json_decode as guzzle_json_decode;
+use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 
 class Requester
@@ -82,8 +83,12 @@ class Requester
         $errorId = '';
         $response = $exception->getResponse();
         if ($response) {
-            $data = guzzle_json_decode((string) $response->getBody(), true);
-            $errorId = (string) $data['sys']['id'] ?? '';
+            try {
+                $data = guzzle_json_decode((string) $response->getBody(), true);
+                $errorId = (string) $data['sys']['id'] ?? '';
+            } catch (InvalidArgumentException $invalidArgumentException) {
+                $errorId = 'InvalidResponseBody';
+            }
         }
 
         $exceptionClass = $this->getExceptionClass($errorId);
