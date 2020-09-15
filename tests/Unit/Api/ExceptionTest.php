@@ -23,7 +23,15 @@ class ExceptionTest extends TestCase
     {
         $request = new Request('GET', 'https://cdn.contentful.com/spaces/cfexampleapi/entries');
 
-        $guzzleException = new ClientException('This is an error', $request);
+        $response = new Response(
+            401,
+            ['X-Contentful-Request-Id' => '426753a1639d40c23ad4cbf085a072c7'],
+            '{"sys": {"type": "Error","id": "AccessTokenInvalid","requestId":"426753a1639d40c23ad4cbf085a072c7"}}',
+            1.1,
+            'Unauthorized'
+        );
+
+        $guzzleException = new ClientException('This is an error', $request, $response);
         $exception = new Exception($guzzleException);
 
         $this->assertSame('This is an error', $exception->getMessage());
