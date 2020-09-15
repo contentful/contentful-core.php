@@ -138,7 +138,7 @@ abstract class BaseClient implements ClientInterface
     /**
      * Parse the body of a JSON response.
      */
-    private function parseResponse(ResponseInterface $response = null): array
+    private function parseResponse(ResponseInterface $response = null)
     {
         $body = $response
             ? (string) $response->getBody()

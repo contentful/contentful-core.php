@@ -106,7 +106,7 @@ class Exception extends \RuntimeException implements \Serializable
 
         try {
             $result = guzzle_json_decode((string) $response->getBody(), true);
-            if (isset($result['message'])) {
+            if (\is_array($result) && isset($result['message'])) {
                 return $result['message'];
             }
         } catch (\InvalidArgumentException $e) {

@@ -81,7 +81,7 @@ class Message implements \Serializable, \JsonSerializable
     {
         $data = guzzle_json_decode($json, true);
 
-        if (
+        if (!\is_array($data) ||
             !isset($data['api']) ||
             !isset($data['request']) ||
             !isset($data['response']) ||

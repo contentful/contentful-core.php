@@ -82,13 +82,11 @@ class Requester
     {
         $errorId = '';
         $response = $exception->getResponse();
-        if ($response) {
-            try {
-                $data = guzzle_json_decode((string) $response->getBody(), true);
-                $errorId = (string) $data['sys']['id'] ?? '';
-            } catch (InvalidArgumentException $invalidArgumentException) {
-                $errorId = 'InvalidResponseBody';
-            }
+        try {
+            $data = guzzle_json_decode((string) $response->getBody(), true);
+            $errorId = (\is_array($data) && (string) $data['sys']['id']) ? $data['sys']['id'] : '';
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $errorId = 'InvalidResponseBody';
         }
 
         $exceptionClass = $this->getExceptionClass($errorId);
