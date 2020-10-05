@@ -54,15 +54,22 @@ abstract class BaseClient implements ClientInterface
     private $messages = [];
 
     /**
+     * @var bool
+     */
+    private $storeMessages = true;
+
+    /**
      * Client constructor.
      */
     public function __construct(
         string $accessToken,
         string $host,
         LoggerInterface $logger = null,
-        HttpClient $httpClient = null
+        HttpClient $httpClient = null,
+        bool $storeMessages = true
     ) {
         $this->logger = $logger ?: new NullLogger();
+        $this->storeMessages = $storeMessages;
         $this->requester = new Requester(
             $httpClient ?: new HttpClient(),
             $this->getApi(),
@@ -101,7 +108,9 @@ abstract class BaseClient implements ClientInterface
         $request = $this->requestBuilder->build($method, $uri, $options);
 
         $message = $this->requester->sendRequest($request);
-        $this->messages[] = $message;
+        if ($this->storeMessages) {
+            $this->messages[] = $message;
+        }
 
         $this->logMessage($message);
 
@@ -175,6 +184,16 @@ abstract class BaseClient implements ClientInterface
     public function getMessages(): array
     {
         return $this->messages;
+    }
+
+    /**
+     * Clears the store of Message objects
+     *
+     * @return void
+     */
+    public function clearMesssages(): void
+    {
+        $this->messages = [];
     }
 
     public function getHost(): string

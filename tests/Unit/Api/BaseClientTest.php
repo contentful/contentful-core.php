@@ -228,4 +228,45 @@ class BaseClientTest extends TestCase
             $request->getHeaderLine('X-Contentful-User-Agent')
         );
     }
+
+    public function testClearMessages()
+    {
+        $logger = null;
+        $httpClient = $this->createHttpClient();
+        $client = new Client('b4c0n73n7fu1', 'https://cdn.contentful.com/', $logger, $httpClient);
+        $client->setApplication('sdk-test-application', '1.0');
+
+        $client->callApi('GET', '/spaces/cfexampleapi');
+        $this->assertNotEmpty($client->getMessages());
+        $client->clearMesssages();
+        $this->assertEmpty($client->getMessages());
+    }
+
+    /**
+     * @dataProvider storingMessagesProvider
+     */
+    public function testStoringMessages($storeMessages, $expectedCount)
+    {
+        $logger = null;
+        $httpClient = $this->createHttpClient();
+        $client = new Client('b4c0n73n7fu1', 'https://cdn.contentful.com/', $logger, $httpClient, $storeMessages);
+        $client->setApplication('sdk-test-application', '1.0');
+
+        $client->callApi('GET', '/spaces/cfexampleapi');
+        $this->assertCount($expectedCount, $client->getMessages());
+    }
+
+    public function storingMessagesProvider()
+    {
+        return [
+            'false' => [
+                'storeMessages' => false,
+                'expectedCount' => 0,
+            ],
+            'true' => [
+                'storeMessages' => true,
+                'expectedCount' => 1,
+            ],
+        ];
+    }
 }
