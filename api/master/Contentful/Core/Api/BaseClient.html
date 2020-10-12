@@ -133,7 +133,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(string $accessToken, string $host, <abbr title="Psr\Log\LoggerInterface">LoggerInterface</abbr> $logger = null, <abbr title="GuzzleHttp\Client">Client</abbr> $httpClient = null)
+                    <a href="#method___construct">__construct</a>(string $accessToken, string $host, <abbr title="Psr\Log\LoggerInterface">LoggerInterface</abbr> $logger = null, <abbr title="GuzzleHttp\Client">Client</abbr> $httpClient = null, bool $storeMessages = true)
         
                                             <p>Client constructor.</p>                </div>
                 <div class="col-md-2"></div>
@@ -179,6 +179,16 @@ the default namespace will be used.</p>                </div>
                     <a href="#method_getMessages">getMessages</a>()
         
                                             <p>Returns an array of Message objects.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_clearMesssages">clearMesssages</a>()
+        
+                                            <p>Clears the store of Message objects.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -292,9 +302,9 @@ the default namespace will be used.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 59</div>
+        <div class="location">at         line 64</div>
         <code>                    
-    <strong>__construct</strong>(string $accessToken, string $host, <abbr title="Psr\Log\LoggerInterface">LoggerInterface</abbr> $logger = null, <abbr title="GuzzleHttp\Client">Client</abbr> $httpClient = null)
+    <strong>__construct</strong>(string $accessToken, string $host, <abbr title="Psr\Log\LoggerInterface">LoggerInterface</abbr> $logger = null, <abbr title="GuzzleHttp\Client">Client</abbr> $httpClient = null, bool $storeMessages = true)
         </code>
     </h3>
     <div class="details">
@@ -327,6 +337,11 @@ the default namespace will be used.</p>                </div>
                 <td>$httpClient</td>
                 <td></td>
             </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$storeMessages</td>
+                <td></td>
+            </tr>
             </table>
 
             
@@ -338,7 +353,7 @@ the default namespace will be used.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_callApi">
-        <div class="location">at         line 99</div>
+        <div class="location">at         line 106</div>
         <code>            protected        array
     <strong>callApi</strong>(string $method, string $uri, array $options = [])
         </code>
@@ -401,7 +416,7 @@ the default namespace will be used.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getExceptionNamespace">
-        <div class="location">at         line 159</div>
+        <div class="location">at         line 168</div>
         <code>            protected        string|null
     <strong>getExceptionNamespace</strong>()
         </code>
@@ -433,7 +448,7 @@ the default namespace will be used.</p>                                         
             </div>
                     <div class="method-item">
                     <h3 id="method_getLogger">
-        <div class="location">at         line 164</div>
+        <div class="location">at         line 173</div>
         <code>                    <abbr title="Psr\Log\LoggerInterface">LoggerInterface</abbr>
     <strong>getLogger</strong>()
         </code>
@@ -461,7 +476,7 @@ the default namespace will be used.</p>                                         
             </div>
                     <div class="method-item">
                     <h3 id="method_getMessages">
-        <div class="location">at         line 175</div>
+        <div class="location">at         line 184</div>
         <code>                    array
     <strong>getMessages</strong>()
         </code>
@@ -490,8 +505,38 @@ the default namespace will be used.</p>                                         
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_clearMesssages">
+        <div class="location">at         line 192</div>
+        <code>                    void
+    <strong>clearMesssages</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Clears the store of Message objects.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_getHost">
-        <div class="location">at         line 180</div>
+        <div class="location">at         line 197</div>
         <code>                    string
     <strong>getHost</strong>()
         </code>
@@ -519,7 +564,7 @@ the default namespace will be used.</p>                                         
             </div>
                     <div class="method-item">
                     <h3 id="method_useApplication">
-        <div class="location">at         line 188</div>
+        <div class="location">at         line 205</div>
         <code>                    
     <strong>useApplication</strong>(<a href="../../../Contentful/Core/Api/ApplicationInterface.html"><abbr title="Contentful\Core\Api\ApplicationInterface">ApplicationInterface</abbr></a> $application)
         </code>
@@ -550,7 +595,7 @@ the default namespace will be used.</p>                                         
             </div>
                     <div class="method-item">
                     <h3 id="method_setApplication">
-        <div class="location">at         line 203</div>
+        <div class="location">at         line 220</div>
         <code>                    
     <strong>setApplication</strong>(string $name, string $version = &#039;&#039;)
         </code>
@@ -586,7 +631,7 @@ the default namespace will be used.</p>                                         
             </div>
                     <div class="method-item">
                     <h3 id="method_useIntegration">
-        <div class="location">at         line 213</div>
+        <div class="location">at         line 230</div>
         <code>                    
     <strong>useIntegration</strong>(<a href="../../../Contentful/Core/Api/IntegrationInterface.html"><abbr title="Contentful\Core\Api\IntegrationInterface">IntegrationInterface</abbr></a> $integration)
         </code>
@@ -617,7 +662,7 @@ the default namespace will be used.</p>                                         
             </div>
                     <div class="method-item">
                     <h3 id="method_setIntegration">
-        <div class="location">at         line 224</div>
+        <div class="location">at         line 241</div>
         <code>                    
     <strong>setIntegration</strong>(string $name, string $version = &#039;&#039;)
         </code>
@@ -653,7 +698,7 @@ the default namespace will be used.</p>                                         
             </div>
                     <div class="method-item">
                     <h3 id="method_getVersion">
-        <div class="location">at         line 231</div>
+        <div class="location">at         line 248</div>
         <code>        static            string
     <strong>getVersion</strong>()
         </code>
@@ -681,7 +726,7 @@ the default namespace will be used.</p>                                         
             </div>
                     <div class="method-item">
                     <h3 id="method_getVersionForPackage">
-        <div class="location">at         line 236</div>
+        <div class="location">at         line 253</div>
         <code>        static    protected        string
     <strong>getVersionForPackage</strong>(string $package)
         </code>
@@ -719,7 +764,7 @@ the default namespace will be used.</p>                                         
             </div>
                     <div class="method-item">
                     <h3 id="method_getPackageName">
-        <div class="location">at         line 257</div>
+        <div class="location">at         line 274</div>
         <code>    abstract    static    protected        string
     <strong>getPackageName</strong>()
         </code>
@@ -749,7 +794,7 @@ the default namespace will be used.</p>                                         
             </div>
                     <div class="method-item">
                     <h3 id="method_getSdkName">
-        <div class="location">at         line 262</div>
+        <div class="location">at         line 279</div>
         <code>    abstract    static    protected        string
     <strong>getSdkName</strong>()
         </code>
@@ -779,7 +824,7 @@ the default namespace will be used.</p>                                         
             </div>
                     <div class="method-item">
                     <h3 id="method_getApiContentType">
-        <div class="location">at         line 267</div>
+        <div class="location">at         line 284</div>
         <code>    abstract    static    protected        string
     <strong>getApiContentType</strong>()
         </code>
