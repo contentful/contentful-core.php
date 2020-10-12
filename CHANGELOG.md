@@ -3,11 +3,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/3.0.4...HEAD)
+## [Unreleased](https://github.com/contentful/contentful-core.php/compare/3.0.5...HEAD)
 
 <!-- PENDING-CHANGES -->
 > No meaningful changes since last release.
 <!-- /PENDING-CHANGES -->
+
+## [3.0.5](https://github.com/contentful/contentful-core.php/tree/3.0.5) (2020-10-12)
+
+### Added
+
+* Added clearMesssages method to allow manually clearing the messages
+* Added parameter to allow initializing without messages
 
 ## [3.0.4](https://github.com/contentful/contentful-core.php/tree/3.0.4) (2020-09-15)
 
