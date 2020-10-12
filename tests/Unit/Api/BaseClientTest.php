@@ -244,6 +244,9 @@ class BaseClientTest extends TestCase
 
     /**
      * @dataProvider storingMessagesProvider
+     *
+     * @param mixed $storeMessages
+     * @param mixed $expectedCount
      */
     public function testStoringMessages($storeMessages, $expectedCount)
     {

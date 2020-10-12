@@ -187,9 +187,7 @@ abstract class BaseClient implements ClientInterface
     }
 
     /**
-     * Clears the store of Message objects
-     *
-     * @return void
+     * Clears the store of Message objects.
      */
     public function clearMesssages(): void
     {
