@@ -77,7 +77,7 @@ jobs:
       - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
       - run: { name: "Test suite", command: "composer test-quick-fail" }
 
-  test74:
+  test80:
     docker:
       - image: circleci/php:8.0-cli
     steps:
