@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Foundation library for Contentful PHP SDKs",
     "require": {
-        "php": "^7.2",
+        "php": "^7.2|^8.0",
         "ext-json": "*",
         "ext-mbstring": "*",
         "guzzlehttp/guzzle": "^6.5|^7.0",
