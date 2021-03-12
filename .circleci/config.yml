@@ -68,7 +68,7 @@ jobs:
       - checkout
       - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
       - run: { name: "Test suite", command: "composer test-quick-fail" }
-        
+
   test74:
     docker:
       - image: circleci/php:7.4-cli
@@ -76,7 +76,15 @@ jobs:
       - checkout
       - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
       - run: { name: "Test suite", command: "composer test-quick-fail" }
-        
+
+  test74:
+    docker:
+      - image: circleci/php:8.0-cli
+    steps:
+      - checkout
+      - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
+      - run: { name: "Test suite", command: "composer test-quick-fail" }
+
   docs_build:
     environment:
       TRAVIS_REPO_SLUG: contentful/contentful-core.php
