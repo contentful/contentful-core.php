@@ -12,12 +12,14 @@ workflows:
       - test72
       - test73
       - test74
+      - test80
       - docs_build:
           requires:
             - lint
             - test72
             - test73
             - test74
+            - test80
           filters:
             branches:
               only: master
