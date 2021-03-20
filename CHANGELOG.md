@@ -3,11 +3,20 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/3.0.5...HEAD)
+## [Unreleased](https://github.com/contentful/contentful-core.php/compare/3.1.1...HEAD)
 
 <!-- PENDING-CHANGES -->
 > No meaningful changes since last release.
 <!-- /PENDING-CHANGES -->
+
+
+## [3.1.1](https://github.com/contentful/contentful-core.php/tree/3.0.5) (2021-03-20)
+
+* Fixed documentation
+
+## [3.1.0](https://github.com/contentful/contentful-core.php/tree/3.0.5) (2021-03-17)
+
+* Added support for PHP8
 
 ## [3.0.5](https://github.com/contentful/contentful-core.php/tree/3.0.5) (2020-10-12)
 
