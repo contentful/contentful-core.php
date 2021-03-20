@@ -35,7 +35,6 @@ return function (string $packageName, bool $usePhp7, array $directories, array $
         '@Symfony' => true,
         '@Symfony:risky' => true,
         '@PHP80Migration' => true,
-        '@PHP80Migration:risky' => true,
         'array_syntax' => [
             'syntax' => 'short',
         ],
