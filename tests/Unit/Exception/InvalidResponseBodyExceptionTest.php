@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2020 Contentful GmbH
+ * @copyright 2015-2021 Contentful GmbH
  * @license   MIT
  */
 
@@ -42,8 +42,8 @@ class InvalidResponseBodyExceptionTest extends TestCase
     {
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());
-        $stack->push(function (callable $handler) use ($handlerOverride) {
-            return function (RequestInterface $request, array $options) use ($handler, $handlerOverride) {
+        $stack->push(function (callable $handler) {
+            return function (RequestInterface $request, array $options) {
                 throw new ClientException('Foo', $request, new Response(500, [], 'FOO'));
             };
         });

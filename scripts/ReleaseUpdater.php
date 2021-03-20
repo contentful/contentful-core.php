@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2020 Contentful GmbH
+ * @copyright 2015-2021 Contentful GmbH
  * @license   MIT
  */
 
@@ -14,27 +14,27 @@ class ReleaseUpdater
     /**
      * @var string
      */
-    const PENDING_CHANGES_START = '<!-- PENDING-CHANGES -->';
+    public const PENDING_CHANGES_START = '<!-- PENDING-CHANGES -->';
 
     /**
      * @var string
      */
-    const PENDING_CHANGES_END = '<!-- /PENDING-CHANGES -->';
+    public const PENDING_CHANGES_END = '<!-- /PENDING-CHANGES -->';
 
     /**
      * @var string
      */
-    const PENDING_CHANGES_PLACEHOLDER = '> No meaningful changes since last release.';
+    public const PENDING_CHANGES_PLACEHOLDER = '> No meaningful changes since last release.';
 
     /**
      * @var string
      */
-    const UNRELEASED_CHANGES_HEADER = '## [Unreleased](%s/compare/%s...HEAD)';
+    public const UNRELEASED_CHANGES_HEADER = '## [Unreleased](%s/compare/%s...HEAD)';
 
     /**
      * @var string
      */
-    const NEW_RELEASE_HEADER = '## [%s](%s/tree/%s) (%s)';
+    public const NEW_RELEASE_HEADER = '## [%s](%s/tree/%s) (%s)';
 
     /**
      * @var string
@@ -82,7 +82,7 @@ class ReleaseUpdater
         $newReleaseChanges = \trim(\mb_substr($content, $extractFrom, $extractLength));
 
         $changelogStart = \trim(\mb_substr($content, 0, $contentStart));
-        $changelogEnd = \trim(\mb_substr($content, $contentEnd + \ mb_strlen(self::PENDING_CHANGES_END)));
+        $changelogEnd = \trim(\mb_substr($content, $contentEnd + \mb_strlen(self::PENDING_CHANGES_END)));
 
         $unreleasedLineStart = \mb_strpos($changelogStart, '## [Unreleased]');
         $changelogStart = \trim(\mb_substr($changelogStart, 0, $unreleasedLineStart));

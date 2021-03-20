@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2020 Contentful GmbH
+ * @copyright 2015-2021 Contentful GmbH
  * @license   MIT
  */
 
@@ -16,11 +16,11 @@ return function (string $packageName, bool $usePhp7, array $directories, array $
     $year = \date('Y');
 
     $fileHeaderComment = <<<COMMENT
-This file is part of the contentful/$packageName package.
+        This file is part of the contentful/$packageName package.
 
-@copyright 2015-$year Contentful GmbH
-@license   MIT
-COMMENT;
+        @copyright 2015-$year Contentful GmbH
+        @license   MIT
+        COMMENT;
 
     $finder = Finder::create();
     foreach ($directories as $directory) {
@@ -34,6 +34,8 @@ COMMENT;
     $rules = [
         '@Symfony' => true,
         '@Symfony:risky' => true,
+        '@PHP80Migration' => true,
+        '@PHP80Migration:risky' => true,
         'array_syntax' => [
             'syntax' => 'short',
         ],

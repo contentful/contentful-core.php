@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2020 Contentful GmbH
+ * @copyright 2015-2021 Contentful GmbH
  * @license   MIT
  */
 
@@ -23,7 +23,7 @@ abstract class BaseQuery
      *
      * @var string
      */
-    const DATE_FORMAT = 'Y-m-d\TH:i:00P';
+    public const DATE_FORMAT = 'Y-m-d\TH:i:00P';
 
     /**
      * @var string[]
