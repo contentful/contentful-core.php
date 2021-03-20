@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2020 Contentful GmbH
+ * @copyright 2015-2021 Contentful GmbH
  * @license   MIT
  */
 
@@ -16,6 +16,9 @@ use function GuzzleHttp\json_decode as guzzle_json_decode;
 use function GuzzleHttp\json_encode as guzzle_json_encode;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
+/**
+ * This class provides helper methods for the repositories' unit tests.
+ */
 class TestCase extends BaseTestCase
 {
     /**
