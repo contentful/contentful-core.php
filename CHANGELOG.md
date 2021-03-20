@@ -10,11 +10,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 <!-- /PENDING-CHANGES -->
 
 
-## [3.1.1](https://github.com/contentful/contentful-core.php/tree/3.0.5) (2021-03-20)
+## [3.1.1](https://github.com/contentful/contentful-core.php/tree/3.1.1) (2021-03-20)
+
+### Fixed
 
 * Fixed documentation
 
-## [3.1.0](https://github.com/contentful/contentful-core.php/tree/3.0.5) (2021-03-17)
+### Internal
+
+* Reworked CI scripts a bit to get them working with PHP8
+
+## [3.1.0](https://github.com/contentful/contentful-core.php/tree/3.1.0) (2021-03-17)
+
+### Added
 
 * Added support for PHP8
 
