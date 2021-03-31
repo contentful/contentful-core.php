@@ -19,6 +19,8 @@ use Contentful\Core\Api\Link;
  *
  * In addition to the retrieved items themselves
  * it also provides some access to metadata.
+ *
+ * @implements \IteratorAggregate<int, \Contentful\Core\Resource\ResourceInterface>
  */
 class ResourceArray implements ResourceInterface, \Countable, \ArrayAccess, \IteratorAggregate
 {
