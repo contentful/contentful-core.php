@@ -19,12 +19,12 @@ use Contentful\Core\Api\Link;
 class LocalUploadFile implements UnprocessedFileInterface
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $fileName;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $contentType;
 
@@ -33,7 +33,7 @@ class LocalUploadFile implements UnprocessedFileInterface
      */
     private $uploadFrom;
 
-    public function __construct(string $fileName, string $contentType, Link $uploadFrom)
+    public function __construct(?string $fileName, ?string $contentType, Link $uploadFrom)
     {
         $this->fileName = $fileName;
         $this->contentType = $contentType;
@@ -45,7 +45,7 @@ class LocalUploadFile implements UnprocessedFileInterface
      */
     public function getFileName(): string
     {
-        return $this->fileName;
+        return $this->fileName ?? '';
     }
 
     /**
@@ -53,7 +53,7 @@ class LocalUploadFile implements UnprocessedFileInterface
      */
     public function getContentType(): string
     {
-        return $this->contentType;
+        return $this->contentType ?? '';
     }
 
     public function getUploadFrom(): Link
