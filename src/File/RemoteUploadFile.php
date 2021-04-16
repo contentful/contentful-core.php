@@ -17,12 +17,12 @@ namespace Contentful\Core\File;
 class RemoteUploadFile implements UnprocessedFileInterface
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $fileName;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $contentType;
 
@@ -34,7 +34,7 @@ class RemoteUploadFile implements UnprocessedFileInterface
     /**
      * RemoteUploadFile constructor.
      */
-    public function __construct(string $fileName, string $contentType, string $upload)
+    public function __construct(?string $fileName, ?string $contentType, string $upload)
     {
         $this->fileName = $fileName;
         $this->contentType = $contentType;
@@ -46,7 +46,7 @@ class RemoteUploadFile implements UnprocessedFileInterface
      */
     public function getFileName(): string
     {
-        return $this->fileName;
+        return $this->fileName ?? '';
     }
 
     /**
@@ -54,7 +54,7 @@ class RemoteUploadFile implements UnprocessedFileInterface
      */
     public function getContentType(): string
     {
-        return $this->contentType;
+        return $this->contentType ?? '';
     }
 
     public function getUpload(): string
