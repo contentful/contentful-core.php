@@ -84,11 +84,8 @@ class ImageOptions implements UrlOptionsInterface
             'r' => $this->radius,
         ];
 
-        if (\null !== $this->quality || $this->progressive) {
-            $options['fm'] = 'jpg';
-        }
-
         if ($this->progressive) {
+            $options['fm'] = 'jpg';            
             $options['fl'] = 'progressive';
         }
 
