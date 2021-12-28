@@ -118,17 +118,17 @@ class ImageOptionsTest extends TestCase
         $options = new ImageOptions();
         $options->setQuality(50);
 
-        $this->assertSame('fm=jpg&q=50', $options->getQueryString());
+        $this->assertSame('q=50', $options->getQueryString());
     }
 
-    public function testQueryQualityOverridesFormat()
+    public function testQueryQualityDoesNotOverrideFormat()
     {
         $options = (new ImageOptions())
             ->setFormat('png')
             ->setQuality(50)
         ;
 
-        $this->assertSame('fm=jpg&q=50', $options->getQueryString());
+        $this->assertSame('fm=png&q=50', $options->getQueryString());
     }
 
     public function testQueryProgressive()
