@@ -38,6 +38,12 @@
         "lint-static-analysis": "$([ -f phpstan.phar ] && echo \"php phpstan.phar\" || echo \"phpstan\") analyse --level=max src/",
         "release": "php scripts/release.php"
     },
+	"config": {
+		"allow-plugins": {
+			"symfony/runtime": true,
+			"composer/package-versions-deprecated": true
+		}
+	},
     "extra": {
         "branch-alias": {
             "dev-master": "2.3.0-dev"
