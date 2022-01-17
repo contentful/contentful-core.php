@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2021 Contentful GmbH
+ * @copyright 2015-2022 Contentful GmbH
  * @license   MIT
  */
 
@@ -85,7 +85,7 @@ class ImageOptions implements UrlOptionsInterface
         ];
 
         if ($this->progressive) {
-            $options['fm'] = 'jpg';            
+            $options['fm'] = 'jpg';
             $options['fl'] = 'progressive';
         }
 
