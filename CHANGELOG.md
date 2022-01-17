@@ -3,11 +3,24 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/3.1.1...HEAD)
+## [Unreleased](https://github.com/contentful/contentful-core.php/compare/3.1.2...HEAD)
 
 <!-- PENDING-CHANGES -->
-> No meaningful changes since last release.
+* The API will no longer switch to the jpg format if a quality is given, consistent with the docs
 <!-- /PENDING-CHANGES -->
+
+## [3.1.2](https://github.com/contentful/contentful-core.php/tree/3.1.2) (2022-01-17)
+
+### Added
+
+* Added generics annotation to ResourceArray class - thanks @emodric !
+
+### Fixed
+
+* Fixed errors when the file content type is not provided - thanks @emsyzz !
+* Added support for Symfony 6
+* Fixed documentation build once again
+* Fixed php cs fixer runs
 
 
 ## [3.1.1](https://github.com/contentful/contentful-core.php/tree/3.1.1) (2021-03-20)
