@@ -11,12 +11,12 @@ declare(strict_types=1);
 
 namespace Contentful\Core\Api;
 
-use Contentful\Core\Log\NullLogger;
 use GuzzleHttp\Client as HttpClient;
 use function GuzzleHttp\json_decode as guzzle_json_decode;
 use Jean85\PrettyVersions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * Abstract client for common code for the different clients.
