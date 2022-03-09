@@ -14,6 +14,7 @@ workflows:
       - test73
       - test74
       - test80
+      - test81
       - docs_build:
           requires:
             - lint
@@ -21,6 +22,7 @@ workflows:
             - test73
             - test74
             - test80
+            - test81
           filters:
             branches:
               only: master
@@ -95,11 +97,21 @@ jobs:
 
   test80:
     docker:
-      - image: circleci/php:8.0-cli
+      - image: cimg/php:8.0
     steps:
       - checkout
       - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
       - run: { name: "Test suite", command: "composer test-quick-fail" }
+
+  test81:
+    docker:
+      - image: cimg/php:8.1
+    steps:
+      - checkout
+      - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
+      - run: { name: "Test suite", command: "composer test-quick-fail" }
+
+
 
   docs_build:
     environment:
