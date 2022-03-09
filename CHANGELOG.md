@@ -3,11 +3,23 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/3.1.2...HEAD)
+## [Unreleased](https://github.com/contentful/contentful-core.php/compare/3.1.3...HEAD)
 
 <!-- PENDING-CHANGES -->
 * The API will no longer switch to the jpg format if a quality is given, consistent with the docs
 <!-- /PENDING-CHANGES -->
+
+
+## [3.1.3](https://github.com/contentful/contentful-core.php/tree/3.1.2) (2022-01-17)
+
+### Added
+
+* Compatibility with psr/log 2 and 3 - thanks @kwivix !
+
+### Internal
+
+* Added CI for PHP8.1
+* Added backwards compatibility break check in CI
 
 ## [3.1.2](https://github.com/contentful/contentful-core.php/tree/3.1.2) (2022-01-17)
 
