@@ -205,11 +205,21 @@ class Message implements \Serializable, \JsonSerializable
 
     public function __serialize(): array
     {
-        return $this->serialize();
+        return [
+            'api' => $this->api,
+            'duration' => $this->duration,
+            'request' => $this->request,
+            'response' => $this->response,
+            'exception' => $this->exception,
+        ];
     }
 
     public function __unserialize(array $data): void
     {
-        $this->unserialize($data);
+        $this->api = $data['api'];
+        $this->duration = $data['duration'];
+        $this->request = $data['request'];
+        $this->response = $data['response'];
+        $this->exception = $data['exception'];
     }
 }
