@@ -1,5 +1,5 @@
 
-window.projectVersion = '3.1.3';
+window.projectVersion = 'master';
 
 (function(root) {
 
@@ -178,6 +178,8 @@ window.projectVersion = '3.1.3';
                     {"type": "Method", "fromName": "Contentful\\Core\\Api\\Message", "fromLink": "Contentful/Core/Api/Message.html", "link": "Contentful/Core/Api/Message.html#method_unserialize", "name": "Contentful\\Core\\Api\\Message::unserialize", "doc": "&quot;{@inheritdoc}&quot;"},
                     {"type": "Method", "fromName": "Contentful\\Core\\Api\\Message", "fromLink": "Contentful/Core/Api/Message.html", "link": "Contentful/Core/Api/Message.html#method_asString", "name": "Contentful\\Core\\Api\\Message::asString", "doc": "&quot;Returns a string representation of the current message.&quot;"},
                     {"type": "Method", "fromName": "Contentful\\Core\\Api\\Message", "fromLink": "Contentful/Core/Api/Message.html", "link": "Contentful/Core/Api/Message.html#method___toString", "name": "Contentful\\Core\\Api\\Message::__toString", "doc": "&quot;&quot;"},
+                    {"type": "Method", "fromName": "Contentful\\Core\\Api\\Message", "fromLink": "Contentful/Core/Api/Message.html", "link": "Contentful/Core/Api/Message.html#method___serialize", "name": "Contentful\\Core\\Api\\Message::__serialize", "doc": "&quot;&quot;"},
+                    {"type": "Method", "fromName": "Contentful\\Core\\Api\\Message", "fromLink": "Contentful/Core/Api/Message.html", "link": "Contentful/Core/Api/Message.html#method___unserialize", "name": "Contentful\\Core\\Api\\Message::__unserialize", "doc": "&quot;&quot;"},
             
             {"type": "Class", "fromName": "Contentful\\Core\\Api", "fromLink": "Contentful/Core/Api.html", "link": "Contentful/Core/Api/RequestBuilder.html", "name": "Contentful\\Core\\Api\\RequestBuilder", "doc": "&quot;RequestBuilder class.&quot;"},
                                                         {"type": "Method", "fromName": "Contentful\\Core\\Api\\RequestBuilder", "fromLink": "Contentful/Core/Api/RequestBuilder.html", "link": "Contentful/Core/Api/RequestBuilder.html#method___construct", "name": "Contentful\\Core\\Api\\RequestBuilder::__construct", "doc": "&quot;&quot;"},
