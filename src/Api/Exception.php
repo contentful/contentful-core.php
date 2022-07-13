@@ -12,10 +12,8 @@ declare(strict_types=1);
 namespace Contentful\Core\Api;
 
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Message as GuzzleMessage;
 use function GuzzleHttp\json_decode as guzzle_json_decode;
-use function GuzzleHttp\Psr7\parse_request as guzzle_parse_request;
-use function GuzzleHttp\Psr7\parse_response as guzzle_parse_response;
-use function GuzzleHttp\Psr7\str as guzzle_stringify_message;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -75,8 +73,8 @@ class Exception extends \RuntimeException implements \Serializable
             'file' => $this->message,
             'line' => $this->line,
             'requestId' => $this->requestId,
-            'request' => guzzle_stringify_message($this->request),
-            'response' => $this->response ? guzzle_stringify_message($this->response) : null,
+            'request' => GuzzleMessage::toString($this->request),
+            'response' => $this->response ? GuzzleMessage::toString($this->response) : null,
         ]);
     }
 
@@ -92,8 +90,8 @@ class Exception extends \RuntimeException implements \Serializable
         $this->file = $data['file'];
         $this->line = $data['line'];
         $this->requestId = $data['requestId'];
-        $this->request = guzzle_parse_request($data['request']);
-        $this->response = $data['response'] ? guzzle_parse_response($data['response']) : null;
+        $this->request = GuzzleMessage::parseRequest($data['request']);
+        $this->response = $data['response'] ? GuzzleMessage::parseResponse($data['response']) : null;
     }
 
     private static function createExceptionMessage(

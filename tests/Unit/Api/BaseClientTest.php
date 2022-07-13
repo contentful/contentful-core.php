@@ -23,8 +23,7 @@ use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
-use function GuzzleHttp\Psr7\parse_request as guzzle_parse_request;
-use function GuzzleHttp\Psr7\parse_response as guzzle_parse_response;
+use GuzzleHttp\Psr7\Message as GuzzleMessage;
 use GuzzleHttp\Psr7\Response;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
@@ -76,9 +75,9 @@ class BaseClientTest extends TestCase
         $this->assertNull(\unserialize($context['exception']));
 
         try {
-            $request = guzzle_parse_request($context['request']);
+            $request = GuzzleMessage::parseRequest($context['request']);
             if ($context['response']) {
-                $response = guzzle_parse_response($context['response']);
+                $response = GuzzleMessage::parseResponse($context['response']);
                 $this->assertSame(200, $response->getStatusCode());
             }
         } catch (\Exception $exception) {

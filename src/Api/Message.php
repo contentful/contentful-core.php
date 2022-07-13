@@ -13,9 +13,7 @@ namespace Contentful\Core\Api;
 
 use function GuzzleHttp\json_decode as guzzle_json_decode;
 use function GuzzleHttp\json_encode as guzzle_json_encode;
-use function GuzzleHttp\Psr7\parse_request as guzzle_parse_request;
-use function GuzzleHttp\Psr7\parse_response as guzzle_parse_response;
-use function GuzzleHttp\Psr7\str as guzzle_stringify_message;
+use GuzzleHttp\Psr7\Message as GuzzleMessage;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LogLevel;
@@ -94,8 +92,8 @@ class Message implements \Serializable, \JsonSerializable
         return new self(
             $data['api'],
             $data['duration'],
-            guzzle_parse_request($data['request']),
-            $data['response'] ? guzzle_parse_response($data['response']) : null,
+            GuzzleMessage::parseRequest($data['request']),
+            $data['response'] ? GuzzleMessage::parseResponse($data['response']) : null,
             $data['exception'] ? \unserialize($data['exception']) : null
         );
     }
@@ -154,8 +152,8 @@ class Message implements \Serializable, \JsonSerializable
         return [
             'api' => $this->api,
             'duration' => $this->duration,
-            'request' => guzzle_stringify_message($this->request),
-            'response' => null !== $this->response ? guzzle_stringify_message($this->response) : null,
+            'request' => GuzzleMessage::toString($this->request),
+            'response' => null !== $this->response ? GuzzleMessage::toString($this->response) : null,
             'exception' => \serialize($this->exception),
         ];
     }
@@ -185,7 +183,7 @@ class Message implements \Serializable, \JsonSerializable
 
         $this->api = $data['api'];
         $this->duration = $data['duration'];
-        $this->request = guzzle_parse_request($data['request']);
+        $this->request = GuzzleMessage::parseRequest($data['request']);
         $this->response = null !== $data['response'] ? guzzle_parse_response($data['response']) : null;
         $this->exception = \unserialize($data['exception']);
     }
