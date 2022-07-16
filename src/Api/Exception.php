@@ -67,7 +67,11 @@ class Exception extends \RuntimeException implements \Serializable
      */
     public function serialize(): string
     {
-        return \serialize([
+        return \serialize($this->__serialize());
+    }
+
+    public function __serialize(): array {
+        return [
             'message' => $this->message,
             'code' => $this->code,
             'file' => $this->message,
@@ -75,7 +79,7 @@ class Exception extends \RuntimeException implements \Serializable
             'requestId' => $this->requestId,
             'request' => GuzzleMessage::toString($this->request),
             'response' => $this->response ? GuzzleMessage::toString($this->response) : null,
-        ]);
+        ];
     }
 
     /**
@@ -84,7 +88,10 @@ class Exception extends \RuntimeException implements \Serializable
     public function unserialize($serialized)
     {
         $data = \unserialize($serialized);
+        $this->__unserialize($data);
+    }
 
+    public function __unserialize(array $data) {
         $this->message = $data['message'];
         $this->code = $data['code'];
         $this->file = $data['file'];
