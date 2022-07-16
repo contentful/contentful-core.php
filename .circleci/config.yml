@@ -62,7 +62,7 @@ jobs:
       CC_TEST_REPORTER_ID: 12e3510bd320a9a0acecb33d12f6c95318256eab19ffd3cca5520705140ba836
       XDEBUG_MODE: coverage
     docker:
-      - image: cimg/php:7.2
+      - image: circleci/php:7.2-cli
     steps:
       - checkout
       - run:
