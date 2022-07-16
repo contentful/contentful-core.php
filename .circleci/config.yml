@@ -17,7 +17,6 @@ workflows:
       - test81
       - docs_build:
           requires:
-            - lint
             - test72
             - test73
             - test74
