@@ -75,7 +75,7 @@ class Message implements \Serializable, \JsonSerializable
      */
     public static function createFromString(string $json): self
     {
-        $data = json_decode($json, true);
+        $data = \json_decode($json, true);
 
         if (!\is_array($data) ||
             !isset($data['api']) ||
@@ -182,9 +182,8 @@ class Message implements \Serializable, \JsonSerializable
         $this->api = $data['api'];
         $this->duration = $data['duration'];
         $this->request = GuzzleMessage::parseRequest($data['request']);
-        $this->response = null !== $data['response'] ?  GuzzleMessage::parseResponse($data['response']) : null;
+        $this->response = null !== $data['response'] ? GuzzleMessage::parseResponse($data['response']) : null;
         $this->exception = \unserialize($data['exception']);
-
     }
 
     /**
@@ -192,7 +191,7 @@ class Message implements \Serializable, \JsonSerializable
      */
     public function asString(): string
     {
-        return json_encode($this);
+        return \json_encode($this);
     }
 
     public function __toString(): string
