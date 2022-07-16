@@ -74,8 +74,7 @@ jobs:
       - run:
           name: Test suite
           command: |
-            sudo -E install-php-extensions xdebug
-            #sudo docker-php-ext-enable xdebug
+            sudo docker-php-ext-enable xdebug
             ./cc-test-reporter before-build
             composer test-quick-fail
             ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
