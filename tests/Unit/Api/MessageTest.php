@@ -15,9 +15,9 @@ use Contentful\Core\Api\Exception;
 use Contentful\Core\Api\Message;
 use Contentful\Tests\TestCase;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Message as GuzzleMessage;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Message as GuzzleMessage;
 
 class MessageTest extends TestCase
 {

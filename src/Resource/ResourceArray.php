@@ -172,7 +172,7 @@ class ResourceArray implements ResourceInterface, \Countable, \ArrayAccess, \Ite
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value) : void
+    public function offsetSet($offset, $value): void
     {
         throw new \BadMethodCallException(\sprintf('"%s" is read-only.', __CLASS__));
     }
@@ -180,7 +180,7 @@ class ResourceArray implements ResourceInterface, \Countable, \ArrayAccess, \Ite
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset) : void
+    public function offsetUnset($offset): void
     {
         throw new \BadMethodCallException(\sprintf('"%s" is read-only.', __CLASS__));
     }

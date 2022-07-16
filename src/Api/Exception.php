@@ -12,8 +12,8 @@ declare(strict_types=1);
 namespace Contentful\Core\Api;
 
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Message as GuzzleMessage;
 use function GuzzleHttp\json_decode as guzzle_json_decode;
+use GuzzleHttp\Psr7\Message as GuzzleMessage;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -70,7 +70,8 @@ class Exception extends \RuntimeException implements \Serializable
         return \serialize($this->__serialize());
     }
 
-    public function __serialize(): array {
+    public function __serialize(): array
+    {
         return [
             'message' => $this->message,
             'code' => $this->code,
@@ -91,7 +92,8 @@ class Exception extends \RuntimeException implements \Serializable
         $this->__unserialize($data);
     }
 
-    public function __unserialize(array $data) {
+    public function __unserialize(array $data)
+    {
         $this->message = $data['message'];
         $this->code = $data['code'];
         $this->file = $data['file'];
