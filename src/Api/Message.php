@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace Contentful\Core\Api;
 
-use function GuzzleHttp\json_decode as guzzle_json_decode;
-use function GuzzleHttp\json_encode as guzzle_json_encode;
 use GuzzleHttp\Psr7\Message as GuzzleMessage;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -77,7 +75,7 @@ class Message implements \Serializable, \JsonSerializable
      */
     public static function createFromString(string $json): self
     {
-        $data = guzzle_json_decode($json, true);
+        $data = json_decode($json, true);
 
         if (!\is_array($data) ||
             !isset($data['api']) ||
@@ -184,8 +182,9 @@ class Message implements \Serializable, \JsonSerializable
         $this->api = $data['api'];
         $this->duration = $data['duration'];
         $this->request = GuzzleMessage::parseRequest($data['request']);
-        $this->response = null !== $data['response'] ? guzzle_parse_response($data['response']) : null;
+        $this->response = null !== $data['response'] ?  GuzzleMessage::parseResponse($data['response']) : null;
         $this->exception = \unserialize($data['exception']);
+
     }
 
     /**
@@ -193,7 +192,7 @@ class Message implements \Serializable, \JsonSerializable
      */
     public function asString(): string
     {
-        return guzzle_json_encode($this);
+        return json_encode($this);
     }
 
     public function __toString(): string
