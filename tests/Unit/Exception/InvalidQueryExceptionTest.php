@@ -26,7 +26,7 @@ class InvalidQueryExceptionTest extends TestCase
             400,
             ['X-Contentful-Request-Id' => '18e21420a62b690effa8f80c8b8766b0'],
             '{"sys": {"type": "Error","id": "InvalidQuery"},"message": "The query you sent was invalid. Probably a filter or ordering specification is not applicable to the type of a field.","details": {"errors": [{"name": "unknown","path": ["name"],"details": "The path \"name\" is not recognized"}]},"requestId":"18e21420a62b690effa8f80c8b8766b0"}',
-            1.1,
+            '1.1',
             'Bad Request'
         );
 

@@ -26,7 +26,7 @@ class AccessTokenInvalidExceptionTest extends TestCase
             401,
             ['X-Contentful-Request-Id' => '426753a1639d40c23ad4cbf085a072c7'],
             '{"sys": {"type": "Error","id": "AccessTokenInvalid"},"message": "The access token you sent could not be found or is invalid.","requestId":"426753a1639d40c23ad4cbf085a072c7"}',
-            1.1,
+            '1.1',
             'Unauthorized'
         );
 

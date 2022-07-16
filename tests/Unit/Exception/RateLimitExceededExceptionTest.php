@@ -29,7 +29,7 @@ class RateLimitExceededExceptionTest extends TestCase
                 'X-Contentful-RateLimit-Reset' => '2727',
             ],
             '{"sys": {"type": "Error","id": "RateLimitExceeded"},"message": "You have exceeded the rate limit of the Organization this Space belongs to by making too many API requests within a short timespan. Please wait a moment before trying the request again.","requestId": "4d0274fb176b51ae43a64b98639a3090"}',
-            1.1,
+            '1.1',
             ''
         );
 

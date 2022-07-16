@@ -3,5 +3,5 @@
     "duration": 0.5,
     "request": "POST \/ HTTP\/1.1\r\nHost: www.example.com\r\nAuthorization: Bearer <accessToken>\r\n\r\n{\"message\":\"Hello!\"}",
     "response": "HTTP\/1.1 404 Not Found\r\n\r\n{\"message\":\"Hello to who?\"}",
-    "exception": "C:29:\"Contentful\\Core\\Api\\Exception\":324:{a:7:{s:7:\"message\";s:13:\"Hello to who?\";s:4:\"code\";i:0;s:4:\"file\";s:13:\"Hello to who?\";s:4:\"line\";i:37;s:9:\"requestId\";s:0:\"\";s:7:\"request\";s:99:\"POST \/ HTTP\/1.1\r\nHost: www.example.com\r\nAuthorization: Bearer <accessToken>\r\n\r\n{\"message\":\"Hello!\"}\";s:8:\"response\";s:53:\"HTTP\/1.1 404 Not Found\r\n\r\n{\"message\":\"Hello to who?\"}\";}}"
+    "exception": "O:29:\"Contentful\\Core\\Api\\Exception\":7:{s:7:\"message\";s:13:\"Hello to who?\";s:4:\"code\";i:0;s:4:\"file\";s:13:\"Hello to who?\";s:4:\"line\";i:37;s:9:\"requestId\";s:0:\"\";s:7:\"request\";s:99:\"POST / HTTP/1.1\r\nHost: www.example.com\r\nAuthorization: Bearer <accessToken>\r\n\r\n{\"message\":\"Hello!\"}\";s:8:\"response\";s:53:\"HTTP/1.1 404 Not Found\r\n\r\n{\"message\":\"Hello to who?\"}\";}"
 }

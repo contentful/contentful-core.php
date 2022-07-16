@@ -26,7 +26,7 @@ class NotFoundExceptionTest extends TestCase
             404,
             ['X-Contentful-Request-Id' => 'db2d795acb78e0592af00759986c744b'],
             '{"sys": {"type": "Error","id": "NotFound"},"message": "The resource could not be found.","details": {"type": "Entry","id": "not-existing","space": "cfexampleapi"},"requestId": "db2d795acb78e0592af00759986c744b"}',
-            1.1,
+            '1.1',
             'Not Found'
         );
 
