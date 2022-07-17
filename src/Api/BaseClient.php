@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Contentful\Core\Api;
 
 use GuzzleHttp\Client as HttpClient;
-use function GuzzleHttp\json_decode as guzzle_json_decode;
 use Jean85\PrettyVersions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -154,7 +153,7 @@ abstract class BaseClient implements ClientInterface
             : null;
 
         return $body
-            ? guzzle_json_decode($body, true)
+            ? \json_decode($body, true)
             : [];
     }
 

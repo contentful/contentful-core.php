@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Contentful\Core\Api;
 
 use GuzzleHttp\Exception\RequestException;
-use function GuzzleHttp\json_decode as guzzle_json_decode;
 use GuzzleHttp\Psr7\Message as GuzzleMessage;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -112,7 +111,7 @@ class Exception extends \RuntimeException implements \Serializable
         }
 
         try {
-            $result = guzzle_json_decode((string) $response->getBody(), true);
+            $result = \json_decode((string) $response->getBody(), true);
             if (\is_array($result) && isset($result['message'])) {
                 return $result['message'];
             }
