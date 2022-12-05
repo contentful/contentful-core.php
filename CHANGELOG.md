@@ -3,11 +3,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/contentful-core.php/compare/3.2.0...HEAD)
+## [Unreleased](https://github.com/contentful/contentful-core.php/compare/4.0.0...HEAD)
 
 <!-- PENDING-CHANGES -->
-* The API will no longer switch to the jpg format if a quality is given, consistent with the docs
 <!-- /PENDING-CHANGES -->
+
+## [4.0.0](https://github.com/contentful/contentful-core.php/tree/4.0.0) (2022-12-05)
+
+* The API will no longer switch to the jpg format if a quality is given, consistent with the docs
+* Support for PHP7 was dropped, support for PHP8 was fully integrated
+* Small internal refactoring
 
 
 ## [3.2.0](https://github.com/contentful/contentful-core.php/tree/3.2.0) (2022-07-16)
