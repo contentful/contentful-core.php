@@ -22,7 +22,7 @@ return function (string $packageName, bool $usePhp7, array $directories, array $
         @license   MIT
         COMMENT;
 
-    $finder = Finder::create();
+    $finder = new Finder();
     foreach ($directories as $directory) {
         $finder = $finder->in($directory);
     }
@@ -78,7 +78,7 @@ return function (string $packageName, bool $usePhp7, array $directories, array $
 
     $cache = \tempnam(\sys_get_temp_dir(), $packageName).'-php_cs.cache';
 
-    return Config::create()
+    return (new Config())
         ->setFinder($finder)
         ->setRiskyAllowed(true)
         ->setCacheFile($cache)

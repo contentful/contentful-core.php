@@ -8,18 +8,13 @@ workflows:
 
   main:
     jobs:
-      - lint
+      - lintSyntax
+      - lintStaticAnalysis
       - checkBcBreaks
-      - test72
-      - test73
-      - test74
       - test80
       - test81
       - docs_build:
           requires:
-            - test72
-            - test73
-            - test74
             - test80
             - test81
           filters:
@@ -27,72 +22,45 @@ workflows:
               only: master
 
 jobs:
-  lint:
+  lintStaticAnalysis:
     docker:
-      - image: cimg/php:7.4
+      - image: cimg/php:8.1
     steps:
       - checkout
-      - run: { name: "Install dependencies", command: sudo composer self-update && composer install -n --prefer-dist }
       - run:
-          name: Syntax tests
-          command: |
-            cp .circleci/php-cs-fixer.phar php-cs-fixer.phar
-            composer run lint-syntax
+          name: "Install dependencies"
+          command: sudo composer self-update && composer install -n --prefer-dist
       - run:
           name: Static analysis
-          command: |
-            wget https://github.com/phpstan/phpstan/releases/download/0.10.3/phpstan.phar -q -O phpstan.phar
-            composer run lint-static-analysis
+          command: composer run lint-static-analysis
+
+  lintSyntax:
+    docker:
+      - image: cimg/php:8.1
+    steps:
+      - checkout
+      - run:
+          name: "Install dependencies"
+          command: sudo composer self-update && composer install -n --prefer-dist
+      - run:
+          name: Install php-cs-fixer
+          command: mkdir -p tools/php-cs-fixer && composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
+      - run:
+          name: Run syntax test
+          command: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --stop-on-violation -v
 
   checkBcBreaks:
     docker:
-      - image: cimg/php:7.4
+      - image: cimg/php:8.1
     steps:
       - checkout
-      - run: { name: "Install dependencies", command: sudo composer self-update && composer install -n --prefer-dist }
+      - run:
+          name: "Install dependencies"
+          command: sudo composer self-update && composer install -n --prefer-dist
       - run:
           name: Check for backwards-compatibility breaks
-          command: |
-            php -d memory_limit=-1 vendor/bin/roave-backward-compatibility-check
+          command: composer run test-for-bc-breaks
 
-
-  test72:
-    environment:
-      CC_TEST_REPORTER_ID: 12e3510bd320a9a0acecb33d12f6c95318256eab19ffd3cca5520705140ba836
-      XDEBUG_MODE: coverage
-    docker:
-      - image: circleci/php:7.2-cli
-    steps:
-      - checkout
-      - run:
-          name: Set up Code Climate test-reporter
-          command: |
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
-      - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
-      - run:
-          name: Test suite
-          command: |
-            sudo docker-php-ext-enable xdebug
-            ./cc-test-reporter before-build
-            composer test-quick-fail
-            ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
-
-  test73:
-    docker:
-      - image: cimg/php:7.3
-    steps:
-      - checkout
-      - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
-      - run: { name: "Test suite", command: "composer test-quick-fail" }
-
-  test74:
-    docker:
-      - image: cimg/php:7.4
-    steps:
-      - checkout
-      - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
-      - run: { name: "Test suite", command: "composer test-quick-fail" }
 
   test80:
     docker:
@@ -110,8 +78,6 @@ jobs:
       - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
       - run: { name: "Test suite", command: "composer test-quick-fail" }
 
-
-
   docs_build:
     environment:
       TRAVIS_REPO_SLUG: contentful/contentful-core.php
@@ -119,7 +85,7 @@ jobs:
       - image: circleci/php:7.2-cli
     steps:
       - checkout
-      - run: {name: "Make docs", command: "sh ./scripts/prepare-docs.sh" }
+      - run: { name: "Make docs", command: "sh ./scripts/prepare-docs.sh" }
       - gh-pages/deploy:
           build-dir: build/docs
           ssh-fingerprints: 3a:e5:54:2b:d3:75:f0:31:70:e7:12:b4:97:1e:da:0d

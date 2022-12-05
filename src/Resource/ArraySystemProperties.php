@@ -14,20 +14,12 @@ namespace Contentful\Core\Resource;
 class ArraySystemProperties implements SystemPropertiesInterface
 {
     /**
-     * Data supplied to the constructor. We need to save this shortly to avoid
-     * code warnings.
-     */
-    private $data;
-
-    /**
      * {@inheritdoc}
      */
-    public function __construct(array $data)
+    public function __construct(array $data)  // @phpstan-ignore-line
     {
-        // this avoids the unused warning
-        $this->data = $data;
-        // this avoids using more RAM than necassary :)
-        $this->data = null;
+        // We need to have PHPStan ignore the constructor line, as the data parameter is needed for inherited types, but
+        // not in this base class.
     }
 
     /**

@@ -65,7 +65,7 @@ class Entry implements EntryInterface
     /**
      * {@inheritdoc}
      */
-    public function jsonSerialize()
+    public function jsonSerialize() : mixed
     {
         return [
             'id' => $this->id,

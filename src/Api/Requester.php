@@ -82,9 +82,9 @@ class Requester
         $errorId = '';
         $response = $exception->getResponse();
         try {
-            $data = \json_decode((string) $response->getBody(), true);
+            $data = \json_decode((string) $response->getBody(), true, 512, \JSON_THROW_ON_ERROR);
             $errorId = (\is_array($data) && (string) $data['sys']['id']) ? $data['sys']['id'] : '';
-        } catch (InvalidArgumentException $invalidArgumentException) {
+        } catch (InvalidArgumentException | \JsonException $jsonException) {
             $errorId = 'InvalidResponseBody';
         }
 

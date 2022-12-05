@@ -22,11 +22,6 @@ use Psr\Http\Message\ResponseInterface;
 class Exception extends \RuntimeException implements \Serializable
 {
     /**
-     * @var RequestException|null
-     */
-    private $previous;
-
-    /**
      * @var string|null
      */
     private $requestId;
@@ -46,7 +41,6 @@ class Exception extends \RuntimeException implements \Serializable
      */
     public function __construct(RequestException $previous, string $message = '')
     {
-        $this->previous = $previous;
         $this->request = $previous->getRequest();
         $this->response = $previous->getResponse();
 

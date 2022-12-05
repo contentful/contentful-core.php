@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Foundation library for Contentful PHP SDKs",
     "require": {
-        "php": "^7.2|^8.0",
+        "php": "^8.0",
         "ext-json": "*",
         "ext-mbstring": "*",
         "guzzlehttp/guzzle": "^6.5|^7.0",
@@ -16,7 +16,8 @@
         "phpunit/phpunit": "^8.5",
         "symfony/finder": "^3.0|^4.0|^5.0|^6.0",
         "monolog/monolog": "^2.0",
-        "roave/backward-compatibility-check": "^3.0|^5.0|^6.1"
+        "roave/backward-compatibility-check": "^6.1",
+        "phpstan/phpstan": "^1.9"
     },
     "license": "MIT",
     "autoload": {
@@ -35,9 +36,8 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-quick-fail": "php vendor/bin/phpunit --stop-on-error --stop-on-failure -v",
-        "test-for-bc-breaks": "php vendor/bin/roave-backward-compatibility-check",
-        "lint-syntax": "$([ -f php-cs-fixer.phar ] && echo \"php php-cs-fixer.phar\" || echo \"php-cs-fixer\") fix --dry-run --stop-on-violation -v",
-        "lint-static-analysis": "$([ -f phpstan.phar ] && echo \"php phpstan.phar\" || echo \"phpstan\") analyse --level=max src/",
+        "test-for-bc-breaks": "php -d memory_limit=-1  vendor/bin/roave-backward-compatibility-check",
+        "lint-static-analysis": "php vendor/bin/phpstan analyse src --level=5",
         "release": "php scripts/release.php"
     },
 	"config": {
