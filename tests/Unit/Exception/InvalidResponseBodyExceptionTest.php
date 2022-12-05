@@ -38,7 +38,7 @@ class InvalidResponseBodyExceptionTest extends TestCase
         $this->assertInstanceOf(InvalidResponseBodyException::class, $message->getException());
     }
 
-    public function createHttpClient(callable $handlerOverride = \null)
+    public function createHttpClient(callable $handlerOverride = null)
     {
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());

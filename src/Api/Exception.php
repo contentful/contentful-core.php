@@ -60,7 +60,7 @@ class Exception extends \RuntimeException implements \Serializable
      */
     public function serialize(): string
     {
-        return \serialize($this->__serialize());
+        return serialize($this->__serialize());
     }
 
     public function __serialize(): array
@@ -81,7 +81,7 @@ class Exception extends \RuntimeException implements \Serializable
      */
     public function unserialize($serialized)
     {
-        $data = \unserialize($serialized);
+        $data = unserialize($serialized);
         $this->__unserialize($data);
     }
 
@@ -105,7 +105,7 @@ class Exception extends \RuntimeException implements \Serializable
         }
 
         try {
-            $result = \json_decode((string) $response->getBody(), true);
+            $result = json_decode((string) $response->getBody(), true);
             if (\is_array($result) && isset($result['message'])) {
                 return $result['message'];
             }

@@ -44,12 +44,12 @@ class ImageOptions implements UrlOptionsInterface
     /**
      * @var bool
      */
-    private $progressive = \false;
+    private $progressive = false;
 
     /**
      * @var bool
      */
-    private $png8bit = \false;
+    private $png8bit = false;
 
     /**
      * @var string|null
@@ -94,24 +94,24 @@ class ImageOptions implements UrlOptionsInterface
             $options['fl'] = 'png8';
         }
 
-        if (\null !== $this->resizeFit) {
+        if (null !== $this->resizeFit) {
             $options['fit'] = $this->resizeFit;
 
             if ((
-                    'pad' === $this->resizeFit ||
-                    'fill' === $this->resizeFit ||
-                    'crop' === $this->resizeFit ||
-                    'thumb' === $this->resizeFit
-                )
-                && \null !== $this->resizeFocus) {
+                'pad' === $this->resizeFit ||
+                'fill' === $this->resizeFit ||
+                'crop' === $this->resizeFit ||
+                'thumb' === $this->resizeFit
+            )
+            && null !== $this->resizeFocus) {
                 $options['f'] = $this->resizeFocus;
             }
-            if ('pad' === $this->resizeFit && \null !== $this->backgroundColor) {
-                $options['bg'] = 'rgb:'.\mb_substr($this->backgroundColor, 1);
+            if ('pad' === $this->resizeFit && null !== $this->backgroundColor) {
+                $options['bg'] = 'rgb:'.mb_substr($this->backgroundColor, 1);
             }
         }
 
-        return \http_build_query($options, '', '&', \PHP_QUERY_RFC3986);
+        return http_build_query($options, '', '&', \PHP_QUERY_RFC3986);
     }
 
     /**
@@ -129,9 +129,9 @@ class ImageOptions implements UrlOptionsInterface
      *
      * @return $this
      */
-    public function setWidth(int $width = \null)
+    public function setWidth(int $width = null)
     {
-        if (\null !== $width && $width < 0) {
+        if (null !== $width && $width < 0) {
             throw new \InvalidArgumentException('Width must not be negative.');
         }
 
@@ -155,9 +155,9 @@ class ImageOptions implements UrlOptionsInterface
      *
      * @return $this
      */
-    public function setHeight(int $height = \null)
+    public function setHeight(int $height = null)
     {
-        if (\null !== $height && $height < 0) {
+        if (null !== $height && $height < 0) {
             throw new \InvalidArgumentException('Height must not be negative.');
         }
 
@@ -170,18 +170,16 @@ class ImageOptions implements UrlOptionsInterface
      * Set the format of the image. Valid values are "png" and "jpg".
      * Can be set to null to not enforce a format.
      *
-     * @param string|null $format
-     *
      * @throws \InvalidArgumentException If $format is not a valid value
      *
      * @return $this
      */
-    public function setFormat(string $format = \null)
+    public function setFormat(string $format = null)
     {
         $validValues = ['png', 'jpg', 'webp'];
 
-        if (\null !== $format && !\in_array($format, $validValues, \true)) {
-            throw new \InvalidArgumentException(\sprintf('Unknown format "%s" given. Expected "%s" or null.', $format, \implode(', ', $validValues)));
+        if (null !== $format && !\in_array($format, $validValues, true)) {
+            throw new \InvalidArgumentException(sprintf('Unknown format "%s" given. Expected "%s" or null.', $format, implode(', ', $validValues)));
         }
 
         $this->format = $format;
@@ -199,10 +197,10 @@ class ImageOptions implements UrlOptionsInterface
      *
      * @return $this
      */
-    public function setQuality(int $quality = \null)
+    public function setQuality(int $quality = null)
     {
-        if (\null !== $quality && ($quality < 1 || $quality > 100)) {
-            throw new \InvalidArgumentException(\sprintf('Quality must be between 1 and 100, "%d" given.', $quality));
+        if (null !== $quality && ($quality < 1 || $quality > 100)) {
+            throw new \InvalidArgumentException(sprintf('Quality must be between 1 and 100, "%d" given.', $quality));
         }
 
         $this->quality = $quality;
@@ -250,18 +248,16 @@ class ImageOptions implements UrlOptionsInterface
      * - 'thumb' Create a thumbnail of detected faces from image, used with 'setFocus'.
      * - 'scale' Scale the image regardless of the original aspect ratio.
      *
-     * @param string|null $resizeFit
-     *
      * @throws \InvalidArgumentException For unknown values of $resizeBehavior
      *
      * @return $this
      */
-    public function setResizeFit(string $resizeFit = \null)
+    public function setResizeFit(string $resizeFit = null)
     {
         $validValues = ['pad', 'crop', 'fill', 'thumb', 'scale'];
 
-        if (\null !== $resizeFit && !\in_array($resizeFit, $validValues, \true)) {
-            throw new \InvalidArgumentException(\sprintf('Unknown resize fit "%s" given. Expected "%s" or null.', $resizeFit, \implode(', ', $validValues)));
+        if (null !== $resizeFit && !\in_array($resizeFit, $validValues, true)) {
+            throw new \InvalidArgumentException(sprintf('Unknown resize fit "%s" given. Expected "%s" or null.', $resizeFit, implode(', ', $validValues)));
         }
 
         $this->resizeFit = $resizeFit;
@@ -277,13 +273,11 @@ class ImageOptions implements UrlOptionsInterface
      * - A combination like 'bottom_right'
      * - 'face' or 'faces' to focus the resizing via face detection
      *
-     * @param string|null $resizeFocus
-     *
      * @throws \InvalidArgumentException For unknown values of $resizeFocus
      *
      * @return $this
      */
-    public function setResizeFocus(string $resizeFocus = \null)
+    public function setResizeFocus(string $resizeFocus = null)
     {
         $validValues = [
             'face',
@@ -299,8 +293,8 @@ class ImageOptions implements UrlOptionsInterface
             'center',
         ];
 
-        if (\null !== $resizeFocus && !\in_array($resizeFocus, $validValues, \true)) {
-            throw new \InvalidArgumentException(\sprintf('Unknown resize focus "%s" given. Expected "%s" or null.', $resizeFocus, \implode(', ', $validValues)));
+        if (null !== $resizeFocus && !\in_array($resizeFocus, $validValues, true)) {
+            throw new \InvalidArgumentException(sprintf('Unknown resize focus "%s" given. Expected "%s" or null.', $resizeFocus, implode(', ', $validValues)));
         }
 
         $this->resizeFocus = $resizeFocus;
@@ -317,9 +311,9 @@ class ImageOptions implements UrlOptionsInterface
      *
      * @return $this
      */
-    public function setRadius(float $radius = \null)
+    public function setRadius(float $radius = null)
     {
-        if (\null !== $radius && $radius < 0) {
+        if (null !== $radius && $radius < 0) {
             throw new \InvalidArgumentException('Radius must not be negative.');
         }
 
@@ -332,15 +326,13 @@ class ImageOptions implements UrlOptionsInterface
      * Background color, relevant if the resize fit type 'pad' is used.
      * Expects a valid hexadecimal HTML color like '#9090ff'. Default is transparency.
      *
-     * @param string|null $backgroundColor
-     *
      * @throws \InvalidArgumentException if the $backgroundColor is not in hexadecimal format
      *
      * @return $this
      */
-    public function setBackgroundColor(string $backgroundColor = \null)
+    public function setBackgroundColor(string $backgroundColor = null)
     {
-        if (\null !== $backgroundColor && !\preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $backgroundColor)) {
+        if (null !== $backgroundColor && !preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $backgroundColor)) {
             throw new \InvalidArgumentException('Background color must be in hexadecimal format.');
         }
 

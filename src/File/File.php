@@ -68,7 +68,7 @@ class File implements ProcessedFileInterface
     /**
      * {@inheritdoc}
      */
-    public function getUrl(UrlOptionsInterface $options = \null): string
+    public function getUrl(UrlOptionsInterface $options = null): string
     {
         return $this->url;
     }

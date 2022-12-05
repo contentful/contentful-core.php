@@ -50,9 +50,9 @@ class MessageTest extends TestCase
         // Exceptions and their stack traces are a bit brittle to test,
         // so message.json might need to be updated from time to time.
         // For now, these tests need to be disabled due to inconsistencies between PHP7.2 and PHP8.0
-        //$this->assertJsonFixtureEqualsJsonObject('message.json', $message);
-        //$this->assertJsonFixtureEqualsJsonString('message.json', (string) $message);
-        //$this->assertJsonFixtureEqualsJsonString('message.json', $message->asString());
+        // $this->assertJsonFixtureEqualsJsonObject('message.json', $message);
+        // $this->assertJsonFixtureEqualsJsonString('message.json', (string) $message);
+        // $this->assertJsonFixtureEqualsJsonString('message.json', $message->asString());
     }
 
     public function testInvalidApi()
@@ -113,7 +113,7 @@ class MessageTest extends TestCase
             'X-Contentful-Request-Id' => 'ddbaaceaced126fc7d29a4d8335f06d9',
         ]);
 
-        $exception = \null;
+        $exception = null;
         $closure1 = function ($closure) {
             $closure();
         };
@@ -124,7 +124,7 @@ class MessageTest extends TestCase
         $closure1($closure2);
 
         $message = new Message('DELIVERY', 0.0, $request, $response, $exception);
-        $serialized = \unserialize(\serialize($message));
+        $serialized = unserialize(serialize($message));
 
         $this->assertInstanceOf(RequestException::class, $message->getException()->getPrevious());
         $this->assertNull($serialized->getException()->getPrevious());

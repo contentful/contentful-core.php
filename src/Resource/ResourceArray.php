@@ -174,7 +174,7 @@ class ResourceArray implements ResourceInterface, \Countable, \ArrayAccess, \Ite
      */
     public function offsetSet($offset, $value): void
     {
-        throw new \BadMethodCallException(\sprintf('"%s" is read-only.', __CLASS__));
+        throw new \BadMethodCallException(sprintf('"%s" is read-only.', __CLASS__));
     }
 
     /**
@@ -182,6 +182,6 @@ class ResourceArray implements ResourceInterface, \Countable, \ArrayAccess, \Ite
      */
     public function offsetUnset($offset): void
     {
-        throw new \BadMethodCallException(\sprintf('"%s" is read-only.', __CLASS__));
+        throw new \BadMethodCallException(sprintf('"%s" is read-only.', __CLASS__));
     }
 }

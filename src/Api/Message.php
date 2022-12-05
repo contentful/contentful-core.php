@@ -60,7 +60,7 @@ class Message implements \Serializable, \JsonSerializable
         Exception $exception = null
     ) {
         if (!\in_array($api, ['DELIVERY', 'PREVIEW', 'MANAGEMENT'], true)) {
-            throw new \InvalidArgumentException(\sprintf('Unknown API value "%s".', $api));
+            throw new \InvalidArgumentException(sprintf('Unknown API value "%s".', $api));
         }
 
         $this->api = $api;
@@ -75,7 +75,7 @@ class Message implements \Serializable, \JsonSerializable
      */
     public static function createFromString(string $json): self
     {
-        $data = \json_decode($json, true);
+        $data = json_decode($json, true);
 
         if (!\is_array($data) ||
             !isset($data['api']) ||
@@ -92,7 +92,7 @@ class Message implements \Serializable, \JsonSerializable
             $data['duration'],
             GuzzleMessage::parseRequest($data['request']),
             $data['response'] ? GuzzleMessage::parseResponse($data['response']) : null,
-            $data['exception'] ? \unserialize($data['exception']) : null
+            $data['exception'] ? unserialize($data['exception']) : null
         );
     }
 
@@ -152,7 +152,7 @@ class Message implements \Serializable, \JsonSerializable
             'duration' => $this->duration,
             'request' => GuzzleMessage::toString($this->request),
             'response' => null !== $this->response ? GuzzleMessage::toString($this->response) : null,
-            'exception' => \serialize($this->exception),
+            'exception' => serialize($this->exception),
         ];
     }
 
@@ -169,7 +169,7 @@ class Message implements \Serializable, \JsonSerializable
      */
     public function serialize(): string
     {
-        return \serialize($this->asSerializableArray());
+        return serialize($this->asSerializableArray());
     }
 
     /**
@@ -177,13 +177,13 @@ class Message implements \Serializable, \JsonSerializable
      */
     public function unserialize($serialized)
     {
-        $data = \unserialize($serialized);
+        $data = unserialize($serialized);
 
         $this->api = $data['api'];
         $this->duration = $data['duration'];
         $this->request = GuzzleMessage::parseRequest($data['request']);
         $this->response = null !== $data['response'] ? GuzzleMessage::parseResponse($data['response']) : null;
-        $this->exception = \unserialize($data['exception']);
+        $this->exception = unserialize($data['exception']);
     }
 
     /**
@@ -191,7 +191,7 @@ class Message implements \Serializable, \JsonSerializable
      */
     public function asString(): string
     {
-        return \json_encode($this);
+        return json_encode($this);
     }
 
     public function __toString(): string

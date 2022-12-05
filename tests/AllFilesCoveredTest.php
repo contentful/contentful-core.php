@@ -23,7 +23,7 @@ class AllFilesCoveredTest extends TestCase
      */
     public function testAllClassesHaveTestFile($file)
     {
-        $file = \str_replace('.php', 'Test.php', $file);
+        $file = str_replace('.php', 'Test.php', $file);
         $this->assertFileExists(__DIR__.'/Unit/'.$file);
     }
 
@@ -36,7 +36,7 @@ class AllFilesCoveredTest extends TestCase
         ;
 
         foreach ($iterator as $file) {
-            if ('Interface.php' === \mb_substr($file->getFilename(), -13)) {
+            if ('Interface.php' === mb_substr($file->getFilename(), -13)) {
                 continue;
             }
 

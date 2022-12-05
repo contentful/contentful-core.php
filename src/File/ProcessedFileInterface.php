@@ -19,9 +19,7 @@ interface ProcessedFileInterface extends FileInterface
     /**
      * The URL where this file can be retrieved.
      *
-     * @param UrlOptionsInterface|null $options
-     *
      * @return string
      */
-    public function getUrl(UrlOptionsInterface $options = \null);
+    public function getUrl(UrlOptionsInterface $options = null);
 }

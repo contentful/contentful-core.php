@@ -13,7 +13,6 @@ namespace Contentful\Core\Api;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
-use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 
 class Requester
@@ -49,7 +48,7 @@ class Requester
      */
     public function sendRequest(RequestInterface $request): Message
     {
-        $startTime = \microtime(true);
+        $startTime = microtime(true);
 
         $exception = null;
         try {
@@ -62,7 +61,7 @@ class Requester
             $exception = $this->createCustomException($exception);
         }
 
-        $duration = \microtime(true) - $startTime;
+        $duration = microtime(true) - $startTime;
 
         return new Message(
             $this->api,
@@ -82,9 +81,9 @@ class Requester
         $errorId = '';
         $response = $exception->getResponse();
         try {
-            $data = \json_decode((string) $response->getBody(), true, 512, \JSON_THROW_ON_ERROR);
+            $data = json_decode((string) $response->getBody(), true, 512, \JSON_THROW_ON_ERROR);
             $errorId = (\is_array($data) && (string) $data['sys']['id']) ? $data['sys']['id'] : '';
-        } catch (InvalidArgumentException | \JsonException $jsonException) {
+        } catch (\InvalidArgumentException|\JsonException $jsonException) {
             $errorId = 'InvalidResponseBody';
         }
 
@@ -101,13 +100,13 @@ class Requester
         if ($this->exceptionNamespace) {
             $class = $this->exceptionNamespace.'\\'.$apiError.'Exception';
 
-            if (\class_exists($class)) {
+            if (class_exists($class)) {
                 return $class;
             }
         }
 
         $class = '\\Contentful\\Core\\Exception\\'.$apiError.'Exception';
 
-        return \class_exists($class) ? $class : Exception::class;
+        return class_exists($class) ? $class : Exception::class;
     }
 }

@@ -28,29 +28,29 @@ if (!isset($argv[1])) {
 
 $version = $argv[1];
 $pattern = '/^(?<version>[0-9]+\.[0-9]+\.[0-9]+)(?<prerelease>-[0-9a-zA-Z.]+)?(?<build>\+[0-9a-zA-Z.]+)?$/';
-if (!\preg_match($pattern, $version)) {
+if (!preg_match($pattern, $version)) {
     exit_message('ERROR: Provided version is not a valid semver identifier, aborting.', 1);
 }
 
-$composerAliasVersion = \null;
+$composerAliasVersion = null;
 if (isset($argv[2])) {
     $composerAliasVersion = $argv[2];
     $pattern = '/^(?<version>[0-9]+\.[0-9]+\.[0-9]+)$/';
-    if (!\preg_match($pattern, $composerAliasVersion)) {
+    if (!preg_match($pattern, $composerAliasVersion)) {
         exit_message('ERROR: Provided master alias version is not a valid semver identifier, aborting.', 1);
     }
 }
 
-$changelogPath = \getcwd().'/CHANGELOG.md';
-$composerConfigPath = \getcwd().'/composer.json';
-$url = \shell_exec('git remote get-url origin');
-$url = \str_replace('github.com:', 'github.com/', $url);
-$url = 'https://'.\mb_substr($url, 4, -5);
+$changelogPath = getcwd().'/CHANGELOG.md';
+$composerConfigPath = getcwd().'/composer.json';
+$url = shell_exec('git remote get-url origin');
+$url = str_replace('github.com:', 'github.com/', $url);
+$url = 'https://'.mb_substr($url, 4, -5);
 
 try {
     $updater = new ReleaseUpdater($changelogPath, $composerConfigPath, $url);
     $updater->updateChangelog($version);
-    if (\null !== $composerAliasVersion) {
+    if (null !== $composerAliasVersion) {
         $updater->updateComposerAliasVersion($composerAliasVersion);
     }
 } catch (\Exception $exception) {
@@ -59,20 +59,20 @@ try {
 
 message();
 message('Committing changes to changelog');
-\system('git add '.$changelogPath);
-\shell_exec('git commit --message="chore(release): Prepare version '.$version.'"');
+system('git add '.$changelogPath);
+shell_exec('git commit --message="chore(release): Prepare version '.$version.'"');
 message('Changes committed!');
 message();
 
 message('Creating git tag');
-\shell_exec('git tag --sign '.$version.' --message="'.$version.'"');
+shell_exec('git tag --sign '.$version.' --message="'.$version.'"');
 message('Tag created!');
 message();
 
-if (\null !== $composerAliasVersion) {
+if (null !== $composerAliasVersion) {
     message('Committing changes to composer.json');
-    \shell_exec('git add '.$composerConfigPath);
-    \shell_exec('git commit --message="chore(release): Prepare development of next version"');
+    shell_exec('git add '.$composerConfigPath);
+    shell_exec('git commit --message="chore(release): Prepare development of next version"');
     message('Changes committed!');
     message();
 }

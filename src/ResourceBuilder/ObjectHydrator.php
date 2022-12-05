@@ -60,6 +60,6 @@ class ObjectHydrator
             foreach ($properties as $property => $value) {
                 $object->$property = $value;
             }
-        }, \null, $class);
+        }, null, $class);
     }
 }

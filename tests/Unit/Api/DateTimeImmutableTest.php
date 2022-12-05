@@ -13,6 +13,7 @@ namespace Contentful\Tests\Core\Unit\Api;
 
 use Contentful\Core\Api\DateTimeImmutable;
 use Contentful\Tests\TestCase;
+
 use function GuzzleHttp\json_encode as guzzle_json_encode;
 
 class DateTimeImmutableTest extends TestCase

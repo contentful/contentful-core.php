@@ -83,7 +83,7 @@ class RequestBuilder
         $uri = UriResolver::resolve($host, new Uri($path));
 
         if ($query) {
-            $uri = $uri->withQuery(\http_build_query(
+            $uri = $uri->withQuery(http_build_query(
                 $query,
                 '',
                 '&',
@@ -113,6 +113,6 @@ class RequestBuilder
             $headers['Content-Type'] = $this->apiContentType;
         }
 
-        return \array_merge($headers, $userHeaders);
+        return array_merge($headers, $userHeaders);
     }
 }

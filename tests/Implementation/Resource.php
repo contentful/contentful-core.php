@@ -47,7 +47,7 @@ class Resource implements ResourceInterface
      */
     public function getSystemProperties(): SystemPropertiesInterface
     {
-        return \null;
+        return null;
     }
 
     /**

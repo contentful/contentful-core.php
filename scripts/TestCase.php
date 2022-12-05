@@ -12,8 +12,10 @@ declare(strict_types=1);
 namespace Contentful\Tests;
 
 use Contentful\Core\Api\Link;
+
 use function GuzzleHttp\json_decode as guzzle_json_decode;
 use function GuzzleHttp\json_encode as guzzle_json_encode;
+
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 /**
@@ -34,7 +36,7 @@ class TestCase extends BaseTestCase
      */
     protected function markTestAsPassed()
     {
-        $this->assertTrue(\true, 'Test case did not throw an exception and passed.');
+        $this->assertTrue(true, 'Test case did not throw an exception and passed.');
     }
 
     /**
@@ -53,7 +55,7 @@ class TestCase extends BaseTestCase
      */
     protected function assertJsonFixtureEqualsJsonObject(string $file, $object, string $message = '')
     {
-        $dir = $this->convertClassToFixturePath(\debug_backtrace()[1]['class']);
+        $dir = $this->convertClassToFixturePath(debug_backtrace()[1]['class']);
 
         $this->assertJsonStringEqualsJsonFile($dir.'/'.$file, guzzle_json_encode($object), $message);
     }
@@ -63,16 +65,13 @@ class TestCase extends BaseTestCase
      */
     protected function assertJsonFixtureEqualsJsonString(string $file, string $string, string $message = '')
     {
-        $dir = $this->convertClassToFixturePath(\debug_backtrace()[1]['class']);
+        $dir = $this->convertClassToFixturePath(debug_backtrace()[1]['class']);
 
         $this->assertJsonStringEqualsJsonFile($dir.'/'.$file, $string, $message);
     }
 
     /**
      * Asserts that any two variables will be serialized to the same JSON structure.
-     *
-     * @param $expected
-     * @param $object
      */
     protected function assertJsonStructuresAreEqual($expected, $object, string $message = '')
     {
@@ -85,9 +84,9 @@ class TestCase extends BaseTestCase
 
     protected function getFixtureContent(string $file): string
     {
-        $dir = $this->convertClassToFixturePath(\debug_backtrace()[1]['class']);
+        $dir = $this->convertClassToFixturePath(debug_backtrace()[1]['class']);
 
-        return \file_get_contents($dir.'/'.$file);
+        return file_get_contents($dir.'/'.$file);
     }
 
     /**
@@ -95,14 +94,14 @@ class TestCase extends BaseTestCase
      */
     protected function getParsedFixture(string $file)
     {
-        $dir = $this->convertClassToFixturePath(\debug_backtrace()[1]['class']);
+        $dir = $this->convertClassToFixturePath(debug_backtrace()[1]['class']);
 
-        return guzzle_json_decode(\file_get_contents($dir.'/'.$file), \true);
+        return guzzle_json_decode(file_get_contents($dir.'/'.$file), true);
     }
 
     protected function getTestFixturesPath(): string
     {
-        return $this->convertClassToFixturePath(\debug_backtrace()[1]['class']);
+        return $this->convertClassToFixturePath(debug_backtrace()[1]['class']);
     }
 
     /**
@@ -118,17 +117,17 @@ class TestCase extends BaseTestCase
         }
 
         // Removes the initial common namespace prefix
-        $extractedClass = \str_replace('Contentful\\Tests\\', '', $class);
+        $extractedClass = str_replace('Contentful\\Tests\\', '', $class);
         // Removes the initial library specific prefix (Core, Delivery, Management, etc)
-        $extractedClass = \mb_substr($extractedClass, \mb_strpos($extractedClass, '\\') + 1);
+        $extractedClass = mb_substr($extractedClass, mb_strpos($extractedClass, '\\') + 1);
         // Converts the namespace separator to the directory separator, as defined in PSR-4
-        $extractedClass = \str_replace('\\', \DIRECTORY_SEPARATOR, $extractedClass);
+        $extractedClass = str_replace('\\', \DIRECTORY_SEPARATOR, $extractedClass);
         // Removes the "Test" suffix from the class name
-        $extractedClass = \mb_substr($extractedClass, 0, -4);
+        $extractedClass = mb_substr($extractedClass, 0, -4);
 
         // Uses the path of the class to determine the starting point of the tests
         $reflection = new \ReflectionClass($class);
-        $testsPath = \str_replace($extractedClass.'Test.php', '', $reflection->getFileName());
+        $testsPath = str_replace($extractedClass.'Test.php', '', $reflection->getFileName());
 
         return self::$classMap[$class] = $testsPath.'/Fixtures/'.$extractedClass;
     }

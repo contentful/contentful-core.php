@@ -32,7 +32,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class BaseClientTest extends TestCase
 {
-    public function createHttpClient(callable $handlerOverride = \null)
+    public function createHttpClient(callable $handlerOverride = null)
     {
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());
@@ -72,7 +72,7 @@ class BaseClientTest extends TestCase
         $context = $logs[1]['context'];
         $this->assertSame('DELIVERY', $context['api']);
         $this->assertIsFloat($context['duration']);
-        $this->assertNull(\unserialize($context['exception']));
+        $this->assertNull(unserialize($context['exception']));
 
         try {
             $request = GuzzleMessage::parseRequest($context['request']);
@@ -106,7 +106,7 @@ class BaseClientTest extends TestCase
 
             throw new ClientException('Not Found', $request, $response);
         });
-        $client = new Client('b4c0n73n7fu1', 'https://cdn.contentful.com', \null, $httpClient);
+        $client = new Client('b4c0n73n7fu1', 'https://cdn.contentful.com', null, $httpClient);
 
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage('The resource could not be found.');
@@ -126,7 +126,7 @@ class BaseClientTest extends TestCase
             throw new ClientException('Bad Request', $request, $response);
         });
 
-        $client = new ClientCustomException('b4c0n73n7fu1', 'https://api.contentful.com', \null, $httpClient);
+        $client = new ClientCustomException('b4c0n73n7fu1', 'https://api.contentful.com', null, $httpClient);
         $client->setIntegration('sdk-test-integration', '1.0.0-beta');
 
         $this->assertSame('MANAGEMENT', $client->getApi());
@@ -173,7 +173,7 @@ class BaseClientTest extends TestCase
             return new Response(200);
         });
 
-        $client = new InvalidPackageNameClient('b4c0n73n7fu1', 'https://cdn.contentful.com', \null, $httpClient);
+        $client = new InvalidPackageNameClient('b4c0n73n7fu1', 'https://cdn.contentful.com', null, $httpClient);
         $client->callApi('GET', '/');
 
         $request = $client->getMessages()[0]->getRequest();
@@ -190,9 +190,9 @@ class BaseClientTest extends TestCase
         $httpClient = $this->createHttpClient(function (): ResponseInterface {
             return new Response(201);
         });
-        $client = new Client('irrelevant', 'https://cdn.contentful.com', \null, $httpClient);
+        $client = new Client('irrelevant', 'https://cdn.contentful.com', null, $httpClient);
 
-        $client->useApplication(new Application(\false));
+        $client->useApplication(new Application(false));
         $client->callApi('GET', '/');
 
         $request = $client->getMessages()[0]->getRequest();
@@ -201,7 +201,7 @@ class BaseClientTest extends TestCase
             $request->getHeaderLine('X-Contentful-User-Agent')
         );
 
-        $client->useApplication(new Application(\true));
+        $client->useApplication(new Application(true));
         $client->callApi('GET', '/');
 
         $request = $client->getMessages()[1]->getRequest();
@@ -216,7 +216,7 @@ class BaseClientTest extends TestCase
         $httpClient = $this->createHttpClient(function (): ResponseInterface {
             return new Response(201);
         });
-        $client = new Client('irrelevant', 'https://cdn.contentful.com', \null, $httpClient);
+        $client = new Client('irrelevant', 'https://cdn.contentful.com', null, $httpClient);
 
         $client->useIntegration(new Integration());
         $client->callApi('GET', '/');

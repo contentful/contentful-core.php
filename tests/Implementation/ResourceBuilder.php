@@ -29,7 +29,7 @@ class ResourceBuilder extends BaseResourceBuilder
      */
     protected function createMapper($fqcn): MapperInterface
     {
-        if ('Mapper' !== \mb_substr($fqcn, -6)) {
+        if ('Mapper' !== mb_substr($fqcn, -6)) {
             $fqcn .= 'Mapper';
         }
 

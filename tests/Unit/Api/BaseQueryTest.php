@@ -67,7 +67,7 @@ class BaseQueryTest extends TestCase
             ->setLimit(150)
         ;
 
-        $query->setLimit(\null);
+        $query->setLimit(null);
 
         $this->assertSame('', $query->getQueryString());
     }
@@ -102,7 +102,7 @@ class BaseQueryTest extends TestCase
     public function testFilterOrderByReversed()
     {
         $query = (new Query())
-            ->orderBy('sys.createdAt', \true)
+            ->orderBy('sys.createdAt', true)
         ;
 
         $this->assertSame('order=-sys.createdAt', $query->getQueryString());
@@ -112,7 +112,7 @@ class BaseQueryTest extends TestCase
     {
         $query = (new Query())
             ->orderBy('sys.createdAt')
-            ->orderBy('sys.updatedAt', \true)
+            ->orderBy('sys.updatedAt', true)
         ;
 
         $this->assertSame('order=sys.createdAt%2C-sys.updatedAt', $query->getQueryString());

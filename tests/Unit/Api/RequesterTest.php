@@ -22,7 +22,7 @@ use Psr\Http\Message\RequestInterface;
 
 class RequesterTest extends TestCase
 {
-    public function createHttpClient(callable $handlerOverride = \null)
+    public function createHttpClient(callable $handlerOverride = null)
     {
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());

@@ -129,12 +129,12 @@ abstract class BaseQuery
      */
     public function getQueryData(): array
     {
-        return \array_merge($this->whereConditions, [
+        return array_merge($this->whereConditions, [
             'limit' => $this->limit,
             'skip' => $this->skip,
             'content_type' => $this->contentType,
             'mimetype_group' => $this->mimeTypeGroup,
-            'order' => $this->orderConditions ? \implode(',', $this->orderConditions) : null,
+            'order' => $this->orderConditions ? implode(',', $this->orderConditions) : null,
             'select' => $this->select,
             'links_to_entry' => $this->linksToEntry,
             'links_to_asset' => $this->linksToAsset,
@@ -146,7 +146,7 @@ abstract class BaseQuery
      */
     public function getQueryString(): string
     {
-        return \http_build_query($this->getQueryData(), '', '&', \PHP_QUERY_RFC3986);
+        return http_build_query($this->getQueryData(), '', '&', \PHP_QUERY_RFC3986);
     }
 
     /**
@@ -161,7 +161,7 @@ abstract class BaseQuery
     public function setSkip(int $skip = null)
     {
         if (null !== $skip && $skip < 0) {
-            throw new \RangeException(\sprintf('Skip value must be 0 or bigger, "%d" given.', $skip));
+            throw new \RangeException(sprintf('Skip value must be 0 or bigger, "%d" given.', $skip));
         }
 
         $this->skip = $skip;
@@ -181,7 +181,7 @@ abstract class BaseQuery
     public function setLimit(int $limit = null)
     {
         if (null !== $limit && ($limit < 1 || $limit > 1000)) {
-            throw new \RangeException(\sprintf('Limit value must be between 0 and 1000, "%d" given.', $limit));
+            throw new \RangeException(sprintf('Limit value must be between 0 and 1000, "%d" given.', $limit));
         }
 
         $this->limit = $limit;
@@ -230,7 +230,7 @@ abstract class BaseQuery
     public function setMimeTypeGroup(string $group = null)
     {
         if (null !== $group && !\in_array($group, self::$validGroups, true)) {
-            throw new \InvalidArgumentException(\sprintf('Unknown MIME-type group "%s" given. Expected "%s" or null.', $group, \implode(', ', self::$validGroups)));
+            throw new \InvalidArgumentException(sprintf('Unknown MIME-type group "%s" given. Expected "%s" or null.', $group, implode(', ', self::$validGroups)));
         }
 
         $this->mimeTypeGroup = $group;
@@ -252,11 +252,11 @@ abstract class BaseQuery
         $matches = [];
         // We check whether there is a specific operator in the field name,
         // and if so we validate it against a whitelist
-        if (\preg_match('/(.+)\[([a-zA-Z]+)\]/', $field, $matches)) {
-            $operator = \mb_strtolower($matches[2]);
+        if (preg_match('/(.+)\[([a-zA-Z]+)\]/', $field, $matches)) {
+            $operator = mb_strtolower($matches[2]);
 
             if (!\in_array($operator, self::$validOperators, true)) {
-                throw new \InvalidArgumentException(\sprintf('Unknown operator "%s" given. Expected "%s" or no operator.', $operator, \implode(', ', self::$validOperators)));
+                throw new \InvalidArgumentException(sprintf('Unknown operator "%s" given. Expected "%s" or no operator.', $operator, implode(', ', self::$validOperators)));
             }
         }
 
@@ -267,7 +267,7 @@ abstract class BaseQuery
             $value = $value->queryStringFormatted();
         }
         if (\is_array($value)) {
-            $value = \implode(',', $value);
+            $value = implode(',', $value);
         }
 
         $this->whereConditions[$field] = $value;
@@ -287,12 +287,12 @@ abstract class BaseQuery
      */
     public function select(array $select)
     {
-        $select = \array_filter($select, function (string $value): bool {
-            return 0 !== \mb_strpos($value, 'sys');
+        $select = array_filter($select, function (string $value): bool {
+            return 0 !== mb_strpos($value, 'sys');
         });
         $select[] = 'sys';
 
-        $this->select = \implode(',', $select);
+        $this->select = implode(',', $select);
 
         return $this;
     }

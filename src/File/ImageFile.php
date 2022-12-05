@@ -53,12 +53,9 @@ class ImageFile extends File
         return $this->height;
     }
 
-    /**
-     * @param UrlOptionsInterface|null $options
-     */
-    public function getUrl(UrlOptionsInterface $options = \null): string
+    public function getUrl(UrlOptionsInterface $options = null): string
     {
-        $query = \null !== $options ? '?'.$options->getQueryString() : '';
+        $query = null !== $options ? '?'.$options->getQueryString() : '';
 
         return parent::getUrl().$query;
     }

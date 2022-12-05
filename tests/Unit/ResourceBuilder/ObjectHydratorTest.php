@@ -54,7 +54,7 @@ class ObjectHydratorTest extends TestCase
 
         $reflectionObject = new \ReflectionObject($hydrator);
         $property = $reflectionObject->getProperty('hydrators');
-        $property->setAccessible(\true);
+        $property->setAccessible(true);
         $hydrators = $property->getValue($hydrator);
 
         $this->assertCount(2, $hydrators);

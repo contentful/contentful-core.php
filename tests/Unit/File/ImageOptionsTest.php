@@ -26,7 +26,7 @@ class ImageOptionsTest extends TestCase
     public function tesSetWidthNull()
     {
         $options = new ImageOptions();
-        $options->setWidth(\null);
+        $options->setWidth(null);
 
         $this->assertSame('', $options->getQueryString());
     }
@@ -50,7 +50,7 @@ class ImageOptionsTest extends TestCase
     public function testSetHeightNull()
     {
         $options = new ImageOptions();
-        $options->setHeight(\null);
+        $options->setHeight(null);
 
         $this->assertSame('', $options->getQueryString());
     }
@@ -75,7 +75,7 @@ class ImageOptionsTest extends TestCase
     public function testGetSetFormatNull()
     {
         $options = new ImageOptions();
-        $options->setFormat(\null);
+        $options->setFormat(null);
 
         $this->assertSame('', $options->getQueryString());
     }
@@ -100,7 +100,7 @@ class ImageOptionsTest extends TestCase
     public function testGetSetQualityNull()
     {
         $options = new ImageOptions();
-        $options->setQuality(\null);
+        $options->setQuality(null);
 
         $this->assertSame('', $options->getQueryString());
     }
@@ -134,7 +134,7 @@ class ImageOptionsTest extends TestCase
     public function testQueryProgressive()
     {
         $options = new ImageOptions();
-        $options->setProgressive(\true);
+        $options->setProgressive(true);
 
         $this->assertSame('fm=jpg&fl=progressive', $options->getQueryString());
     }
@@ -143,7 +143,7 @@ class ImageOptionsTest extends TestCase
     {
         $options = (new ImageOptions())
             ->setFormat('png')
-            ->setProgressive(\true)
+            ->setProgressive(true)
         ;
 
         $this->assertSame('fm=jpg&fl=progressive', $options->getQueryString());
@@ -152,7 +152,7 @@ class ImageOptionsTest extends TestCase
     public function testQueryPng8Bit()
     {
         $options = new ImageOptions();
-        $options->setPng8Bit(\true);
+        $options->setPng8Bit(true);
 
         $this->assertSame('fm=png&fl=png8', $options->getQueryString());
     }
@@ -161,7 +161,7 @@ class ImageOptionsTest extends TestCase
     {
         $options = (new ImageOptions())
             ->setFormat('jpg')
-            ->setPng8Bit(\true)
+            ->setPng8Bit(true)
         ;
 
         $this->assertSame('fm=png&fl=png8', $options->getQueryString());
@@ -309,7 +309,7 @@ class ImageOptionsTest extends TestCase
             ->setWidth(30)
             ->setHeight(40)
             ->setFormat('jpg')
-            ->setProgressive(\true)
+            ->setProgressive(true)
             ->setQuality(80)
         ;
 

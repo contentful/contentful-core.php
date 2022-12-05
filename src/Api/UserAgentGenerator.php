@@ -87,11 +87,11 @@ class UserAgentGenerator
             'Darwin' => 'macOS',
         ];
 
-        $parts = \array_filter([
+        $parts = array_filter([
             'app' => $this->application,
             'integration' => $this->integration,
             'sdk' => $this->sdk,
-            'platform' => \sprintf(
+            'platform' => sprintf(
                 'PHP/%d.%d.%d',
                 \PHP_MAJOR_VERSION,
                 \PHP_MINOR_VERSION,
@@ -105,7 +105,7 @@ class UserAgentGenerator
             $userAgent .= $key.' '.$value.'; ';
         }
 
-        return \trim($userAgent);
+        return trim($userAgent);
     }
 
     /**

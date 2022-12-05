@@ -75,8 +75,8 @@ abstract class BaseClient implements ClientInterface
             $this->getExceptionNamespace()
         );
 
-        if ('/' === \mb_substr($host, -1)) {
-            $host = \mb_substr($host, 0, -1);
+        if ('/' === mb_substr($host, -1)) {
+            $host = mb_substr($host, 0, -1);
         }
         $this->host = $host;
 
@@ -126,7 +126,7 @@ abstract class BaseClient implements ClientInterface
      */
     private function logMessage(Message $message)
     {
-        $logMessage = \sprintf(
+        $logMessage = sprintf(
             '%s %s (%.3Fs)',
             $message->getRequest()->getMethod(),
             (string) $message->getRequest()->getUri(),
@@ -153,7 +153,7 @@ abstract class BaseClient implements ClientInterface
             : null;
 
         return $body
-            ? \json_decode($body, true)
+            ? json_decode($body, true)
             : [];
     }
 
@@ -257,8 +257,8 @@ abstract class BaseClient implements ClientInterface
             ;
 
             // Removes the ".x-dev" part which is inserted during development
-            if ('.x-dev' === \mb_substr($shortVersion, -6)) {
-                $shortVersion = \mb_substr($shortVersion, 0, -6).'-dev';
+            if ('.x-dev' === mb_substr($shortVersion, -6)) {
+                $shortVersion = mb_substr($shortVersion, 0, -6).'-dev';
             }
 
             return $shortVersion;

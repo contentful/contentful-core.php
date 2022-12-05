@@ -23,7 +23,7 @@ abstract class BaseResourcePool implements ResourcePoolInterface
      */
     protected function sanitize(string $value): string
     {
-        return \strtr($value, [
+        return strtr($value, [
             '.' => '___46___',
             '-' => '___45___',
             '_' => '___95___',

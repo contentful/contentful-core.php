@@ -47,7 +47,7 @@ class SecretResource implements ResourceInterface
      */
     public function getSystemProperties(): SystemPropertiesInterface
     {
-        return \null;
+        return null;
     }
 
     /**
