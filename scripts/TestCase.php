@@ -72,6 +72,9 @@ class TestCase extends BaseTestCase
 
     /**
      * Asserts that any two variables will be serialized to the same JSON structure.
+     *
+     * @param mixed $expected
+     * @param mixed $object
      */
     protected function assertJsonStructuresAreEqual($expected, $object, string $message = '')
     {
