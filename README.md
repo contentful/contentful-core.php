@@ -11,7 +11,7 @@
 
 ## Requirements
 
-This package requires PHP 7.2 or above or PHP 8.0 or above.
+This package requires PHP 8.0 or above.
 
 ## About
 
