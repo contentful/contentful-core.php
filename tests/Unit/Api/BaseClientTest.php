@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -32,7 +32,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class BaseClientTest extends TestCase
 {
-    public function createHttpClient(callable $handlerOverride = null)
+    public function createHttpClient(?callable $handlerOverride = null)
     {
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());
@@ -243,9 +243,6 @@ class BaseClientTest extends TestCase
 
     /**
      * @dataProvider storingMessagesProvider
-     *
-     * @param mixed $storeMessages
-     * @param mixed $expectedCount
      */
     public function testStoringMessages($storeMessages, $expectedCount)
     {

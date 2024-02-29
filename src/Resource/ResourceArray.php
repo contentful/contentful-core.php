@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -89,41 +89,26 @@ class ResourceArray implements ResourceInterface, \Countable, \ArrayAccess, \Ite
         return $this->items;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSystemProperties(): SystemPropertiesInterface
     {
         return new ArraySystemProperties([]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function asLink(): Link
     {
         throw new \LogicException('Resource of type Array can not be represented as a Link object.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getId(): string
     {
         throw new \LogicException('Resource of type Array does not have an ID.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType(): string
     {
         return 'Array';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function jsonSerialize(): array
     {
         return [
@@ -137,49 +122,31 @@ class ResourceArray implements ResourceInterface, \Countable, \ArrayAccess, \Ite
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function count(): int
     {
         return \count($this->items);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->items);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetExists($offset): bool
     {
         return isset($this->items[$offset]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetGet($offset): ResourceInterface
     {
         return $this->items[$offset];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetSet($offset, $value): void
     {
         throw new \BadMethodCallException(sprintf('"%s" is read-only.', __CLASS__));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function offsetUnset($offset): void
     {
         throw new \BadMethodCallException(sprintf('"%s" is read-only.', __CLASS__));

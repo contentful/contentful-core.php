@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -20,49 +20,31 @@ class ClientCustomException extends BaseClient
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function callApi(string $method, string $path, array $options = []): array
     {
         return parent::callApi($method, $path, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getApi(): string
     {
         return 'MANAGEMENT';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected static function getPackageName(): string
     {
         return 'contentful/core';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected static function getSdkName(): string
     {
         return 'contentful-core.php';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected static function getApiContentType(): string
     {
         return 'application/vnd.contentful.management.v1+json';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExceptionNamespace(): string
     {
         return __NAMESPACE__.'\\Exception';

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -28,7 +28,7 @@ class DateTimeImmutable extends \DateTimeImmutable implements \JsonSerializable
         $milliseconds = floor($date->format('u') / 1000);
 
         if ($milliseconds > 0) {
-            $result .= '.'.str_pad((string) $milliseconds, 3, '0', \STR_PAD_LEFT);
+            $result .= '.'.mb_str_pad((string) $milliseconds, 3, '0', \STR_PAD_LEFT);
         }
 
         return $result.'Z';

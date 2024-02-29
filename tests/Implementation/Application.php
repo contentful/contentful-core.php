@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -25,25 +25,16 @@ class Application implements ApplicationInterface
         $this->isPackagedApplication = $isPackagedApplication;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getApplicationName(): string
     {
         return 'the-example-app';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isPackagedApplication(): bool
     {
         return $this->isPackagedApplication;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getApplicationPackageName(): string
     {
         return $this->isPackagedApplication
@@ -51,9 +42,6 @@ class Application implements ApplicationInterface
             : '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getApplicationVersion(): string
     {
         return $this->isPackagedApplication

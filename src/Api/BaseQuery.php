@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -158,7 +158,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function setSkip(int $skip = null)
+    public function setSkip(?int $skip = null)
     {
         if (null !== $skip && $skip < 0) {
             throw new \RangeException(sprintf('Skip value must be 0 or bigger, "%d" given.', $skip));
@@ -178,7 +178,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function setLimit(int $limit = null)
+    public function setLimit(?int $limit = null)
     {
         if (null !== $limit && ($limit < 1 || $limit > 1000)) {
             throw new \RangeException(sprintf('Limit value must be between 0 and 1000, "%d" given.', $limit));
@@ -215,7 +215,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function setContentType(string $contentType = null)
+    public function setContentType(?string $contentType = null)
     {
         $this->contentType = $contentType;
 
@@ -227,7 +227,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function setMimeTypeGroup(string $group = null)
+    public function setMimeTypeGroup(?string $group = null)
     {
         if (null !== $group && !\in_array($group, self::$validGroups, true)) {
             throw new \InvalidArgumentException(sprintf('Unknown MIME-type group "%s" given. Expected "%s" or null.', $group, implode(', ', self::$validGroups)));

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -56,8 +56,8 @@ class Message implements \Serializable, \JsonSerializable
         string $api,
         float $duration,
         RequestInterface $request,
-        ResponseInterface $response = null,
-        Exception $exception = null
+        ?ResponseInterface $response = null,
+        ?Exception $exception = null
     ) {
         if (!\in_array($api, ['DELIVERY', 'PREVIEW', 'MANAGEMENT'], true)) {
             throw new \InvalidArgumentException(sprintf('Unknown API value "%s".', $api));
@@ -77,12 +77,12 @@ class Message implements \Serializable, \JsonSerializable
     {
         $data = json_decode($json, true);
 
-        if (!\is_array($data) ||
-            !isset($data['api']) ||
-            !isset($data['request']) ||
-            !isset($data['response']) ||
-            !isset($data['duration']) ||
-            !isset($data['exception'])
+        if (!\is_array($data)
+            || !isset($data['api'])
+            || !isset($data['request'])
+            || !isset($data['response'])
+            || !isset($data['duration'])
+            || !isset($data['exception'])
         ) {
             throw new \InvalidArgumentException('String passed to Message::createFromString() is valid JSON but does not contain required fields.');
         }
@@ -156,25 +156,16 @@ class Message implements \Serializable, \JsonSerializable
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function jsonSerialize(): array
     {
         return $this->asSerializableArray();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function serialize(): string
     {
         return serialize($this->asSerializableArray());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function unserialize($serialized)
     {
         $data = unserialize($serialized);

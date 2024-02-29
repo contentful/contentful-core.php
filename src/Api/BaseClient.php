@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -63,8 +63,8 @@ abstract class BaseClient implements ClientInterface
     public function __construct(
         string $accessToken,
         string $host,
-        LoggerInterface $logger = null,
-        HttpClient $httpClient = null,
+        ?LoggerInterface $logger = null,
+        ?HttpClient $httpClient = null,
         bool $storeMessages = true
     ) {
         $this->logger = $logger ?: new NullLogger();
@@ -146,7 +146,7 @@ abstract class BaseClient implements ClientInterface
     /**
      * Parse the body of a JSON response.
      */
-    private function parseResponse(ResponseInterface $response = null)
+    private function parseResponse(?ResponseInterface $response = null)
     {
         $body = $response
             ? (string) $response->getBody()
@@ -198,9 +198,6 @@ abstract class BaseClient implements ClientInterface
         return $this->host;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function useApplication(ApplicationInterface $application)
     {
         $version = $application->isPackagedApplication()
@@ -213,9 +210,6 @@ abstract class BaseClient implements ClientInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setApplication(string $name, string $version = '')
     {
         $this->userAgentGenerator->setApplication($name, $version);
@@ -223,9 +217,6 @@ abstract class BaseClient implements ClientInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function useIntegration(IntegrationInterface $integration)
     {
         $this->userAgentGenerator->setIntegration(
@@ -234,9 +225,6 @@ abstract class BaseClient implements ClientInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setIntegration(string $name, string $version = '')
     {
         $this->userAgentGenerator->setIntegration($name, $version);

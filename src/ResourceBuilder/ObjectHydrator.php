@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -34,7 +34,7 @@ class ObjectHydrator
      */
     public function hydrate($target, array $data)
     {
-        $class = \is_object($target) ? \get_class($target) : $target;
+        $class = \is_object($target) ? $target::class : $target;
         if (\is_string($target)) {
             $target = (new \ReflectionClass($class))
                 ->newInstanceWithoutConstructor()

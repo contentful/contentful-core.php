@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -53,16 +53,13 @@ class ImageFile extends File
         return $this->height;
     }
 
-    public function getUrl(UrlOptionsInterface $options = null): string
+    public function getUrl(?UrlOptionsInterface $options = null): string
     {
         $query = null !== $options ? '?'.$options->getQueryString() : '';
 
         return parent::getUrl().$query;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function jsonSerialize(): array
     {
         $file = parent::jsonSerialize();

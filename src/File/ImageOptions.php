@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -71,9 +71,6 @@ class ImageOptions implements UrlOptionsInterface
      */
     private $backgroundColor;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getQueryString(): string
     {
         $options = [
@@ -98,10 +95,10 @@ class ImageOptions implements UrlOptionsInterface
             $options['fit'] = $this->resizeFit;
 
             if ((
-                'pad' === $this->resizeFit ||
-                'fill' === $this->resizeFit ||
-                'crop' === $this->resizeFit ||
-                'thumb' === $this->resizeFit
+                'pad' === $this->resizeFit
+                || 'fill' === $this->resizeFit
+                || 'crop' === $this->resizeFit
+                || 'thumb' === $this->resizeFit
             )
             && null !== $this->resizeFocus) {
                 $options['f'] = $this->resizeFocus;
@@ -129,7 +126,7 @@ class ImageOptions implements UrlOptionsInterface
      *
      * @return $this
      */
-    public function setWidth(int $width = null)
+    public function setWidth(?int $width = null)
     {
         if (null !== $width && $width < 0) {
             throw new \InvalidArgumentException('Width must not be negative.');
@@ -155,7 +152,7 @@ class ImageOptions implements UrlOptionsInterface
      *
      * @return $this
      */
-    public function setHeight(int $height = null)
+    public function setHeight(?int $height = null)
     {
         if (null !== $height && $height < 0) {
             throw new \InvalidArgumentException('Height must not be negative.');
@@ -174,7 +171,7 @@ class ImageOptions implements UrlOptionsInterface
      *
      * @return $this
      */
-    public function setFormat(string $format = null)
+    public function setFormat(?string $format = null)
     {
         $validValues = ['png', 'jpg', 'webp'];
 
@@ -197,7 +194,7 @@ class ImageOptions implements UrlOptionsInterface
      *
      * @return $this
      */
-    public function setQuality(int $quality = null)
+    public function setQuality(?int $quality = null)
     {
         if (null !== $quality && ($quality < 1 || $quality > 100)) {
             throw new \InvalidArgumentException(sprintf('Quality must be between 1 and 100, "%d" given.', $quality));
@@ -252,7 +249,7 @@ class ImageOptions implements UrlOptionsInterface
      *
      * @return $this
      */
-    public function setResizeFit(string $resizeFit = null)
+    public function setResizeFit(?string $resizeFit = null)
     {
         $validValues = ['pad', 'crop', 'fill', 'thumb', 'scale'];
 
@@ -277,7 +274,7 @@ class ImageOptions implements UrlOptionsInterface
      *
      * @return $this
      */
-    public function setResizeFocus(string $resizeFocus = null)
+    public function setResizeFocus(?string $resizeFocus = null)
     {
         $validValues = [
             'face',
@@ -311,7 +308,7 @@ class ImageOptions implements UrlOptionsInterface
      *
      * @return $this
      */
-    public function setRadius(float $radius = null)
+    public function setRadius(?float $radius = null)
     {
         if (null !== $radius && $radius < 0) {
             throw new \InvalidArgumentException('Radius must not be negative.');
@@ -330,7 +327,7 @@ class ImageOptions implements UrlOptionsInterface
      *
      * @return $this
      */
-    public function setBackgroundColor(string $backgroundColor = null)
+    public function setBackgroundColor(?string $backgroundColor = null)
     {
         if (null !== $backgroundColor && !preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $backgroundColor)) {
             throw new \InvalidArgumentException('Background color must be in hexadecimal format.');

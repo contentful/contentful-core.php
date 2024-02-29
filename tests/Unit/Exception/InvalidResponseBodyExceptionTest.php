@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -38,7 +38,7 @@ class InvalidResponseBodyExceptionTest extends TestCase
         $this->assertInstanceOf(InvalidResponseBodyException::class, $message->getException());
     }
 
-    public function createHttpClient(callable $handlerOverride = null)
+    public function createHttpClient(?callable $handlerOverride = null)
     {
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());

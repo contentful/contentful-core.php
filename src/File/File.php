@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -49,26 +49,17 @@ class File implements ProcessedFileInterface
         $this->size = $size;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFileName(): string
     {
         return $this->fileName;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getContentType(): string
     {
         return $this->contentType;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getUrl(UrlOptionsInterface $options = null): string
+    public function getUrl(?UrlOptionsInterface $options = null): string
     {
         return $this->url;
     }
@@ -81,9 +72,6 @@ class File implements ProcessedFileInterface
         return $this->size;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function jsonSerialize(): array
     {
         return [

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -16,17 +16,11 @@ use Contentful\Core\ResourceBuilder\MapperInterface;
 
 class ResourceBuilder extends BaseResourceBuilder
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function getMapperNamespace(): string
     {
         return __NAMESPACE__;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function createMapper($fqcn): MapperInterface
     {
         if ('Mapper' !== mb_substr($fqcn, -6)) {
@@ -36,9 +30,6 @@ class ResourceBuilder extends BaseResourceBuilder
         return new $fqcn();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getSystemType(array $data): string
     {
         return $data['sys']['type'];

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -50,10 +50,7 @@ abstract class BaseResourceBuilder implements ResourceBuilderInterface
         $this->mapperNamespace = $this->getMapperNamespace();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function build(array $data, ResourceInterface $resource = null)
+    public function build(array $data, ?ResourceInterface $resource = null)
     {
         $fqcn = $this->determineMapperFqcn($data);
 
@@ -126,7 +123,7 @@ abstract class BaseResourceBuilder implements ResourceBuilderInterface
      *
      * @return static
      */
-    public function setDataMapperMatcher($type, callable $dataMapperMatcher = null)
+    public function setDataMapperMatcher($type, ?callable $dataMapperMatcher = null)
     {
         $this->dataMapperMatchers[$type] = $dataMapperMatcher;
 

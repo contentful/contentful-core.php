@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -42,49 +42,31 @@ class SecretResource implements ResourceInterface
         $this->secretId = $secretId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSystemProperties(): SystemPropertiesInterface
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function asLink(): Link
     {
         return new Link($this->id, $this->type);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSecretId(): string
     {
         return $this->secretId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function jsonSerialize(): array
     {
         return [];

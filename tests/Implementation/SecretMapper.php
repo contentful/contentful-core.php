@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -15,9 +15,6 @@ use Contentful\Core\ResourceBuilder\MapperInterface;
 
 class SecretMapper implements MapperInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function map($resource, array $data)
     {
         return new SecretResource($data['sys']['id'], $data['sys']['type'], $data['secretId']);

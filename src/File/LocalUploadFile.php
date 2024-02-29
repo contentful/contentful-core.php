@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -40,17 +40,11 @@ class LocalUploadFile implements UnprocessedFileInterface
         $this->uploadFrom = $uploadFrom;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFileName(): string
     {
         return $this->fileName ?? '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getContentType(): string
     {
         return $this->contentType ?? '';
@@ -61,9 +55,6 @@ class LocalUploadFile implements UnprocessedFileInterface
         return $this->uploadFrom;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function jsonSerialize(): array
     {
         return [

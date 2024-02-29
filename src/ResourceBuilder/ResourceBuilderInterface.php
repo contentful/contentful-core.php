@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -31,5 +31,5 @@ interface ResourceBuilderInterface
      *
      * @return ResourceInterface|ResourceArray
      */
-    public function build(array $data, ResourceInterface $resource = null);
+    public function build(array $data, ?ResourceInterface $resource = null);
 }

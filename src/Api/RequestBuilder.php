@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -77,7 +77,7 @@ class RequestBuilder
     /**
      * @param string[] $query
      */
-    private function getUri(string $path, string $host = null, array $query = []): UriInterface
+    private function getUri(string $path, ?string $host = null, array $query = []): UriInterface
     {
         $host = $host ? new Uri($host) : $this->host;
         $uri = UriResolver::resolve($host, new Uri($path));
@@ -96,7 +96,6 @@ class RequestBuilder
 
     /**
      * @param string[] $userHeaders
-     * @param mixed    $body
      *
      * @return string[]
      */

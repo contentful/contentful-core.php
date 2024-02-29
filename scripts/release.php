@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -53,7 +53,7 @@ try {
     if (null !== $composerAliasVersion) {
         $updater->updateComposerAliasVersion($composerAliasVersion);
     }
-} catch (\Exception $exception) {
+} catch (Exception $exception) {
     exit_message($exception->getMessage(), 1);
 }
 

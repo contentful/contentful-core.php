@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -55,9 +55,6 @@ class Exception extends \RuntimeException implements \Serializable
         parent::__construct($message, 0, $previous);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function serialize(): string
     {
         return serialize($this->__serialize());
@@ -76,9 +73,6 @@ class Exception extends \RuntimeException implements \Serializable
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function unserialize($serialized)
     {
         $data = unserialize($serialized);
@@ -98,7 +92,7 @@ class Exception extends \RuntimeException implements \Serializable
 
     private static function createExceptionMessage(
         RequestException $previous,
-        ResponseInterface $response = null
+        ?ResponseInterface $response = null
     ): string {
         if (!$response) {
             return $previous->getMessage();

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -41,17 +41,11 @@ class RemoteUploadFile implements UnprocessedFileInterface
         $this->upload = $upload;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFileName(): string
     {
         return $this->fileName ?? '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getContentType(): string
     {
         return $this->contentType ?? '';
@@ -62,9 +56,6 @@ class RemoteUploadFile implements UnprocessedFileInterface
         return $this->upload;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function jsonSerialize(): array
     {
         return [
