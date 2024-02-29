@@ -8,6 +8,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 <!-- PENDING-CHANGES -->
 <!-- /PENDING-CHANGES -->
 
+## [4.0.1](https://github.com/contentful/contentful-core.php/tree/4.0.1) (2024-02-29)
+
+* Updated for PHP8
+* Updated for Symfony 7
+
+
+
 ## [4.0.0](https://github.com/contentful/contentful-core.php/tree/4.0.0) (2022-12-05)
 
 * The API will no longer switch to the jpg format if a quality is given, consistent with the docs
