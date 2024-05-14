@@ -8,6 +8,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 <!-- PENDING-CHANGES -->
 <!-- /PENDING-CHANGES -->
 
+## [4.0.2](https://github.com/contentful/contentful-core.php/tree/4.0.2) (2024-05-13)
+
+* Updated for PSR/message v2, allowing the installation of Laravel 11
+
+
+
 ## [4.0.1](https://github.com/contentful/contentful-core.php/tree/4.0.1) (2024-02-29)
 
 * Updated for PHP8
