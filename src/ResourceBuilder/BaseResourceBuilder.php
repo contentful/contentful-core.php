@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2024 Contentful GmbH
+ * @copyright 2015-2025 Contentful GmbH
  * @license   MIT
  */
 
@@ -104,7 +104,7 @@ abstract class BaseResourceBuilder implements ResourceBuilderInterface
             }
 
             if (!class_exists($matchedFqcn, true)) {
-                throw new \RuntimeException(sprintf('Mapper class "%s" does not exist.', $matchedFqcn));
+                throw new \RuntimeException(\sprintf('Mapper class "%s" does not exist.', $matchedFqcn));
             }
 
             return $matchedFqcn;

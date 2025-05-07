@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2024 Contentful GmbH
+ * @copyright 2015-2025 Contentful GmbH
  * @license   MIT
  */
 
@@ -126,7 +126,7 @@ abstract class BaseClient implements ClientInterface
      */
     private function logMessage(Message $message)
     {
-        $logMessage = sprintf(
+        $logMessage = \sprintf(
             '%s %s (%.3Fs)',
             $message->getRequest()->getMethod(),
             (string) $message->getRequest()->getUri(),

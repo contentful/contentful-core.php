@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2024 Contentful GmbH
+ * @copyright 2015-2025 Contentful GmbH
  * @license   MIT
  */
 
@@ -161,7 +161,7 @@ abstract class BaseQuery
     public function setSkip(?int $skip = null)
     {
         if (null !== $skip && $skip < 0) {
-            throw new \RangeException(sprintf('Skip value must be 0 or bigger, "%d" given.', $skip));
+            throw new \RangeException(\sprintf('Skip value must be 0 or bigger, "%d" given.', $skip));
         }
 
         $this->skip = $skip;
@@ -181,7 +181,7 @@ abstract class BaseQuery
     public function setLimit(?int $limit = null)
     {
         if (null !== $limit && ($limit < 1 || $limit > 1000)) {
-            throw new \RangeException(sprintf('Limit value must be between 0 and 1000, "%d" given.', $limit));
+            throw new \RangeException(\sprintf('Limit value must be between 0 and 1000, "%d" given.', $limit));
         }
 
         $this->limit = $limit;
@@ -230,7 +230,7 @@ abstract class BaseQuery
     public function setMimeTypeGroup(?string $group = null)
     {
         if (null !== $group && !\in_array($group, self::$validGroups, true)) {
-            throw new \InvalidArgumentException(sprintf('Unknown MIME-type group "%s" given. Expected "%s" or null.', $group, implode(', ', self::$validGroups)));
+            throw new \InvalidArgumentException(\sprintf('Unknown MIME-type group "%s" given. Expected "%s" or null.', $group, implode(', ', self::$validGroups)));
         }
 
         $this->mimeTypeGroup = $group;
@@ -256,7 +256,7 @@ abstract class BaseQuery
             $operator = mb_strtolower($matches[2]);
 
             if (!\in_array($operator, self::$validOperators, true)) {
-                throw new \InvalidArgumentException(sprintf('Unknown operator "%s" given. Expected "%s" or no operator.', $operator, implode(', ', self::$validOperators)));
+                throw new \InvalidArgumentException(\sprintf('Unknown operator "%s" given. Expected "%s" or no operator.', $operator, implode(', ', self::$validOperators)));
             }
         }
 

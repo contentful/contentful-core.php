@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2024 Contentful GmbH
+ * @copyright 2015-2025 Contentful GmbH
  * @license   MIT
  */
 
@@ -60,7 +60,7 @@ class Message implements \Serializable, \JsonSerializable
         ?Exception $exception = null
     ) {
         if (!\in_array($api, ['DELIVERY', 'PREVIEW', 'MANAGEMENT'], true)) {
-            throw new \InvalidArgumentException(sprintf('Unknown API value "%s".', $api));
+            throw new \InvalidArgumentException(\sprintf('Unknown API value "%s".', $api));
         }
 
         $this->api = $api;

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2024 Contentful GmbH
+ * @copyright 2015-2025 Contentful GmbH
  * @license   MIT
  */
 
@@ -144,11 +144,11 @@ class ResourceArray implements ResourceInterface, \Countable, \ArrayAccess, \Ite
 
     public function offsetSet($offset, $value): void
     {
-        throw new \BadMethodCallException(sprintf('"%s" is read-only.', __CLASS__));
+        throw new \BadMethodCallException(\sprintf('"%s" is read-only.', __CLASS__));
     }
 
     public function offsetUnset($offset): void
     {
-        throw new \BadMethodCallException(sprintf('"%s" is read-only.', __CLASS__));
+        throw new \BadMethodCallException(\sprintf('"%s" is read-only.', __CLASS__));
     }
 }

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2024 Contentful GmbH
+ * @copyright 2015-2025 Contentful GmbH
  * @license   MIT
  */
 
@@ -108,11 +108,11 @@ class ReleaseUpdater
 
         return strtr($changelogTemplate, [
             '[START]' => $changelogStart,
-            '[UNRELEASED_HEADER]' => sprintf(self::UNRELEASED_CHANGES_HEADER, $this->githubUrl, $version),
+            '[UNRELEASED_HEADER]' => \sprintf(self::UNRELEASED_CHANGES_HEADER, $this->githubUrl, $version),
             '[PENDING_CHANGES_START]' => self::PENDING_CHANGES_START,
             '[PENDING_CHANGES_PLACEHOLDER]' => self::PENDING_CHANGES_PLACEHOLDER,
             '[PENDING_CHANGES_END]' => self::PENDING_CHANGES_END,
-            '[NEW_RELEASE_HEADER]' => sprintf(
+            '[NEW_RELEASE_HEADER]' => \sprintf(
                 self::NEW_RELEASE_HEADER,
                 $version,
                 $this->githubUrl,

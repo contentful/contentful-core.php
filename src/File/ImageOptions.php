@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2024 Contentful GmbH
+ * @copyright 2015-2025 Contentful GmbH
  * @license   MIT
  */
 
@@ -176,7 +176,7 @@ class ImageOptions implements UrlOptionsInterface
         $validValues = ['png', 'jpg', 'webp'];
 
         if (null !== $format && !\in_array($format, $validValues, true)) {
-            throw new \InvalidArgumentException(sprintf('Unknown format "%s" given. Expected "%s" or null.', $format, implode(', ', $validValues)));
+            throw new \InvalidArgumentException(\sprintf('Unknown format "%s" given. Expected "%s" or null.', $format, implode(', ', $validValues)));
         }
 
         $this->format = $format;
@@ -197,7 +197,7 @@ class ImageOptions implements UrlOptionsInterface
     public function setQuality(?int $quality = null)
     {
         if (null !== $quality && ($quality < 1 || $quality > 100)) {
-            throw new \InvalidArgumentException(sprintf('Quality must be between 1 and 100, "%d" given.', $quality));
+            throw new \InvalidArgumentException(\sprintf('Quality must be between 1 and 100, "%d" given.', $quality));
         }
 
         $this->quality = $quality;
@@ -254,7 +254,7 @@ class ImageOptions implements UrlOptionsInterface
         $validValues = ['pad', 'crop', 'fill', 'thumb', 'scale'];
 
         if (null !== $resizeFit && !\in_array($resizeFit, $validValues, true)) {
-            throw new \InvalidArgumentException(sprintf('Unknown resize fit "%s" given. Expected "%s" or null.', $resizeFit, implode(', ', $validValues)));
+            throw new \InvalidArgumentException(\sprintf('Unknown resize fit "%s" given. Expected "%s" or null.', $resizeFit, implode(', ', $validValues)));
         }
 
         $this->resizeFit = $resizeFit;
@@ -291,7 +291,7 @@ class ImageOptions implements UrlOptionsInterface
         ];
 
         if (null !== $resizeFocus && !\in_array($resizeFocus, $validValues, true)) {
-            throw new \InvalidArgumentException(sprintf('Unknown resize focus "%s" given. Expected "%s" or null.', $resizeFocus, implode(', ', $validValues)));
+            throw new \InvalidArgumentException(\sprintf('Unknown resize focus "%s" given. Expected "%s" or null.', $resizeFocus, implode(', ', $validValues)));
         }
 
         $this->resizeFocus = $resizeFocus;

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2024 Contentful GmbH
+ * @copyright 2015-2025 Contentful GmbH
  * @license   MIT
  */
 
@@ -91,7 +91,7 @@ class UserAgentGenerator
             'app' => $this->application,
             'integration' => $this->integration,
             'sdk' => $this->sdk,
-            'platform' => sprintf(
+            'platform' => \sprintf(
                 'PHP/%d.%d.%d',
                 \PHP_MAJOR_VERSION,
                 \PHP_MINOR_VERSION,
