@@ -3,7 +3,7 @@
 [![Packagist](https://img.shields.io/packagist/v/contentful/core.svg?style=for-the-badge)](https://packagist.org/packages/contentful/core)
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/contentful/core.svg?style=for-the-badge)](https://packagist.org/packages/contentful/core)
 [![Packagist](https://img.shields.io/github/license/contentful/contentful-core.php.svg?style=for-the-badge)](https://packagist.org/packages/contentful/core)
-<img height="28px" src="https://circleci.com/gh/contentful/contentful-core.php.svg?style=shield"/>
+[![CI](https://github.com/contentful/contentful-core.php/actions/workflows/ci.yml/badge.svg)](https://github.com/contentful/contentful-core.php/actions/workflows/ci.yml)
 
 ## What is Contentful?
 
@@ -16,6 +16,18 @@ This package requires PHP 8.0 or above.
 ## About
 
 This package provides foundation components for both [Delivery SDK](https://github.com/contentful/contentful.php) and [Management SDK](https://github.com/contentful/contentful-management.php), and it is not meant for being used from third party packages.
+
+## Development with Dev Containers
+
+For a reproducible local setup, open this repository in its included dev container. The container installs the project dependencies automatically when it is created.
+
+After the container is ready, run:
+
+```bash
+composer test-quick-fail
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contributor workflow.
 
 ## License
 
