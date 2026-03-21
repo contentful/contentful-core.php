@@ -19,7 +19,16 @@ This package provides foundation components for both [Delivery SDK](https://gith
 
 ## Development with Dev Containers
 
-For a reproducible local setup, open this repository in its included dev container. The container installs the project dependencies automatically when it is created.
+For a reproducible local setup, this repository includes a `.devcontainer` configuration and GitHub Actions uses the same setup for CI.
+
+In Visual Studio Code, open the repository and run `Dev Containers: Reopen in Container`.
+
+Without Visual Studio Code, install Docker and the Dev Container CLI (`npm install -g @devcontainers/cli`), then run:
+
+```bash
+devcontainer up --workspace-folder .
+devcontainer exec --workspace-folder . bash
+```
 
 After the container is ready, run:
 
