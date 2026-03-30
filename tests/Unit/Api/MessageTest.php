@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2025 Contentful GmbH
+ * @copyright 2015-2026 Contentful GmbH
  * @license   MIT
  */
 
@@ -114,10 +114,10 @@ class MessageTest extends TestCase
         ]);
 
         $exception = null;
-        $closure1 = function ($closure) {
+        $closure1 = static function ($closure) {
             $closure();
         };
-        $closure2 = function () use (&$exception, $request, $response) {
+        $closure2 = static function () use (&$exception, $request, $response) {
             $requestException = new RequestException('Not Found', $request, $response);
             $exception = new Exception($requestException, 'Error message');
         };

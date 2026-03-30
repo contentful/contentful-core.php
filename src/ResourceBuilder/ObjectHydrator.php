@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2025 Contentful GmbH
+ * @copyright 2015-2026 Contentful GmbH
  * @license   MIT
  */
 
@@ -56,7 +56,7 @@ class ObjectHydrator
             return $this->hydrators[$class];
         }
 
-        return $this->hydrators[$class] = \Closure::bind(function ($object, array $properties) {
+        return $this->hydrators[$class] = \Closure::bind(static function ($object, array $properties) {
             foreach ($properties as $property => $value) {
                 $object->$property = $value;
             }

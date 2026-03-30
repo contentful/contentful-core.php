@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2025 Contentful GmbH
+ * @copyright 2015-2026 Contentful GmbH
  * @license   MIT
  */
 
@@ -36,8 +36,8 @@ class BaseClientTest extends TestCase
     {
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());
-        $stack->push(function (callable $handler) use ($handlerOverride) {
-            return function (RequestInterface $request, array $options) use ($handler, $handlerOverride) {
+        $stack->push(static function (callable $handler) use ($handlerOverride) {
+            return static function (RequestInterface $request, array $options) use ($handler, $handlerOverride) {
                 $handler = $handlerOverride ?: $handler;
 
                 return $handler($request, $options);
@@ -169,7 +169,7 @@ class BaseClientTest extends TestCase
 
     public function testInvalidPackageNameVersion()
     {
-        $httpClient = $this->createHttpClient(function (): ResponseInterface {
+        $httpClient = $this->createHttpClient(static function (): ResponseInterface {
             return new Response(200);
         });
 
@@ -187,7 +187,7 @@ class BaseClientTest extends TestCase
 
     public function testCustomApplication()
     {
-        $httpClient = $this->createHttpClient(function (): ResponseInterface {
+        $httpClient = $this->createHttpClient(static function (): ResponseInterface {
             return new Response(201);
         });
         $client = new Client('irrelevant', 'https://cdn.contentful.com', null, $httpClient);
@@ -213,7 +213,7 @@ class BaseClientTest extends TestCase
 
     public function testCustomIntegration()
     {
-        $httpClient = $this->createHttpClient(function (): ResponseInterface {
+        $httpClient = $this->createHttpClient(static function (): ResponseInterface {
             return new Response(201);
         });
         $client = new Client('irrelevant', 'https://cdn.contentful.com', null, $httpClient);

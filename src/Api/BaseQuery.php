@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2025 Contentful GmbH
+ * @copyright 2015-2026 Contentful GmbH
  * @license   MIT
  */
 
@@ -287,7 +287,7 @@ abstract class BaseQuery
      */
     public function select(array $select)
     {
-        $select = array_filter($select, function (string $value): bool {
+        $select = array_filter($select, static function (string $value): bool {
             return 0 !== mb_strpos($value, 'sys');
         });
         $select[] = 'sys';

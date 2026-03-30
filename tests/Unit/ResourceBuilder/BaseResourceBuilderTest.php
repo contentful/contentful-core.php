@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2025 Contentful GmbH
+ * @copyright 2015-2026 Contentful GmbH
  * @license   MIT
  */
 
@@ -38,7 +38,7 @@ class BaseResourceBuilderTest extends TestCase
     public function testCustomMatcher()
     {
         $builder = new ResourceBuilder();
-        $builder->setDataMapperMatcher('Entry', function (array $data) {
+        $builder->setDataMapperMatcher('Entry', static function (array $data) {
             if (isset($data['secretId'])) {
                 return SecretMapper::class;
             }
@@ -76,7 +76,7 @@ class BaseResourceBuilderTest extends TestCase
         $this->expectExceptionMessage('Mapper class "MyInvalidMapper" does not exist.');
 
         $builder = new ResourceBuilder();
-        $builder->setDataMapperMatcher('Entry', function (array $data) {
+        $builder->setDataMapperMatcher('Entry', static function (array $data) {
             return 'MyInvalidMapper';
         });
 

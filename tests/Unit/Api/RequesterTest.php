@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-core package.
  *
- * @copyright 2015-2025 Contentful GmbH
+ * @copyright 2015-2026 Contentful GmbH
  * @license   MIT
  */
 
@@ -26,8 +26,8 @@ class RequesterTest extends TestCase
     {
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());
-        $stack->push(function (callable $handler) use ($handlerOverride) {
-            return function (RequestInterface $request, array $options) use ($handler, $handlerOverride) {
+        $stack->push(static function (callable $handler) use ($handlerOverride) {
+            return static function (RequestInterface $request, array $options) use ($handler, $handlerOverride) {
                 $handler = $handlerOverride ?: $handler;
 
                 return $handler($request, $options);
@@ -40,7 +40,7 @@ class RequesterTest extends TestCase
     public function testRequester()
     {
         $response = new Response(200, [], '{}');
-        $handler = function (RequestInterface $request, array $options) use ($response) {
+        $handler = static function (RequestInterface $request, array $options) use ($response) {
             return $response;
         };
         $httpClient = $this->createHttpClient($handler);
