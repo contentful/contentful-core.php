@@ -25,13 +25,6 @@ devcontainer exec --workspace-folder . bash
 composer test-quick-fail
 ```
 
-## Other Useful Commands
-
-```bash
-composer run lint-static-analysis
-composer run test-for-bc-breaks
-```
-
 ## Pull Requests
 
 1. Fork the repository and create a branch for your change.
@@ -60,31 +53,17 @@ Sourced from `composer.json` scripts:
 - **Fixture JSON:** `tests/Fixtures/Unit/`
 - **Concrete test implementations:** `tests/Implementation/` — test-only subclasses of abstract library classes
 
-```bash
-# Run all tests
-composer run test
-
-# Run and stop on first failure
-composer run test-quick-fail
-```
+See the [All Available Commands](#all-available-commands) table for `composer run test` and `composer run test-quick-fail`.
 
 ## Static Analysis
 
-PHPStan at level 5:
-
-```bash
-composer run lint-static-analysis
-```
+PHPStan at level 5. See the [All Available Commands](#all-available-commands) table for `composer run lint-static-analysis`.
 
 Fix reported issues and commit before opening a PR.
 
 ## Backwards Compatibility
 
-This library enforces backwards compatibility via `roave/backward-compatibility-check`:
-
-```bash
-composer run test-for-bc-breaks
-```
+This library enforces backwards compatibility via `roave/backward-compatibility-check`. See the [All Available Commands](#all-available-commands) table for `composer run test-for-bc-breaks`.
 
 This check runs in CI against git history (`fetch-depth: 0` required). Any breaking changes require a **major version bump** — dropping a PHP version counts as breaking.
 
